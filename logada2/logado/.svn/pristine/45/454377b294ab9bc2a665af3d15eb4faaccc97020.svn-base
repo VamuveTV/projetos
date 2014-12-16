@@ -1,0 +1,479 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+return array(
+    'doctrine' => array(
+        'driver' => array(
+            'acesso_entities' => array(
+                'class' =>'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/Acesso/Entity')
+            ),
+
+            'orm_default' => array(
+                'drivers' => array(
+                    'Acesso\Entity' => 'acesso_entities'
+                )
+            )
+        )
+    ),
+    'router' => array(
+        'routes' => array(
+            'home' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'notificacao' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/notificacao',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'notificacao',
+                    ),
+                ),
+            ),
+            'internet' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/internet',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'internet',
+                    ),
+                ),
+            ),
+            'mapa' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/mapa',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'mapa',
+                    ),
+                ),
+            ),
+            'sentindo' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/sentindo',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'sentindo',
+                    ),
+                ),
+            ),
+            'sentindo2' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/sentindo2',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'sentindo2',
+                    ),
+                ),
+            ),
+            'contato' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/contato',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'contato',
+                    ),
+                ),
+            ),
+            'opine' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/opine',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'opine',
+                    ),
+                ),
+            ),
+            'opine_alunos' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/alunos',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'opineAlunos',
+                    ),
+                ),
+            ),
+            'opine_alunos_notas' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/enviaNotaA',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'enviaNotaAluno',
+                    ),
+                ),
+            ),
+            'opine_funcionarios' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/funcionarios',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'opineFuncionarios',
+                    ),
+                ),
+            ),
+            'avalia_funcionarios' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/avalia[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'avaliaFuncionarios',
+                    ),
+                ),
+            ),
+            'avalia_escolas' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/avaliae[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'avaliaEscolas',
+                    ),
+                ),
+            ),
+            'avalia_alunos' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/avaliaa[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'avaliaAlunos',
+                    ),
+                ),
+            ),
+            'opine_funcionarios_notas' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/enviaNotaF',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'enviaNotaFuncionario',
+                    ),
+                ),
+            ),
+            'opine_escolas' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/escolas',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'opineEscolas',
+                    ),
+                ),
+            ),
+            'opine_escolas_notas' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/enviaNotaE',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'enviaNotaEscola',
+                    ),
+                ),
+            ),
+            'opine_funcionarios_notas' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/opine/enviaNotaF',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'enviaNotaFuncionario',
+                    ),
+                ),
+            ),
+            'atividades_aluno' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/atividades',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'atividades',
+                    ),
+                ),
+            ),
+            'add_atividades' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/atividades/add',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'addAtividade',
+                    ),
+                ),
+            ),
+            'edit_atividades' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route'    => '/atividades/edit[/:id]',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'editAtividade',
+                    ),
+                ),
+            ),
+            'calendario' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/calendario',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'calendario',
+                    ),
+                ),
+            ),
+            'perfil_aluno' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/perfil',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'perfil',
+                    ),
+                ),
+            ),
+            'perfil_admin' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/perfiladmin',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'perfilAdmin',
+                    ),
+                ),
+            ),
+            'edita_perfil' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/editaperfil',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'editPerfil',
+                    ),
+                ),
+            ),
+            'perfil_sub' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/perfil[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'perfil',
+                    ),
+                ),
+            ),
+            'perfiladmin_sub' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/perfiladmin[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'perfilAdmin',
+                    ),
+                ),
+            ),
+            'verperfil_sub' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/verperfil[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'verPerfil',
+                    ),
+                ),
+            ),
+            'vernotas' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/vernotas[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'verNotas',
+                    ),
+                ),
+            ),
+            'perfil_foto' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/perfil/foto',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'foto',
+                    ),
+                ),
+            ),
+            'amigos' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/amigos',
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'amigos',
+                    ),
+                ),
+            ),
+            'amigos_sub' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/amigos[/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'amigos',
+                    ),
+                ),
+            ),
+            'acesso' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/acesso[/][:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Acesso\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+
+        ),
+    ),
+    'service_manager' => array(
+        'abstract_factories' => array(
+            'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
+            'Zend\Log\LoggerAbstractServiceFactory',
+        ),
+        'aliases' => array(
+            'translator' => 'MvcTranslator',
+        ),
+    ),
+    'translator' => array(
+        'locale' => 'en_US',
+        'translation_file_patterns' => array(
+            array(
+                'type'     => 'gettext',
+                'base_dir' => __DIR__ . '/../language',
+                'pattern'  => '%s.mo',
+            ),
+        ),
+    ),
+    'controllers' => array(
+        'invokables' => array(
+            'Acesso\Controller\Index' => 'Acesso\Controller\IndexController'
+        ),
+    ),
+    'module_layouts' => array(
+        'ModuleName' => 'layout/acesso',
+    ),
+    'view_manager' => array(
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+        'not_found_template'       => 'error/404',
+        'exception_template'       => 'error/index',
+        'template_map' => array(
+            'layout/layout'           => __DIR__ . '/../view/layout/acesso.phtml',
+            'acesso/index/index'      => __DIR__ . '/../view/acesso/index/index.phtml',
+            'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
+        ),
+    ),
+    // Placeholder for console routes
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+            ),
+        ),
+    ),
+);

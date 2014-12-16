@@ -1,0 +1,17 @@
+<link id="file_estilo" rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<div>
+    <div>
+        <div>
+            <div>
+                <h2>OPEC</h2>
+                <br class="limpa"><br class="limpa">
+                <form method="post">
+                <label class="label-admin">Link para Opec:</label> <br>
+                <input type="text" class="input-admin" style="width: 440px" name="opec" id="opec" value="<?php echo $opec->getLink();?>">
+                <br>
+                <button type="submit" class="btn btn-admin">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

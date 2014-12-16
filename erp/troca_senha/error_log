@@ -1,0 +1,2 @@
+[06-Dec-2013 19:48:25 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, boolean given in /home/kservido/public_html/erp/troca_senha/ajax_validaSenha.php on line 11
+[06-Dec-2013 19:49:26 UTC] PHP Warning:  mysql_num_rows() expects parameter 1 to be resource, boolean given in /home/kservido/public_html/erp/troca_senha/ajax_validaSenha.php on line 11

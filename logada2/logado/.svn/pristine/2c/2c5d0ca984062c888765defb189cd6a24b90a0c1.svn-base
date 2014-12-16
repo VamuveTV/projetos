@@ -1,0 +1,37 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h3>Administradores</h3>
+            </div>
+            <div>
+                <a href="<?php echo $this->url('admin', array('action'=>'add'));?>"class="btn btn-success">Adicionar Administrador</a>
+                <?php if (isset($admins)) : ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Login</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <?php foreach($admins as $admin): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $admin->getId(); ?></td>
+                                <td><?php echo $admin->getNome(); ?></td>
+                                <td><?php echo $admin->getLogin(); ?></td>
+                                <td>
+                                    <a href="<?php echo $this->url('admin', array('action'=>'edit', 'id' => $admin->getId()));?>" class="btn btn-warning">Editar</a>
+                                    <a href="<?php echo $this->url('admin', array('action'=>'delete', 'id' => $admin->getId()));?>" class="btn btn-danger">Excluir</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

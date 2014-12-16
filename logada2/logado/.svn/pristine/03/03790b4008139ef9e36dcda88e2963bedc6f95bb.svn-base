@@ -1,0 +1,10 @@
+<label class="label-admin">Gravidade da denúncia:</label><br>
+<select class="input-admin" id="tipo_denuncia">
+    <option value="1">Normal</option>
+    <option value="2">Grave</option>
+    <option value="3">Muito Grave</option>
+</select>
+<br>
+<label class="label-admin">O que aconteceu?</label><br>
+<textarea id="texto_denuncia" rows="4" cols="20"></textarea>
+<input type="submit" value="Enviar" id="envia_denuncia">

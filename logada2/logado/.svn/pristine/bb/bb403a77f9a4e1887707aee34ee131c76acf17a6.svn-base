@@ -1,0 +1,17 @@
+[13-Dec-2013 17:07:31 America/Sao_Paulo] PHP Fatal error:  Call to a member function getNome() on a non-object in /home/zarbsolu/public_html/logada/module/Application/view/application/index/delete.phtml on line 7
+[13-Dec-2013 17:47:40 America/Sao_Paulo] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/zarbsolu/public_html/logada/config/application.config.php:1) in /home/zarbsolu/public_html/logada/module/Application/src/Application/Controller/IndexController.php on line 40
+[13-Dec-2013 18:33:22 America/Sao_Paulo] PHP Catchable fatal error:  Object of class Zend\Mvc\Controller\Plugin\Url could not be converted to string in /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/Http/Headers.php on line 184
+[20-Dec-2013 18:01:28 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\ModuleManager\Exception\RuntimeException' with message 'Module (ZfcBase) could not be initialized.' in /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php:175
+Stack trace:
+#0 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php(149): Zend\ModuleManager\ModuleManager->loadModuleByName(Object(Zend\ModuleManager\ModuleEvent))
+#1 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php(90): Zend\ModuleManager\ModuleManager->loadModule('ZfcBase')
+#2 [internal function]: Zend\ModuleManager\ModuleManager->onLoadModules(Object(Zend\ModuleManager\ModuleEvent))
+#3 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Object(Zend\ModuleManager\ModuleEvent))
+#4 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/librar in /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php on line 175
+[20-Dec-2013 18:01:29 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\ModuleManager\Exception\RuntimeException' with message 'Module (ZfcBase) could not be initialized.' in /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php:175
+Stack trace:
+#0 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php(149): Zend\ModuleManager\ModuleManager->loadModuleByName(Object(Zend\ModuleManager\ModuleEvent))
+#1 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php(90): Zend\ModuleManager\ModuleManager->loadModule('ZfcBase')
+#2 [internal function]: Zend\ModuleManager\ModuleManager->onLoadModules(Object(Zend\ModuleManager\ModuleEvent))
+#3 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Object(Zend\ModuleManager\ModuleEvent))
+#4 /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/librar in /home/zarbsolu/public_html/logada/vendor/zendframework/zendframework/library/Zend/ModuleManager/ModuleManager.php on line 175

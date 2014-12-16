@@ -1,0 +1,69 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<link id="/public/css/estilo_internoCalendario.css" rel="stylesheet" type="text/css" href="" media="all" />
+<link href='/public/fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='/public/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='/public/lib/jquery-ui.custom.min.js'></script>
+<script src='/public/fullcalendar/fullcalendar.min.js'></script>
+<script>
+
+    $(document).ready(function() {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            editable: true,
+            events: [
+                <?php
+                    if (isset($atividades)) :
+                        $i = 0;
+                        foreach($atividades as $atividade):
+                            $i++;
+
+                            echo "{
+                                        title: '".$atividade->getNome()."',
+                                        start: '".$atividade->getData()."',
+                                        end: '".$atividade->getData()."',
+                                        url: '/admin/atividades/edit/".$atividade->getId()."'
+                                    }";
+
+                            echo $i<count($atividadesA)||count($atividadesT)>0?',':'';
+                        endforeach;
+                    endif;
+                ?>
+            ]
+        });
+
+    });
+
+</script>
+<style>
+
+    body {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 14px;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    }
+
+    #calendar {
+        width: 900px;
+        margin: 0 auto;
+        background: #fff;
+    }
+
+    .limpa{
+        clear: both;
+    }
+</style>
+</head>
+<body>
+<div id='calendar'></div>
+<div class="limpa" style="height: 30px"></div>

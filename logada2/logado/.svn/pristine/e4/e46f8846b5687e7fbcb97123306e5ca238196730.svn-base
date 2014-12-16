@@ -1,0 +1,171 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Opine\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Funcionarios\Entity\Funcionario;
+use Acesso\Entity\Opinea;
+use Acesso\Entity\Opinee;
+use Acesso\Entity\Opinef;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        return new ViewModel();
+    }
+
+    public function opineAction(){
+
+        return new ViewModel();
+    }
+
+    public function opineAlunosAction(){
+
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+
+        if ($this->request->isPost()) {
+            $parametros = array();
+            if($this->getRequest()->getPost('busca_escola')!='')
+                $parametros['escola']=$this->getRequest()->getPost('busca_escola');
+            if($this->getRequest()->getPost('busca_serie')!='')
+                $parametros['serie']=$this->getRequest()->getPost('busca_serie');
+
+            $alunos = $this->getObjectManager()->getRepository('\Alunos\Entity\Aluno')->findBy($parametros);
+
+            $notas = array();
+
+            //buscando a nota de cada aluno
+            foreach($alunos as $aluno){
+                //NOVO MODO: PEGA A MEDIA DE NOTAS RECEBIDAS PELO ALUNO
+                $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinea o WHERE o.avaliado='.$aluno->getId());
+                $dados = $query->getResult();
+                $avaliado = $aluno->getId();
+                $ct = $soma_nota = 0;
+
+                if($dados){
+                    foreach($dados AS $o){
+                        $nota = $o->getNota();
+                        $soma_nota+= $nota;
+                        $ct++;
+                    }
+                    $notas[$avaliado] = $soma_nota / $ct;
+                }
+                else
+                    $notas[$avaliado] = 0;
+
+                /* MODO ANTIGO: PEGAVA A NOTA DADA AO ALUNO POR QUEM ESTA LOGADO
+                $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinea o WHERE o.avaliador='.$id_aluno.' AND o.avaliado='.$aluno->getId());
+                $dados = $query->getResult();
+                $avaliado = $aluno->getId();
+
+                if($dados){
+                    $nota = $dados[0]->getNota();
+                    $notas[$avaliado] = $nota;
+                }
+                else
+                    $notas[$avaliado] = 0;
+                */
+            }
+
+            return new ViewModel(array('notas'=>$notas,'logado'=>$aluno,'alunos'=>$alunos,'escolas'=>$escolas));
+        }
+
+        return new ViewModel(array('escolas'=>$escolas));
+    }
+
+    public function opineFuncionariosAction(){
+
+        $funcionarios = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findAll();
+
+        if ($this->request->isPost()) {
+            $parametros = array();
+            if($this->getRequest()->getPost('busca_funcao')!='')
+                $parametros['funcao']=$this->getRequest()->getPost('busca_funcao');
+
+            $funcionarios = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findBy($parametros);
+        }
+
+        $notas = array();
+
+        //buscando a nota de cada funcionario
+        foreach($funcionarios as $funcionario){
+            //NOVO MODO: PEGA A MEDIA DE NOTAS RECEBIDAS PELO ALUNO
+            $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinef o WHERE o.funcionario='.$funcionario->getId());
+            $dados = $query->getResult();
+            $avaliado = $funcionario->getId();
+            $ct = $soma_nota = 0;
+
+            if($dados){
+                foreach($dados AS $o){
+                    $nota = $o->getNota();
+                    $soma_nota+= $nota;
+                    $ct++;
+                }
+                $notas[$avaliado] = $soma_nota / $ct;
+            }
+            else
+                $notas[$avaliado] = 0;
+        }
+
+
+        return new ViewModel(array('funcionarios'=>$funcionarios,'notas'=>$notas));
+    }
+
+    public function opineEscolasAction(){
+
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+        $notas = array();
+        foreach($escolas AS $escola){
+
+            $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinee o WHERE o.escola='.$escola->getId());
+            $dados = $query->getResult();
+            $ct = $soma_nota = 0;
+
+            if($dados){
+                foreach($dados AS $o){
+                    $nota = $o->getNota();
+                    $soma_nota+= $nota;
+                    $ct++;
+                }
+                $nota = $soma_nota / $ct;
+            }
+            else
+                $nota = 0;
+
+            $notas[$escola->getId()] = $nota;
+            /*
+            $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinee o WHERE o.avaliador='.$id_aluno.' AND o.escola='.$escola->getId());
+            $dados = $query->getResult();
+            if($dados){
+                $nota = $dados[0]->getNota();
+            }
+            else
+                $nota = 0;
+            */
+        }
+
+        return new ViewModel(array('escolas'=>$escolas,'notas'=>$notas));
+    }
+
+
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+}

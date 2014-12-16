@@ -1,0 +1,149 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Atividades\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Atividades\Entity\Atividade;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $atividades = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findAll();
+
+        return new ViewModel(array('atividades' => $atividades));
+    }
+
+    public function calendarioAction()
+    {
+        $atividades = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findBy(array('tipo_dono' => 'AD'));
+
+        return new ViewModel(array('atividades'=>$atividades));
+    }
+
+    public function addAction()
+    {
+        if ($this->request->isPost()) {
+            $atividade = new Atividade();
+            $atividade->setNome($this->getRequest()->getPost('nome'));
+            $atividade->setLocal($this->getRequest()->getPost('local'));
+            $atividade->setTipoDestino($this->getRequest()->getPost('tipo_destino'));
+            $atividade->setIdDestino($this->getRequest()->getPost('id_destino'));
+            $atividade->setHoraInicio($this->getRequest()->getPost('hora_inicio'));
+            $atividade->setHoraFim($this->getRequest()->getPost('hora_fim'));
+            $atividade->setDescricao($this->getRequest()->getPost('descricao'));
+            $atividade->setTipoDono('AD');
+            $atividade->setIdDono(1);
+            $atividade->setDataCriacao(date('Y-m-d H:i:s'));
+            $d = explode('/',$this->getRequest()->getPost('data'));
+            $data = $d[2].'-'.$d[1].'-'.$d[0];
+            $atividade->setData($data);
+
+            $this->getObjectManager()->persist($atividade);
+
+            $this->getObjectManager()->flush();
+            $newId = $atividade->getId();
+
+            return $this->redirect()->toRoute('atividades');
+        }
+
+        return new ViewModel();
+    }
+
+    public function buscaDestinoAction(){
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+
+        //verificando se é turma ou aluno para buscar os dados
+        if($_POST['tipo_destino']=='A'){
+            $dados = $this->getObjectManager()->getRepository('\Alunos\Entity\Aluno')->findAll();
+            $label = "Aluno";
+        }else if($_POST['tipo_destino']=='T'){
+            $dados = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+            $label = "Turma";
+        }
+
+        $conteudo = '<label class="control-label" for="nome">'.$label.'</label>
+                    <div class="controls">';
+        $conteudo.= '<input type="hidden" name="tipo_destino" value="'.$_POST['tipo_destino'].'">';
+        $conteudo.= '<select name="id_destino" id="id_destino">';
+        foreach($dados as $item){
+            if($_POST['tipo_destino']=='A'){
+                $conteudo.= "<option value='".$item->getId()."'";
+                $conteudo.= $item->getId()==$_POST['cod']?' selected':'';
+                $conteudo.= ">".$item->getNome()."</option>";
+            }else{
+                $conteudo.= "<option value='".$item->getId()."'";
+                $conteudo.= $item->getId()==$_POST['cod']?' selected':'';
+                $conteudo.= ">".$item->getTurma()."</option>";
+            }
+        }
+        $conteudo.= "</select>";
+        $conteudo.= "</div>";
+        $response->setContent($conteudo);
+
+        return $response;
+    }
+
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $atividade = $this->getObjectManager()->find('\Atividades\Entity\Atividade', $id);
+
+        if ($this->request->isPost()) {
+            $atividade->setNome($this->getRequest()->getPost('nome'));
+            $atividade->setLocal($this->getRequest()->getPost('local'));
+            $atividade->setTipoDestino($this->getRequest()->getPost('tipo_destino'));
+            $atividade->setIdDestino($this->getRequest()->getPost('id_destino'));
+            $atividade->setHoraInicio($this->getRequest()->getPost('hora_inicio'));
+            $atividade->setHoraFim($this->getRequest()->getPost('hora_fim'));
+            $atividade->setDescricao($this->getRequest()->getPost('descricao'));
+            $atividade->setTipoDono('AD');
+            $atividade->setIdDono(1);
+            $atividade->setDataCriacao(date('Y-m-d H:i:s'));
+
+            $this->getObjectManager()->persist($atividade);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('home_atividades');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('atividade'=>$atividade));
+    }
+
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $atividade = $this->getObjectManager()->find('\Atividades\Entity\Atividade', $id);
+
+        if ($this->request->isPost()) {
+            $this->getObjectManager()->remove($atividade);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('home_atividades');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('atividade' => $atividade));
+    }
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+}

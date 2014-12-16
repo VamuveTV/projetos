@@ -1,0 +1,30 @@
+<?php
+
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'localhost',
+                    'port'     => '3306',
+                    'user'     => 'root',
+                    'password' => '',
+                    'dbname'   => 'logada',
+                )))));
+
+
+/*
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'zarbsolution.com.br',
+                    'port'     => '3306',
+                    'user'     => 'zarbsolu_escola',
+                    'password' => 'admin123',
+                    'dbname'   => 'zarbsolu_escola',
+                )))));
+*/

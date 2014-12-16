@@ -1,0 +1,119 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="opinee")
+ * @ORM\Entity */
+class Opinee {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $avaliador;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $escola;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $nota;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $observacao;
+
+    /**
+     * @param mixed $avaliador
+     */
+    public function setAvaliador($avaliador)
+    {
+        $this->avaliador = $avaliador;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvaliador()
+    {
+        return $this->avaliador;
+    }
+
+    /**
+     * @param mixed $escola
+     */
+    public function setEscola($escola)
+    {
+        $this->escola = $escola;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEscola()
+    {
+        return $this->escola;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $nota
+     */
+    public function setNota($nota)
+    {
+        $this->nota = $nota;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNota()
+    {
+        return $this->nota;
+    }
+
+    /**
+     * @param mixed $observacao
+     */
+    public function setObservacao($observacao)
+    {
+        $this->observacao = $observacao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObservacao()
+    {
+        return $this->observacao;
+    }
+
+
+
+}

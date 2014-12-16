@@ -1,0 +1,12 @@
+<?php
+
+$title = 'Excluir Aviso';
+$this->headTitle($title);
+?>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<h2><?php echo $this->escapeHtml($title); ?></h2>
+<br class="limpa"><br class="limpa">
+Tem certeza que quer deletar: <b><?php echo $aviso->getAssunto(); ?></b>? <br/>
+<br><form method="post">
+    <input type="submit" value="Excluir" class="btn btn-admin">
+</form>

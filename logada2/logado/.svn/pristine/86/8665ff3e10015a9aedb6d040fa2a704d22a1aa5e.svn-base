@@ -1,0 +1,22 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\EntityRepository;
+
+class AdminRepository extends EntityRepository{
+
+    public function findByLoginAndPassword($login,$password){
+
+        $admin = $this->findOneByLogin($login);
+
+        if($admin){
+            if($admin->getSenha() == $password)
+                return $admin;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+}

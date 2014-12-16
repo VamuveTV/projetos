@@ -1,0 +1,93 @@
+<?php
+namespace Acesso\Utils;
+
+//Instalar o Curl
+//No caso do windows também é necessário editar as configurações do php.ini e 
+//descomentar a linha "extension=php_curl.dll"
+
+class ServiceClient
+{
+	/*public function __construct()
+	{
+	}*/
+	
+	/**
+	 * do a get request to a service
+	 * 
+	 * @param string $url
+	 * 
+	 * @return mixed
+	 */
+	protected function doGetRequest($url)
+	{
+		$ch = curl_init($url);		
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER	, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER	, true);
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return $result;
+	}
+	
+	/**
+	 * do a post request to a service
+	 * 
+	 * the params parameter must be a string with the format:
+	 * key=val&key2=val2&key3=val3
+	 * 
+	 * @param string $url
+	 * @param string $params
+	 */
+	protected function doPostRequest($url, $params)
+	{
+		$ch = curl_init($url);		
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER	, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER	, true);
+		curl_setopt($ch, CURLOPT_POST			, 1);
+ 		curl_setopt($ch, CURLOPT_POSTFIELDS    	, $params);	
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return $result;
+	}
+	
+	/**
+	 * do a put request to a service
+	 * 
+	 * the params parameter must be a string with the format:
+	 * key=val&key2=val2&key3=val3
+	 * 
+	 * @param string $url
+	 * @param string $params
+	 */
+	protected function doPutRequest($url, $params)
+	{
+		$ch = curl_init($url);		
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER	, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER	, true);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST  , "PUT");
+ 		curl_setopt($ch, CURLOPT_POSTFIELDS    	, $params);	
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return $result;
+	}
+	
+	/**
+	 * do a delete request to a service
+	 * 
+	 * the params parameter must be a string with the format:
+	 * key=val&key2=val2&key3=val3
+	 * 
+	 * @param string $url
+	 * @param string $params
+	 */
+	protected function doDeleteRequest($url, $params)
+	{
+		$ch = curl_init($url);		
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER	, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER	, true);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST  , "DELETE");
+ 		curl_setopt($ch, CURLOPT_POSTFIELDS    	, $params);	
+		$result = curl_exec($ch);
+		curl_close($ch);
+		return $result;
+	}
+}

@@ -1,0 +1,60 @@
+<?php
+
+$title = 'Editar Atividade';
+$this->headTitle($title);
+
+$data = explode("-",$atividade->getData());
+$data = $data[2].'/'.$data[1].'/'.$data[0];
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="nome">Nome do evento</label>
+        <div class="controls">
+            <input type="text" id="nome" name="nome" class="input-medium" value="<?php echo $atividade->getNome();?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="local">Local do evento</label>
+        <div class="controls">
+            <input type="text" id="local" name="local" class="input-medium" value="<?php echo $atividade->getLocal();?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="data">Data</label>
+        <div class="controls">
+            <input type="text" id="data" name="data" value="<?php echo $data;?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="hora_inicio">Hora início</label>
+        <div class="controls">
+            <input type="text" id="hora_inicio" name="hora_inicio" value="<?php echo $atividade->getHoraInicio();?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="hora_fim">Hora término</label>
+        <div class="controls">
+            <input type="text" id="hora_fim" name="hora_fim" value="<?php echo $atividade->getHoraFim();?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Descrição</label>
+        <div class="controls">
+            <textarea id="descricao" name="descricao" cols="50" rows="5"><?php echo $atividade->getDescricao();?></textarea>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </div>
+    </div>
+</form>

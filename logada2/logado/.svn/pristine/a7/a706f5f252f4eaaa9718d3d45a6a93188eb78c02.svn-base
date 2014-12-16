@@ -1,0 +1,170 @@
+<?php
+$url = $_SERVER['REQUEST_URI'];
+?>
+<style type="text/css">
+    html, body, .container, .content {
+        min-height: 100%;
+    }
+
+    .container, .content {
+        position: relative;
+    }
+
+    .proper-content {
+        padding-top: 40px; /* >= navbar height */
+    }
+
+    .wrapper {
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -50px; /* same as the footer */
+    }
+
+    .push {
+        height: 50px; /* same as the footer */
+    }
+    .footer-wrapper {
+        position: relative;
+        bottom:0;
+        height: 150px;
+        width: 100%;
+        background:#8e3867;
+        margin-top: 30px;
+        margin-bottom: -42px;
+    }
+    #conteudo{
+        min-height: 600px;
+        display: block;
+        padding-bottom: 0;
+    }
+</style>
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('Versão de teste'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/public/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/public/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/public/css/bootstrap.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/public/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/public/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/public/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/public/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+    </head>
+    <body>
+        <?php
+        if($url != '/login' && $url != '/cadastro' && $url != '/termos' && $url != '/admin'){
+        ?>
+        <nav class="navbar navbar-fixed-top" role="navigation" id="topo">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('/public/img/logo.png') ?>" id="logo" alt="" height="36"/></a>
+                </div>
+                <div class="collapse navbar-collapse" id="menu">
+                    <ul class="nav navbar-nav">
+                        <?php
+                        if($url != '/admin' && $url != '/admin/'){
+                            //criando array com palavras que determinam que sao paginas do modulo admin (deve carregar o menu do admin)
+                            $url_admin = array();
+                            $url_admin[] = 'admin';
+                            $url_admin[] = 'perfiladmin';
+                            $url_admin[] = 'alunos';
+                            $url_admin[] = 'escolas';
+                            $url_admin[] = 'funcionarios';
+                            $url_admin[] = 'turmas';
+                            $url_admin[] = 'home';
+                            $url_admin[] = 'vernotas';
+                            $url_admin[] = 'loginternet';
+                            $url_admin[] = 'verinternet';
+
+                            $admin = false;
+                            foreach($url_admin AS $palavra){
+                                if(strpos($url,$palavra) == 1){
+                                    $admin = true;
+                                    break;
+                                }
+                            }
+                            if($admin == true)
+                                include('public/menu_admin.phtml');
+                            else {
+                            ?>
+                                <li><a href="/" style="margin-top:8px;"><?php echo $this->translate('HOME') ?></a></li>
+                                <li><a href="/amigos" style="margin-top:8px;"><?php echo $this->translate('AMIGOS') ?></a></li>
+                                <li><a href="/atividades" style="margin-top:8px;"><?php echo $this->translate('ATIVIDADES') ?></a></li>
+                                <li><a href="/opine" style="margin-top:8px;"><?php echo $this->translate('OPINE') ?></a></li>
+                                <li><a href="/internet" style="margin-top:8px;"><?php echo $this->translate('INTERNET') ?></a></li>
+                                <li><a href="/mapa" style="margin-top:8px;"><?php echo $this->translate('MAPA') ?></a></li>
+                                <li><a href="/notificacao" style="margin-top:8px;"><?php echo $this->translate('NOTIFICAÇÕES') ?></a></li>
+                                <li><a href="/contato" style="margin-top:8px;"><?php echo $this->translate('FALE CONOSCO') ?></a></li>
+                                <li><a href="/perfil" style="margin-top:8px;"><?php echo $this->translate('MEU PERFIL') ?></a></li>
+                                <li><a href="/logout" style="margin-top:8px;"><?php echo $this->translate('SAIR') ?></a></li>
+                            <?php
+                            }
+                        }
+                        ?>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <?php
+        }else if($url == '/cadastro'){
+        ?>
+            <nav class="navbar navbar-fixed-top" role="navigation" id="topo">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('/public/img/logo.png') ?>" id="logo" alt="" height="36"/></a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="menu">
+
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+        <?php
+        }
+        ?>
+        <div class="container" id="conteudo">
+            <?php echo $this->content; ?>
+            <hr>
+
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+
+
+
+
+                <div class="wrapper">
+
+
+                </div><!-- /.wrapper -->
+
+                <div class="footer-wrapper" id="rodape" style="height: 200px;">
+                    <footer>
+
+                    </footer>
+                </div>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<br>
+<div>
+    <h2 style=" width: 100%;margin-bottom: 30px">NOTIFICAÇÕES</h2>
+    <br class="limpa">
+    <?php
+    $ct = 0;
+    foreach($notificacoes AS $i => $msg){
+        $ct++;
+        switch($msg->getTipo()){
+            case 'P':   $nome_msg = "postou em seu perfil";
+                        $link_msg = "/perfil";
+                        break;
+            case 'A': $nome_msg = "enviou um aviso";
+                       $remetentes[$i] = "Administrador";
+                       break;
+            case 'C': $nome_msg = "enviou um coração";
+                        $link_msg = "/perfil";
+                        break;
+            case 'AM': $nome_msg = "enviou um aperto de mão";
+                        $link_msg = "/perfil";
+                        break;
+            case 'AI': $nome_msg = "te adicionou como amigo";
+                        $link_msg = "/amigos";
+                        break;
+            case 'PR': $nome_msg = "te adicionou como amigo Preferido";
+                        $link_msg = "/amigos";
+                        break;
+            case 'AT': $remetentes[$i] = '';
+                       $nome_msg = 'Nova atividade cadastrada';
+                       $link_msg = "/atividades";
+        }
+        echo "<b>".$remetentes[$i]."</b> $nome_msg, clique <a href=\"$link_msg\">aqui</a> para visualizar";
+        if($ct != count($notificacoes))
+            echo '<hr>';
+    }
+    ?>
+
+    <br class="limpa">
+    <a data-toggle="modal" href="#myModal2" style="float: right"><img src="/public/img/ico-libras-escuro.png" alt="" border="0"></a>
+    <br class="limpa">
+</div>
+
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <?php
+                echo $video->getVideo();
+                ?>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Fechar</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

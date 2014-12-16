@@ -1,0 +1,29 @@
+<?php
+if(isset($nota)){
+    $nota1 = $nota->getNota1();
+    $nota2 = $nota->getNota2();
+    $nota3 = $nota->getNota3();
+    $nota4 = $nota->getNota4();
+}
+else
+    $nota1 = $nota2 = $nota3 = $nota4 = '';
+
+$conteudo = '';
+if($tipo_nota == 'B'){ //se trabalha com bimestre
+    $conteudo.= 'Bimestre 1: <input type="text" name="nota1" id="nota1" value="'.$nota1.'"><br>';
+    $conteudo.= 'Bimestre 2: <input type="text" name="nota2" id="nota2" value="'.$nota2.'"><br>';
+    $conteudo.= 'Bimestre 3: <input type="text" name="nota3" id="nota3" value="'.$nota3.'"><br>';
+    $conteudo.= 'Bimestre 4: <input type="text" name="nota4" id="nota4" value="'.$nota4.'"><br>';
+}
+else if($tipo_nota == 'T'){
+    $conteudo.= 'Trimestre 1: <input type="text" name="nota1" id="nota1" value="'.$nota1.'"><br>';
+    $conteudo.= 'Trimestre 2: <input type="text" name="nota2" id="nota2" value="'.$nota2.'"><br>';
+    $conteudo.= 'Trimestre 3: <input type="text" name="nota3" id="nota3" value="'.$nota3.'"><br>';
+}
+else{
+    $conteudo.= 'Semestre 1: <input type="text" name="nota1" id="nota1" value="'.$nota1.'"><br>';
+    $conteudo.= 'Semestre 2: <input type="text" name="nota2" id="nota2" value="'.$nota2.'"><br>';
+}
+$conteudo.= '<button class="btn btn-success" onclick="salvaNotas()">Salvar</button>';
+
+echo $conteudo;

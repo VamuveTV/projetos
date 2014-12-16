@@ -1,0 +1,76 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="videos")
+ * @ORM\Entity */
+class Video {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $pagina;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $video;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $pagina
+     */
+    public function setPagina($pagina)
+    {
+        $this->pagina = $pagina;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPagina()
+    {
+        return $this->pagina;
+    }
+
+    /**
+     * @param mixed $video
+     */
+    public function setVideo($video)
+    {
+        $this->video = $video;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVideo()
+    {
+        return $this->video;
+    }
+
+
+}

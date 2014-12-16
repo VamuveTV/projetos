@@ -1,0 +1,35 @@
+<?php
+
+$title = 'Editar Administrador';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="nome">Nome</label>
+        <div class="controls">
+            <input type="text" id="nome" name="nome" value="<?php echo $admin->getNome(); ?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="login">Login</label>
+        <div class="controls">
+            <input type="text" id="login" name="login" value="<?php echo $admin->getLogin(); ?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="senha">Senha</label>
+        <div class="controls">
+            <input type="password" id="senha" name="senha" value="<?php echo $admin->getSenha(); ?>">
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='../'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>

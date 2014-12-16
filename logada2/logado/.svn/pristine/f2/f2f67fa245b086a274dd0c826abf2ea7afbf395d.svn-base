@@ -1,0 +1,54 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+
+<!-- Google Maps Script 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script>
+var map;
+function initialize() {
+	var mapOptions = {
+		zoom: 8,
+		center: new google.maps.LatLng(-34.397, 150.644)
+	};
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<!-- End Google Maps Script -->
+
+<div>
+    <div>
+        <div style="margin-top: 20px">
+            <h2>MAPA</h2>
+            <ul class="btsAlterarFontes">
+                <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+                <li><a href="#" id="aumenta"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+                <li><a href="#" id="diminui"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+            </ul>
+        </div>
+        <br class="limpa">
+
+		<!-- Map -->
+		<div id="map-canvas" style="height:500px;width:600px;"></div>
+		
+        <br class="limpa">
+        <div id="navegador">
+
+        </div>
+    </div>
+</div>

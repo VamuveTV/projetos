@@ -1,0 +1,102 @@
+<style type="text/css">
+    html, body, .container, .content {
+        height: 100%;
+    }
+
+    .container, .content {
+        position: relative;
+    }
+
+    .proper-content {
+        padding-top: 40px; /* >= navbar height */
+    }
+
+    .wrapper {
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -50px; /* same as the footer */
+    }
+
+    .push {
+        height: 50px; /* same as the footer */
+    }
+    .footer-wrapper {
+        position: relative;
+        height: 50px;
+    }
+</style>
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('Versão de teste'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/public/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/public/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/public/css/bootstrap.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/public/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/public/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/public/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/public/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-fixed-top" role="navigation" style="background: #fff">
+            <div class="container" style="background: #fff">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('/public/img/logo.png') ?>" alt="" height="36"/></a>
+                </div>
+                <div class="collapse navbar-collapse" style="background: #fff">
+                    <ul class="nav navbar-nav" style="background: #fff">
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('HOME') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('AMIGOS') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('ATIVIDADES') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('OPINE') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('INTERNET') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('MAPA') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('MEU PERFIL') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('NOTIFICAÇÕES') ?></a></li>
+                        <li><a href="<?php echo $this->url('home') ?>" style="background: #fff;margin-top:8px; color: #5e2954"><?php echo $this->translate('FALE CONOSCO') ?></a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+
+
+
+
+                <div class="wrapper">
+
+
+                </div><!-- /.wrapper -->
+
+                <div class="footer-wrapper" style="height: 200px;background:#8e3867">
+                    <footer>
+
+                    </footer>
+                </div>
+    </body>
+</html>

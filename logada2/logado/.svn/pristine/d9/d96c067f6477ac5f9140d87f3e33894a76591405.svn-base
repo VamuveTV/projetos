@@ -1,0 +1,50 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+
+        $('#acessar').click(function(){
+            var caminho = 'http://' + $('#url').val();
+            $('#navegador').html("<iframe src='"+caminho+"' style='background: #fff;width: 95%; height: 400px'></iframe>");
+            $.ajax({
+                type: "POST",
+                data: {'usuario':<?php echo $logado->getId();?>,'tipo':'A','url':caminho},
+                url: '/acesso/enviaAcesso',
+                success: function(dados) {
+                    return true;
+                }
+            });
+        })
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+<div>
+    <div>
+        <div style="margin-top: 20px">
+            <h2>INTERNET</h2>
+            <ul class="btsAlterarFontes">
+                <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+                <li><a href="#" id="aumenta"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+                <li><a href="#" id="diminui"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+
+            </ul>
+        </div>
+        <br class="limpa">
+        <div>
+            <h2>Digite o endereço do site que deseja acessar:</h2>
+            <input type="text" id="url" style="width: 85%"> <button id="acessar" class="btn btn-success">Acessar</button>
+        </div>
+        <br class="limpa">
+        <div id="navegador">
+
+        </div>
+    </div>
+</div>

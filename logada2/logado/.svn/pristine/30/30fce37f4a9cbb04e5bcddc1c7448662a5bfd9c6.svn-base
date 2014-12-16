@@ -1,0 +1,221 @@
+<?php
+//ESTA PAGINA RECEBE 2 OBJETOS COMO PARAMETRO
+//$aluno = O aluno que está logado
+//$perfil = O aluno do perfil deseja que foi mencionado na url (se não for mencionado $perfil é igual $aluno)
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+
+        $('#estilo').change(function(){
+            $.cookie('estilo', $(this).val());
+            document.location='';
+        })
+    })
+</script>
+<script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script>
+    tinymce.init({selector:'textarea','menubar' : false});
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript">
+$(document).ready(function(){
+    $.ajax({
+        type: "POST",
+        data: {'destinatario':<?php echo $perfil->getId();?>},
+        url: '/acesso/buscaPost',
+        success: function(dados) {
+            $('#teste').html(dados);
+        }
+    });
+})
+function enviaPost()
+{
+    mensagem = tinyMCE.activeEditor.getContent();
+    $.ajax({
+        type: "POST",
+        data: {'mensagem': mensagem,'remetente':<?php echo $aluno->getId();?>,'tipo_remetente':'<?php echo $tipo_logado;?>','destinatario':<?php echo $perfil->getId();?>,'tipo_destinatario':'A'},
+        url: '/acesso/envia',
+        success: function(dados) {
+            $('#teste').html(dados);
+            $('#mensagem').val('');
+        }
+    });
+}
+function addAmigo(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/addAmigo',
+        success: function(dados) {
+            $('#area_btn_amigos').html("Nova amizade realizada");
+        }
+    });
+}
+function mediaVisivel(op){
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','op':op},
+        url: '/acesso/media',
+        success: function(dados) {
+            return true;
+        }
+    });
+}
+function denunciar(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/denuncia',
+        success: function(dados) {
+            $('#area_btn_amigos').html("Denúncia realizada");
+        }
+    });
+}
+function enviaCoracao(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/coracao',
+        success: function(dados) {
+            $('#area_coracao').html('<img src="/public/img/ico_coracao.png">');
+            $('#area_coracao').after("&nbsp;Coração enviado com sucesso");
+        }
+    });
+}
+
+function enviaAperto(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/aperto',
+        success: function(dados) {
+            $('#area_aperto').html('<img src="/public/img/ico_aperto.png">');
+            $('#area_aperto').after("&nbsp;Aperto de mão enviado com sucesso");
+        }
+    });
+}
+</script>
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+<div>
+    <div style="margin-top: 20px">
+        <h2>PERFIL</h2>
+        <ul class="btsAlterarFontes">
+            <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+            <li><a href="#" id="aumenta"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+            <li><a href="#" id="diminui"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+
+        </ul>
+    </div>
+    <div id="topo_perfil">
+        <div style="float:left; width:500px;">
+            <div id="fotoPerfil">
+                <?php
+                if($aluno == $perfil)
+                    echo '<br class="limpa"><a href="/perfil/foto" title="Atualizar foto">';
+
+
+                if($perfil->getFoto() != ''){
+                    $foto = $perfil->getFoto();
+                    echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+                }else
+                    echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+
+                if($aluno == $perfil)
+                    echo '</a>';
+                ?>
+            </div>
+            <div id="infoPerfil">
+                <strong><?php echo $perfil->getNome();?></strong><br />
+                <?php echo $perfil->getEscola();?><br />
+                <?php echo $perfil->getSerie();?> ano<br />
+                <a href="/boletim/<?php echo $perfil->getId();?>"><img src="/public/img/ico_boletim.png" border="0" width="26" height="27" /> Ver meu Boletim</a><br />
+                <?php
+                //verificando se não são amigos para adicionar o botão de adicionar amizade
+                if($aluno != $perfil){ //nao esta no proprio perfil
+
+                    echo "<span id='area_coracao'><img src='/public/img/ico_coracao.png'>";
+                    $label_coracao = $n_coracoes==1?'coração':'corações';
+                    echo "&nbsp;$n_coracoes $label_coracao";
+                    if($coracao == '0')
+                        echo "&nbsp;<a href='#' id='linkcoracao' onclick='enviaCoracao(".$perfil->getId().")'>(enviar coração)</a>";
+                    echo "</span><br>";
+
+                    echo "<span id='area_aperto'><img src='/public/img/ico_aperto.png'>";
+                    $label_aperto = $n_apertos==1?'aperto':'apertos';
+                    echo "&nbsp;$n_apertos $label_aperto de mão";
+                    if($aperto == '0')
+                        echo "&nbsp;<a href='#' id='linkaperto' onclick='enviaAperto(".$perfil->getId().")'>(enviar aperto de mão)</a>";
+                    echo "</span>";
+
+                    //echo "<a href='#' style='float: right' onclick='denunciar(".$perfil->getId().")'>Denunciar esta pessoa</a>";
+                }
+                else
+                    echo "<a href='/editaperfil'><img src=\"/public/img/ico-editar-perfil.png\" border=\"0\" width=\"29\" height=\"27\" /> Editar perfil</a>";
+                ?>
+            </div>
+        </div>
+        <?php
+        if($aluno == $perfil && $tipo_logado == 'A'){ //nao esta no proprio perfil
+        ?>
+        <div id="temaCorFonte">
+            <div class="escolherTemaPerfil">
+                Escolher tema:<br />
+                <select name="estilo" id="estilo" class="estiloSelectPerfil">
+                    <option value=""></option>
+                    <option value="claro">Claro</option>
+                    <option value="escuro">Escuro</option>
+                </select>
+                <br /><br />
+
+                Escolher Fonte:<br />
+                <select name="site" onchange = " location =  this . options [ this . selectedIndex ]. value ; " class="estiloSelectPerfil">
+                    <option selected="selected">Arial</option>
+                    <option >Tahoma</option>
+                </select>
+                <br /><br />
+
+                    <span>
+                    	As médias das avaliações que<br />
+                    	seus amigos fizerem podem <br />
+                    	ficar visíveis no seu perfil?
+                	</span><br />
+
+                <input name="media" type="radio" value="S" onclick="mediaVisivel('S')" <?php echo $perfil->getMedia()=='S'?'checked="checked"':'';?> />
+                Sim <input name="media" type="radio" onclick="mediaVisivel('N')" value="N" <?php echo $perfil->getMedia()=='N'?'checked="checked"':'';?> />Não
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+    <div class="limpa">
+        <?php
+        if($aluno != $perfil){
+            if(!in_array($perfil->getId(),$amigos))
+                echo '<span id="area_btn_amigos"><button class="btn btn-primary" onclick="addAmigo('.$perfil->getId().')">Adicionar aos amigos</button></span>';
+        }
+        ?>
+
+    </div>
+    <div id="meio_perfil">
+        <h3>GOSTARIA DE FALAR ALGO PARA <?php echo strtoupper($perfil->getNome());?>?</h3>
+            <textarea cols="" rows="" id="mensagem" class="comentar-sentindo"></textarea>
+            <input name="" type="image" src="/public/img/bt-postar.png" onclick="enviaPost()" width="112" height="34" class="bt-postar" />
+    </div>
+    <h2 style="width: 100%;display: block">SUAS POSTAGENS</h2>
+    <div id="teste"></div>
+</div>
+

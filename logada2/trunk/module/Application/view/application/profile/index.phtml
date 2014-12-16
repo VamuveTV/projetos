@@ -1,0 +1,65 @@
+<?php
+$profileName = $this->profile->getDisplayName();
+$title = "Perfil de " . $profileName;
+
+$this->headTitle($title);
+?>
+
+<div class="row">
+    <div class="col-lg-2">
+        <img src="http://www.chic-and-ethic.com/useruploads/profilepics/profile_img.jpg" alt="perfil" class="img-thumbnail"/>
+    </div>        
+    <div class="col-lg-8">
+        <h2><?php echo $profileName ?></h2>
+        <ul  class="list-unstyled">
+            <li><?=$school ?></li>
+            <li><?=$class->getName() ?></li>
+            <li><a href="<?php echo 'profile/report_card/' . $profile->getId(); ?>">Ver meu boletim</a></li>
+        </ul>
+        
+        <ul  class="list-unstyled">
+            <li><i class="glyphicon glyphicon-heart"></i> <?php echo $this->profile->getHeartCount() ?> corações (<a>enviar coração</a>)</li>
+            <li><i class="glyphicon glyphicon-thumbs-up"></i> <?php echo $this->profile->getHandshakeCount() ?> apertos de mão (<a>enviar aperto de mão</a>)</li>
+        </ul>
+    </div>
+    <div class="col-lg-2">
+        <ul class="list-unstyled">
+            <li>
+            <li>
+                <p>Escolher Tema:</p>
+                <p><select id="select_style">
+                    <option value="light">Claro</option>
+                    <option value="dark">Escuro</option>
+                </select></p>
+            </li>
+            <li>
+                <p><select id="select_font">
+                    <option value="tahoma">Tahoma</option>
+                    <option value="arialblack">Arial Black</option>
+                </select></p>
+            </li>
+            </li>
+            <li>
+                <p>As médias das avaliações que seus amigos fizerem podem ficar visíveis no seu perfil?</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <h2>Nova Postagem:</h2>
+    <?php
+        $this->form->setAttribute('action', $this->url('profile', 
+            array('action' => 'postToWall'))
+        );
+        $this->form->prepare();
+        echo $this->form()->openTag($this->form);        
+        echo $this->postCreate;
+        echo $this->form()->closeTag();
+    ?>
+</div>
+
+<div class="row">
+    <h2>Minhas Postagens</h2>
+    <?php echo $this->postDisplay;?>
+</div>

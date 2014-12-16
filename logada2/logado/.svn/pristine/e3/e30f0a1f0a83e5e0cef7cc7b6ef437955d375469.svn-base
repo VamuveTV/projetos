@@ -1,0 +1,70 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<script type="text/javascript" src="/public/js/jquery.raty.js"></script>
+<script type="text/javascript" src="/public/js/labs.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    <?php
+    foreach($notas AS $avaliado => $nota){
+        //echo "$avaliado => $nota<br>";
+        $id = '#'.$avaliado;
+        echo "$('$id').raty({
+                readOnly: 1,
+                score: $nota,
+                path: '/images'
+            });";
+    }
+    ?>
+})
+</script>
+<div>
+    <h3>OPINAR</h3>
+    <p style="width: 100px;float: left;">Dê sua opnião</p>
+    <div style="width: 600px; float: right" id="icones_opine">
+        <p><a href="/admin/opine/alunos"><img src="/public/img/ico_alunos.png"> Alunos</a></p>
+        <p><a href="/admin/opine/escolas"><img src="/public/img/ico_escola.png"> Escola</a></p>
+        <p><a href="/admin/opine/funcionarios"><img src="/public/img/ico_funcionarios.png"> Funcionários</a></p>
+
+    </div>
+    <div class="limpa"></div>
+    <hr>
+    <form method="post">
+    <p>Filtrar</p>
+    Por:
+    <select name="busca_escola" id="busca_escola">
+        <option value="">Escola</option>
+        <?php foreach($escolas AS $escola){
+            echo "<option value='".$escola->getId()."'>".$escola->getNome()."</option>";
+        }
+        ?>
+    </select>
+
+    <select name="busca_serie" id="busca_serie">
+        <option value="">Série</option>
+        <option value="1">Primeiro ano</option>
+        <option value="2">Segundo ano</option>
+        <option value="3">Terceiro ano</option>
+    </select>
+    <button type="submit" class="btn btn-normal">Buscar</button>
+    </form>
+    <?php
+    if(isset($alunos)):
+        foreach($alunos as $aluno):
+                $id_aluno = $aluno->getId();
+                if($aluno->getFoto()!='')
+                    $foto_aluno = '/public/fotos/alunos/'.$aluno->getFoto();
+                else
+                    $foto_aluno = '/public/img/semfoto.jpg';
+
+                echo "<div class=\"usuario_mini\">
+                        <a href='/perfiladmin/$id_aluno'><img src=\"$foto_aluno\" class=\"foto_mini\">
+                            <p><b>".$aluno->getNome()."</b></p></a>
+                            <p>".$aluno->getEscola()."</p>
+                            <div class='star' id='".$aluno->getId()."'></div>
+                        </div>";
+        endforeach;
+    endif;
+    ?>
+
+
+</div>

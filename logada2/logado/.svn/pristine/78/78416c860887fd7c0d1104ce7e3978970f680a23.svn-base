@@ -1,0 +1,9 @@
+# pack-refs with: peeled fully-peeled 
+6b05578418b586d0f8033470dc8a33ef10ce6f86 refs/remotes/origin/feature/config-collector
+b25e651f86ff2b4867419f26b3f2d87f54095322 refs/remotes/origin/feature/loaded-modules
+3050a8f832cc3cbc65b37287bb8a312ac5ae50ae refs/remotes/origin/hotfix/dump-font-color
+8c38e67884268c94426cc4c8647d064ef13d100a refs/remotes/origin/master
+40c6c8738177e228bca67a5d8c5dd06b3f5a8f22 refs/tags/0.0.1
+^012dd4dcd988f29f31b1e2f4ac6573ba2fd793f2
+e35c95f64f93dd19a836548bc1d3dd36380495e6 refs/tags/0.0.2
+^9b9311311fdb562494f89e62eb4649d687b58364

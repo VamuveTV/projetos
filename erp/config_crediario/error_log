@@ -1,0 +1,25 @@
+[05-Sep-2013 20:07:31 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[05-Sep-2013 20:07:32 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[05-Sep-2013 20:07:32 America/New_York] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/kservido/public_html/erp/config_crediario/cadastro.php on line 10
+[05-Sep-2013 20:08:11 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[05-Sep-2013 20:08:11 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[05-Sep-2013 20:08:12 America/New_York] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/kservido/public_html/erp/config_crediario/cadastro.php on line 10
+[05-Sep-2013 21:40:30 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[06-Sep-2013 17:03:49 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[06-Sep-2013 17:03:51 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[06-Sep-2013 17:03:51 America/New_York] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, boolean given in /home/kservido/public_html/erp/config_crediario/cadastro.php on line 10
+[06-Sep-2013 17:16:23 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[06-Sep-2013 17:16:24 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[06-Sep-2013 17:49:44 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[06-Sep-2013 17:49:45 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[10-Sep-2013 14:44:42 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[10-Sep-2013 14:44:43 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[10-Sep-2013 21:59:01 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[10-Sep-2013 21:59:02 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[11-Sep-2013 09:23:33 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[11-Sep-2013 09:23:34 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[12-Sep-2013 09:22:17 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[12-Sep-2013 09:22:19 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[12-Sep-2013 09:29:47 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[12-Sep-2013 23:27:13 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0
+[12-Sep-2013 23:27:13 America/New_York] PHP Warning:  Cannot load module 'XCache' because conflicting module 'eAccelerator' is already loaded in Unknown on line 0

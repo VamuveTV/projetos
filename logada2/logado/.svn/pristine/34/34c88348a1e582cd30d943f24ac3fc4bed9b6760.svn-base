@@ -1,0 +1,57 @@
+<?php
+
+$title = 'ADICIONAR TURMA';
+$this->headTitle($title);
+?>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<h2><?php echo $this->escapeHtml($title); ?></h2>
+<br class="limpa">
+<form method="post">
+    <div class="control-group">
+        <label class="label-admin" for="turma">Turma</label>
+        <div class="controls">
+            <input type="text" class="input-admin" id="turma" name="turma" class="input-medium">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="label-admin" for="escola">Escola</label>
+        <div class="controls">
+            <select class="input-admin" name="escola" id="escola">
+                <?php foreach($escolas AS $escola){
+                    echo "<option value='".$escola->getId()."'>".$escola->getNome()."</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="label-admin" for="numero">Número</label>
+        <div class="controls">
+            <input type="text" class="input-admin" id="numero" name="numero">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="label-admin" for="regiao">Região</label>
+        <div class="controls">
+            <input type="text" class="input-admin" id="regiao" name="regiao">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="label-admin" for="bairro">Bairro</label>
+        <div class="controls">
+            <input type="text" class="input-admin" id="bairro" name="bairro">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-admin">Enviar</button>
+            <button type="button" onclick="document.location='/admin/turmas'" class="btn btn-admin-cancel">Voltar</button>
+        </div>
+    </div>
+</form>

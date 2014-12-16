@@ -1,0 +1,36 @@
+$(document).ready(function(){
+    $("#aumenta").click(function(){
+        $('div, p, span, td, th, li').children().each(function(i,element){
+            t = parseInt($(this).css('font-size'));
+            t++;
+            $(this).css('font-size',t);
+        })
+    });
+
+    $("#diminui").click(function(){
+        $('div, p, span, td, th, li').children().each(function(i,element){
+            t = parseInt($(this).css('font-size'));
+            t--;
+            $(this).css('font-size',t);
+        })
+    });
+})
+
+//FIM TAMANHO DA FONTE
+
+//EXIBIR E OCULTAR DIV
+function exibe(id) {
+	if(document.getElementById(id).style.display=="none") {
+		document.getElementById(id).style.display = "inline";
+		document.getElementById('btSaibaMaisSentindo').style.display = "none";
+		document.getElementById('btOcultarFace').style.display = "inline";
+		
+	}
+	else {
+		document.getElementById(id).style.display = "none";
+		document.getElementById('btSaibaMaisSentindo').style.display = "inline";
+		document.getElementById('btOcultarFace').style.display = "none";
+		
+	}
+	
+}

@@ -1,0 +1,99 @@
+<?php use Application\Constants\Constants;
+echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        
+        <?php echo $this->headTitle('Logado '. $this->translate('Home'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php 
+        //Zend_Layout::getMvcInstance()->assign('style', Constants::STYLE_LIGHT);
+        
+        //if (Zend_Registry::get('style') == Constants::STYLE_DARK) {
+        //die(var_dump($this->getServiceLocator()));
+        //setcookie('style', Constants::STYLE_LIGHT, time() + 3600, '/');
+        //echo $_COOKIE['style'];
+        //$request = new Zend_Controller_Request_Http();
+        //$myCookie = $request->getCookie('cookieName');
+        //echo $myCookie;
+        
+        //echo $this->layout()->style;
+        if ($this->style == Constants::STYLE_DARK) {
+        //if (true) {
+            echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/css/style.css')
+                ->prependStylesheet($this->basePath() . '/css/bootstrap.dark.css');
+        } else { //DEFAULT:
+            echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->prependStylesheet($this->basePath() . '/css/style.css')
+                //->prependStylesheet($this->basePath() . '/css/bootstrap.min.css');
+                ->prependStylesheet($this->basePath() . '/css/bootstrap.css');
+        }
+        ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+        ?>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Logado</a>
+          </div>
+        
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="<?php echo $this->url('feed') ?>">Início</a></li>
+                <li><a href="<?php echo $this->url('profile', array('action' => 'friends')) ?>">Amigos</a></li>
+                <li><a href="<?php echo $this->url('activity') ?>">Atividades</a></li>
+                <li><a href="<?php echo $this->url('opinion') ?>">Opine</a></li>
+                <li><a href="<?php echo $this->url('map') ?>">Mapa</a></li>
+                <li><a href="<?php echo $this->url('profile') ?>">Meu Perfil</a></li>
+                <li><a href="<?php echo $this->url('notifications') ?>">Notificações</a></li>
+
+				<!--
+				INÍCIO
+
+				A opção RELATÓRIOS está rodando para um perfil de usuário diferente de ADMIN provisoriamente.
+				Perfil de usuário ADMIN não estava rodando nessa versão do Projeto, última tentativa em 30/12/2013.
+
+				-->
+                <li><a href="<?php echo $this->url('report') ?>">Relatórios</a></li>
+				<!-- 
+				TÉRMINO
+				-->
+				
+                <li><a href="<?php echo $this->url('contact') ?>">Fale conosco</a></li>              
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="<?php echo $this->url('login').'/logout' ?>">Sair</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </nav>
+            
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+            <!--<footer>
+                <p>Finxi S/A. <?php //echo $this->translate('All rights reserved.') ?></p>
+            </footer>-->
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

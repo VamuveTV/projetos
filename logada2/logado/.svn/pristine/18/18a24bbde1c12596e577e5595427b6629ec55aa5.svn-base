@@ -1,0 +1,321 @@
+<?php
+//ESTA PAGINA RECEBE 2 OBJETOS COMO PARAMETRO
+//$aluno = O aluno que está logado
+//$perfil = O aluno do perfil deseja que foi mencionado na url (se não for mencionado $perfil é igual $aluno)
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/public/js/bootstrap-modal.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //definindo o tema
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+
+        if($.cookie('fonte')!=null){
+            $('div, p, span, td, th, li').children().each(function(i,element){
+                var fonte = $.cookie('fonte');
+                $(this).css('font-family',fonte);
+            })
+        }
+
+        $('#estilo').change(function(){
+            $.cookie('estilo', $(this).val());
+            document.location='';
+        })
+
+        $('#fonte').change(function(){
+            $.cookie('fonte', $(this).val());
+            document.location='';
+        })
+
+
+
+    })
+    function closeDialog () {
+        $('.modal').modal('hide');
+    };
+
+    function okClicked () {
+        //colocar codigo da denuncia
+        closeDialog ();
+    };
+</script>
+<script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script>
+    tinymce.init({selector:'textarea','menubar' : false});
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript">
+$(document).ready(function(){
+    $.ajax({
+        type: "POST",
+        data: {'destinatario':<?php echo $perfil->getId();?>},
+        url: '/acesso/buscaPost',
+        success: function(dados) {
+            $('#teste').html(dados);
+        }
+    });
+
+    $('#envia_denuncia').click(function(){
+        var tipo = $('#tipo_denuncia').val();
+        var texto = $('#texto_denuncia').val();
+
+        denunciar(tipo,texto);
+    })
+})
+function enviaPost()
+{
+    mensagem = tinyMCE.activeEditor.getContent();
+    $.ajax({
+        type: "POST",
+        data: {'mensagem': mensagem,'remetente':<?php echo $aluno->getId();?>,'tipo_remetente':'<?php echo $tipo_logado;?>','destinatario':<?php echo $perfil->getId();?>,'tipo_destinatario':'A'},
+        url: '/acesso/envia',
+        success: function(dados) {
+            $('#teste').html(dados);
+            $('#mensagem').val('');
+        }
+    });
+}
+function addAmigo(cod)
+{
+    <?php
+    if($tipo_logado=='A')
+        $url_ajax = '/acesso/addAmigo';
+    else
+        $url_ajax = '/acesso/addAmigof';
+    ?>
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '<?php echo $url_ajax;?>',
+        success: function(dados) {
+            $('#area_btn_amigos').html("Nova amizade realizada");
+        }
+    });
+}
+function mediaVisivel(op){
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','op':op},
+        url: '/acesso/media',
+        success: function(dados) {
+            return true;
+        }
+    });
+}
+function denunciar(tipo,texto)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo': <?php echo $perfil->getId();?>,'tipo':tipo,'texto':texto,'tipo_remetente':'<?php echo $tipo_logado;?>','tipo_destinatario':'A'},
+        url: '/denuncia',
+        success: function(dados) {
+            $('#myModal').modal('hide');
+        }
+    });
+    document.location='/perfil/'+<?php echo $perfil->getId();?>;
+}
+function enviaCoracao(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/coracao',
+        success: function(dados) {
+            $('#area_coracao').html('<img src="/public/img/ico_coracao.png">');
+            $('#area_coracao').after("&nbsp;Coração enviado com sucesso");
+        }
+    });
+}
+
+function enviaAperto(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/aperto',
+        success: function(dados) {
+            $('#area_aperto').html('<img src="/public/img/ico_aperto.png">');
+            $('#area_aperto').after("&nbsp;Aperto de mão enviado com sucesso");
+        }
+    });
+}
+</script>
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+<div>
+    <div style="margin-top: 20px">
+        <h2>PERFIL</h2>
+        <ul class="btsAlterarFontes">
+            <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+            <li><a href="#" id="aumenta"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+            <li><a href="#" id="diminui"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+        </ul>
+    </div>
+    <div id="topo_perfil">
+        <div style="float:left; width:500px;">
+            <div id="fotoPerfil">
+                <?php
+                if($aluno == $perfil)
+                    echo '<br class="limpa"><a href="/perfil/foto" title="Atualizar foto">';
+
+
+                if($perfil->getFoto() != ''){
+                    $foto = $perfil->getFoto();
+                    echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+                }else
+                    echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+
+                if($aluno == $perfil)
+                    echo '</a>';
+                ?>
+            </div>
+            <div id="infoPerfil">
+                <strong><?php echo $perfil->getNome();?></strong><br />
+                <?php echo $perfil->getEscola();?><br />
+                <?php
+                if($tipo_logado == 'A')
+                    echo $perfil->getSerie(). ' ano';
+
+                echo '<br />';
+                if($tipo_logado == 'A')
+                    echo '<a href="/boletim/'.$perfil->getId().'"><img src="/public/img/ico_boletim.png" border="0" width="26" height="27" /> Ver meu Boletim</a><br />';
+
+                //verificando se não são amigos para adicionar o botão de adicionar amizade
+                if($aluno != $perfil){ //nao esta no proprio perfil
+
+                    echo "<span id='area_coracao'><img src='/public/img/ico_coracao.png'>";
+                    $label_coracao = $n_coracoes==1?'coração':'corações';
+                    echo "&nbsp;$n_coracoes $label_coracao";
+                    if($coracao == '0')
+                        echo "&nbsp;<a href='#' id='linkcoracao' onclick='enviaCoracao(".$perfil->getId().")'>(enviar coração)</a>";
+                    echo "</span><br>";
+
+                    echo "<span id='area_aperto'><img src='/public/img/ico_aperto.png'>";
+                    $label_aperto = $n_apertos==1?'aperto':'apertos';
+                    echo "&nbsp;$n_apertos $label_aperto de mão";
+                    if($aperto == '0')
+                        echo "&nbsp;<a href='#' id='linkaperto' onclick='enviaAperto(".$perfil->getId().")'>(enviar aperto de mão)</a>";
+                    echo "</span>";
+
+                    //echo "<a href='#' style='float: right' onclick='denunciar(".$perfil->getId().")'>Denunciar esta pessoa</a>";
+                }
+                else
+                    echo "<a href='/editaperfil'><img src=\"/public/img/ico-editar-perfil.png\" border=\"0\" width=\"29\" height=\"27\" /> Editar perfil</a>";
+                ?>
+            </div>
+        </div>
+        <?php
+        if($aluno != $perfil){ //nao esta no proprio perfil
+        ?>
+        <div style="clear: both;margin-top: -80px;width: 200px;float: right">
+            <img src="/public/img/ico-denuncias-perfil.png" width="26" height="26" border="0" />
+            <a data-toggle="modal" href="#myModal" onclick="tinymce.remove('#texto_denuncia');$('#texto_denuncia').val('')">Denunciar esta pessoa</a>
+        </div>
+        <?php
+        }
+        if($aluno == $perfil && $tipo_logado == 'A'){ //nao esta no proprio perfil
+        ?>
+        <div id="temaCorFonte">
+            <div class="escolherTemaPerfil">
+                Escolher tema:<br />
+                <select name="estilo" id="estilo" class="estiloSelectPerfil">
+                    <option value=""></option>
+                    <option value="claro">Claro</option>
+                    <option value="escuro">Escuro</option>
+                </select>
+                <br /><br />
+
+                Escolher Fonte:<br />
+                <select name="fonte" id="fonte" class="estiloSelectPerfil">
+                    <option></option>
+                    <option value="arial">Arial</option>
+                    <option value="verdana">Tahoma</option>
+                    <option value="calibri">Calibri</option>
+                </select>
+                <br /><br />
+
+                    <span>
+                    	As médias das avaliações que<br />
+                    	seus amigos fizerem podem <br />
+                    	ficar visíveis no seu perfil?
+                	</span><br />
+
+                <input name="media" type="radio" value="S" onclick="mediaVisivel('S')" <?php echo $perfil->getMedia()=='S'?'checked="checked"':'';?> />
+                Sim <input name="media" type="radio" onclick="mediaVisivel('N')" value="N" <?php echo $perfil->getMedia()=='N'?'checked="checked"':'';?> />Não
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+    <div class="limpa">
+        <?php
+        if($aluno != $perfil){
+            if(!in_array($perfil->getId(),$amigos))
+                echo '<span id="area_btn_amigos"><button class="btn btn-primary" onclick="addAmigo('.$perfil->getId().')">Adicionar aos amigos</button></span>';
+        }
+        if($tipo_logado == 'F' && $aluno != $perfil){
+            echo '<span id="area_btn_amigos"><button class="btn btn-success" onclick="document.location=\'/lancaNotas/'.$perfil->getId().'\'">Lançar nota</button></span>';
+        }
+        ?>
+
+    </div>
+    <div id="meio_perfil">
+        <h3>GOSTARIA DE FALAR ALGO PARA <?php echo strtoupper($perfil->getNome());?>?</h3>
+            <textarea cols="" rows="" id="mensagem" class="comentar-sentindo"></textarea>
+            <input name="" type="image" src="/public/img/bt-postar.png" onclick="enviaPost()" width="112" height="34" class="bt-postar" />
+    </div>
+    <h2 style="width: 100%;display: block">SUAS POSTAGENS</h2>
+    <div id="teste"></div>
+    <br class="limpa">
+    <a data-toggle="modal" href="#myModal2" style="float: right"><img src="/public/img/ico-libras-escuro.png" alt="" border="0"></a>
+    <br class="limpa">
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>
+                <h4 class="modal-title">Denúncia</h4>
+            </div>
+            <div class="modal-body">
+                <label class="label-admin">Gravidade da denúncia:</label><br>
+                <select class="input-admin" id="tipo_denuncia">
+                    <option value="1">Normal</option>
+                    <option value="2">Grave</option>
+                    <option value="3">Muito Grave</option>
+                </select>
+                <br>
+                <label class="label-admin">O que aconteceu?</label><br>
+                <textarea style="width: 450px" class="label-admin" id="texto_denuncia" rows="4" cols="20"></textarea>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                <a href="#" id="envia_denuncia" class="btn btn-primary">Enviar</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <?php
+                echo $video->getVideo();
+                ?>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Fechar</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

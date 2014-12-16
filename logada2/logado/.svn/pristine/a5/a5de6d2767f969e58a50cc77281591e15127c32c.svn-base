@@ -1,0 +1,128 @@
+<?php
+
+namespace Funcionarios\Entity;
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * @ORM\Table(name="funcionario")
+ * @ORM\Entity */
+class Funcionario {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string") */
+    protected $nome;
+
+    /** @ORM\Column(type="string") */
+    protected $escola;
+
+    /** @ORM\Column(type="string") */
+    protected $turmas;
+
+    /** @ORM\Column(type="string") */
+    protected $materia;
+
+    /** @ORM\Column(type="string") */
+    protected $funcao;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $escola
+     */
+    public function setEscola($escola)
+    {
+        $this->escola = $escola;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEscola()
+    {
+        return $this->escola;
+    }
+
+    /**
+     * @param mixed $funcao
+     */
+    public function setFuncao($funcao)
+    {
+        $this->funcao = $funcao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFuncao()
+    {
+        return $this->funcao;
+    }
+
+    /**
+     * @param mixed $materia
+     */
+    public function setMateria($materia)
+    {
+        $this->materia = $materia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMateria()
+    {
+        return $this->materia;
+    }
+
+    /**
+     * @param mixed $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @param mixed $turmas
+     */
+    public function setTurmas($turmas)
+    {
+        $this->turmas = $turmas;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTurmas()
+    {
+        return $this->turmas;
+    }
+}
+
+

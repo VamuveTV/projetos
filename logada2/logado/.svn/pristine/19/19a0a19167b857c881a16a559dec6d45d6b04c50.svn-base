@@ -1,0 +1,48 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h3>Alunos</h3>
+            </div>
+            <div>
+                <a href="<?php echo $this->url('alunos', array('action'=>'add'));?>"class="btn btn-success">Adicionar Aluno</a><br>
+                <?php
+                if (isset($alunos)) : ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Matrícula</th>
+                            <th>Escola</th>
+                            <th>Série</th>
+                            <th>Turma</th>
+                            <th>Período</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <?php foreach($alunos as $aluno): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $aluno->getId(); ?></td>
+                                <td><?php echo $aluno->getNome(); ?></td>
+                                <td><?php echo $aluno->getMatricula(); ?></td>
+                                <td><?php echo $aluno->getEscola(); ?></td>
+                                <td><?php echo $aluno->getSerie(); ?></td>
+                                <td><?php echo $aluno->getTurma(); ?></td>
+                                <td><?php echo $aluno->getPeriodo(); ?></td>
+                                <td>
+                                    <a href="<?php echo $this->url('alunos', array('action'=>'edit', 'id' => $aluno->getId()));?>" class="btn btn-warning">Editar</a>
+                                    <a href="<?php echo $this->url('alunos', array('action'=>'delete', 'id' => $aluno->getId()));?>" class="btn btn-danger">Excluir</a>
+                                    <a target="_blank" href="/perfil/<?php echo $aluno->getId();?>" class="btn btn-primary">Perfil</a>
+                                    <a href="/alunos/lancaNotas/<?php echo $aluno->getId();?>" class="btn btn-info">Notas</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

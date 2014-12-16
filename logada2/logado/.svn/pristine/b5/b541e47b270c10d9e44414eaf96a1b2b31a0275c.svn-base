@@ -1,0 +1,79 @@
+<?php
+
+namespace Application\Auth;
+
+use Zend\Authentication\Adapter\AdapterInterface,
+    Zend\Authentication\Result;
+
+use Doctrine\ORM\EntityManager;
+
+
+class Adapter implements AdapterInterface
+{
+    protected $em;
+    protected $login;
+    protected $senha;
+
+    public function __construct(EntityManager $em){
+        $this->em = $em;
+    }
+
+    /**
+     * @param mixed $login
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param mixed $senha
+     */
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * Performs an authentication attempt
+     *
+     * @return \Zend\Authentication\Result
+     * @throws \Zend\Authentication\Adapter\Exception\ExceptionInterface If authentication cannot be performed
+     */
+    public function authenticate()
+    {
+        $repository = $this->em->getRepository('Application\Entity\Admin');
+        $admin = $repository->findByLoginAndPassword($this->getLogin(),$this->getSenha());
+
+        if($admin)
+            return new Result(Result::SUCCESS,array('admin'=>$admin),array('OK'));
+        else
+            return new Result(Result::FAILURE_CREDENTIAL_INVALID,null,array());
+        /*
+        $escola = $this->em->find('\Escolas\Entity\Escola', $this->getEscola());
+        $repository = $this->em->getRepository('Alunos\Entity\Aluno');
+        $aluno = $repository->findByMatriculaAndPassword($this->getMatricula(),$this->getSenha(),$escola);
+
+        if($aluno)
+            return new Result(Result::SUCCESS,array('aluno'=>$aluno),array('OK'));
+        else
+            return new Result(Result::FAILURE_CREDENTIAL_INVALID,null,array());
+        */
+    }
+}

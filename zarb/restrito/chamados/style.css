@@ -1,0 +1,32 @@
+
+#conteudo{
+  padding: 5px;
+  margin-right: 5px;
+  background: #F5F5F5;
+  margin-top: 10px;
+  border: 1px #444444 solid;
+  font-family: Trebuchet MS,verdana;
+  font-size: 10px;
+  color: #444444;
+  overflow: auto;
+  height: 90%;
+}
+
+#interacoes{
+  width: 100%;
+  font-size: 12px;
+}
+
+#conteudo .interacoes{
+  font-size: 12px;
+  float: left;
+  padding: 4px;
+  font-weight: bold;
+  width: 99%;
+}
+
+#conteudo .label4{
+  font-size: 11px;
+  padding: 4px;
+  font-weight: bold;
+}

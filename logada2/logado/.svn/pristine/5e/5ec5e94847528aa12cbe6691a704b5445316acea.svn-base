@@ -1,0 +1,32 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<br>
+<div>
+    <h3>Notificações</h3>
+    <?php
+    $ct = 0;
+    foreach($notificacoes AS $i => $msg){
+        $ct++;
+        switch($msg->getTipo()){
+            case 'P':   $nome_msg = "postou em seu perfil";
+                        $link_msg = "/perfil";
+                        break;
+        }
+        echo "<b>".$remetentes[$i]."</b> $nome_msg, clique <a href=\"$link_msg\">aqui</a> para visualizar";
+        if($ct != count($notificacoes))
+            echo '<hr>';
+    }
+    ?>
+</div>

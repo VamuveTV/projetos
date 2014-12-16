@@ -1,0 +1,21 @@
+<?php
+$title = 'Turmas';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>
+  <a href="<?php echo $this->url('school-class', array('action'=>'add'));?>">Adicionar</a>
+</p>
+<?php foreach ($classes as $class) : ?>
+<article>
+    <?php echo $this->escapeHtml($class->getName());?>
+    
+    <a href="<?php echo $this->url('school-class', 
+        array('action'=>'edit','id'=>$class->getId()));?>">Editar</a>
+          
+    <a href="<?php echo $this->url('school-class', 
+        array('action'=>'delete','id'=>$class->getId()));?>">Apagar</a>
+</article>
+<?php endforeach; ?>

@@ -1,0 +1,11 @@
+<wpml-config>
+	<admin-texts>
+
+		<key name="topbar_text" />
+		<key name="copyright_text" />
+		<key name="registration_content" />
+		<key name="login_content" />
+
+	</admin-texts>
+</wpml-config>
+

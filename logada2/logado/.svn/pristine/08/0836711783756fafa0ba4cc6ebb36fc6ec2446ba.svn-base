@@ -1,0 +1,138 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="opinef")
+ * @ORM\Entity */
+class Opinef {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $avaliador;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $funcionario;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $nota;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $observacao;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $tipo_avaliador;
+
+    /**
+     * @param mixed $avaliador
+     */
+    public function setAvaliador($avaliador)
+    {
+        $this->avaliador = $avaliador;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvaliador()
+    {
+        return $this->avaliador;
+    }
+
+    /**
+     * @param mixed $funcionario
+     */
+    public function setFuncionario($funcionario)
+    {
+        $this->funcionario = $funcionario;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFuncionario()
+    {
+        return $this->funcionario;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $nota
+     */
+    public function setNota($nota)
+    {
+        $this->nota = $nota;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNota()
+    {
+        return $this->nota;
+    }
+
+    /**
+     * @param mixed $observacao
+     */
+    public function setObservacao($observacao)
+    {
+        $this->observacao = $observacao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObservacao()
+    {
+        return $this->observacao;
+    }
+
+    /**
+     * @param mixed $tipo_avaliador
+     */
+    public function setTipoAvaliador($tipo_avaliador)
+    {
+        $this->tipo_avaliador = $tipo_avaliador;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTipoAvaliador()
+    {
+        return $this->tipo_avaliador;
+    }
+
+}

@@ -1,0 +1,76 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="amigoa")
+ * @ORM\Entity */
+class Amigoa {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $amigo1;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $amigo2;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $amigo1
+     */
+    public function setAmigo1($amigo1)
+    {
+        $this->amigo1 = $amigo1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmigo1()
+    {
+        return $this->amigo1;
+    }
+
+    /**
+     * @param mixed $amigo2
+     */
+    public function setAmigo2($amigo2)
+    {
+        $this->amigo2 = $amigo2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmigo2()
+    {
+        return $this->amigo2;
+    }
+
+
+}

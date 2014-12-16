@@ -1,0 +1,101 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+
+
+    function preferirAmigo(cod)
+    {
+        $.ajax({
+            type: "POST",
+            data: {'logado':'<?php echo $logado->getId();?>','amigo':cod},
+            url: '/acesso/addPreferido',
+            success: function(dados) {
+                $('#preferido'+cod).html("<i>Amigo não preferido</i>");
+            }
+        });
+    }
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<div>
+    <h3>SEUS AMIGOS</h3>
+    <p>Procure um amigo:</p>
+    <form method="post">
+        <input type="text" name="busca_amigo" id="busca_amigo">
+        <select name="busca_escola" id="busca_escola">
+            <option value="">Escola</option>
+            <?php foreach($escolas AS $escola){
+                echo "<option value='".$escola->getId()."'>".$escola->getNome()."</option>";
+            }
+            ?>
+        </select>
+        <select name="busca_turma" id="busca_turma">
+            <option value="">Turma</option>
+            <?php foreach($turmas AS $turma){
+                echo "<option value='".$turma->getId()."'>".$turma->getTurma()."</option>";
+            }
+            ?>
+        </select>
+        <select name="busca_periodo" id="busca_periodo">
+            <option value="">Períodos</option>
+            <option value="M">Manhã</option>
+            <option value="T">Tarde</option>
+            <option value="N">Noite</option>
+        </select>
+        <button class="btn">Buscar</button>
+    </form>
+    <?php
+    if(isset($alunos)):
+    echo '<h3>Resultados da busca</h3>';
+        foreach($alunos as $aluno):
+            if($aluno->getId() != $logado->getId()){
+                if($aluno->getFoto()!='')
+                    $foto_aluno = '/public/fotos/alunos/'.$aluno->getFoto();
+                else
+                    $foto_aluno = '/public/img/semfoto.jpg';
+
+                echo "<div class=\"usuario_mini\">
+                        <p><a href=\"/perfil/".$aluno->getId()."\"><img src=\"$foto_aluno\" class=\"foto_mini\">
+                            <b>".$aluno->getNome()."</b></a><br>
+                            ".$aluno->getEscola()."
+                            </p>
+                        </div>";
+            }
+        endforeach;
+    endif;
+    ?>
+    <div class="limpa"></div>
+    <hr>
+    <?php
+    if(isset($amigos)):
+        echo '<h3>Todos seus amigos</h3>';
+        foreach($amigos as $amigo):
+            if($amigo->getFoto()!='')
+                $foto_amigo = '/public/fotos/alunos/'.$amigo->getFoto();
+            else
+                $foto_amigo = '/public/img/semfoto.jpg';
+
+            echo "<div class=\"usuario_mini\">
+                    <p><a href=\"/perfil/".$amigo->getId()."\"><img src=\"$foto_amigo\" class=\"foto_mini\">
+                        <b>".$amigo->getNome()."</b></a><br>
+                        ".$amigo->getEscola()."
+                        <br><span id='preferido".$amigo->getId()."'>";
+                        if(!in_array($amigo->getId(),$preferidos))
+                            echo "<a href='#' onclick='preferirAmigo(".$amigo->getId().")'>Preferir amigo</a></span>";
+                        else
+                            echo "<i>Amigo preferido</i>";
+                    echo "</p></div>";
+        endforeach;
+    endif;
+    ?>
+    <div class="limpa"></div>
+
+</div>

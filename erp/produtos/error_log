@@ -1,0 +1,63 @@
+[18-Oct-2013 17:05:47 America/Chicago] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1130] Host '107.6.144.21' is not allowed to connect to this MySQL server' in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php:40
+Stack trace:
+#0 /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php(40): PDO->__construct('mysql:host=calc...', 'passono_erp', 'erp@magento', Array)
+#1 /home/kservido/public_html/erp/magmi/inc/magmi_engine.php(424): DBHelper->initDb('calcadospassono...', 'passono_nobre2', 'passono_erp', 'erp@magento', '3306', '/var/lib/mysql/...', 'net', NULL)
+#2 /home/kservido/public_html/erp/magmi/engines/magmi_productimportengine.php(1490): Magmi_Engine->connectToMagento()
+#3 /home/kservido/public_html/erp/magmi/integration/inc/productimport_datapump.php(38): Magmi_ProductImportEngine->initImport(Array)
+#4 /home/kservido/public_html/erp/produtos/ajax_cadastrar.php(15): Magmi_ProductImport_DataPump->beginImportSession('default', 'create')
+#5 {main}
+  thrown in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php on line 40
+[18-Oct-2013 17:12:22 America/Chicago] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1130] Host '107.6.144.21' is not allowed to connect to this MySQL server' in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php:40
+Stack trace:
+#0 /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php(40): PDO->__construct('mysql:host=calc...', 'passono_erp', 'erp@magento', Array)
+#1 /home/kservido/public_html/erp/magmi/inc/magmi_engine.php(424): DBHelper->initDb('calcadospassono...', 'passono_nobre2', 'passono_erp', 'erp@magento', '3306', '/var/lib/mysql/...', 'net', NULL)
+#2 /home/kservido/public_html/erp/magmi/engines/magmi_productimportengine.php(1490): Magmi_Engine->connectToMagento()
+#3 /home/kservido/public_html/erp/magmi/integration/inc/productimport_datapump.php(38): Magmi_ProductImportEngine->initImport(Array)
+#4 /home/kservido/public_html/erp/produtos/ajax_cadastrar.php(15): Magmi_ProductImport_DataPump->beginImportSession('default', 'create')
+#5 {main}
+  thrown in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php on line 40
+[18-Oct-2013 17:16:06 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Host '107.6.144.21' is not allowed to connect to this MySQL server in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 12:49:09 America/Chicago] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1130] Host '107.6.144.21' is not allowed to connect to this MySQL server' in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php:40
+Stack trace:
+#0 /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php(40): PDO->__construct('mysql:host=calc...', 'passono_erp', 'erp@magento', Array)
+#1 /home/kservido/public_html/erp/magmi/inc/magmi_engine.php(424): DBHelper->initDb('calcadospassono...', 'passono_nobre2', 'passono_erp', 'erp@magento', '3306', '/var/lib/mysql/...', 'net', NULL)
+#2 /home/kservido/public_html/erp/magmi/engines/magmi_productimportengine.php(1490): Magmi_Engine->connectToMagento()
+#3 /home/kservido/public_html/erp/magmi/integration/inc/productimport_datapump.php(38): Magmi_ProductImportEngine->initImport(Array)
+#4 /home/kservido/public_html/erp/produtos/ajax_cadastrar.php(15): Magmi_ProductImport_DataPump->beginImportSession('default', 'create')
+#5 {main}
+  thrown in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php on line 40
+[21-Oct-2013 12:49:50 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Host '107.6.144.21' is not allowed to connect to this MySQL server in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 14:24:07 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Host '107.6.144.21' is not allowed to connect to this MySQL server in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 14:26:20 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Host '107.6.144.21' is not allowed to connect to this MySQL server in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 14:36:42 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Host '107.6.144.21' is not allowed to connect to this MySQL server in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 14:50:20 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Host '107.6.144.21' is not allowed to connect to this MySQL server in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 16:25:59 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Host '107.6.144.21' is not allowed to connect to this MySQL server in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 16:26:47 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'passono_erp'@'107.6.144.21' (using password: YES) in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 16:28:14 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'passono_erp'@'107.6.144.21' (using password: YES) in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 16:28:16 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'passono_erp'@'107.6.144.21' (using password: YES) in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 16:32:22 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'passono_erp'@'107.6.144.21' (using password: YES) in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[21-Oct-2013 18:15:56 America/Chicago] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'passono_erp'@'107.6.144.21' (using password: YES) in /home/kservido/public_html/erp/produtos/teste_conexao.php on line 3
+[01-Nov-2013 11:54:12 America/Chicago] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[28000] [1045] Access denied for user 'passono_erp'@'107.6.144.21' (using password: YES)' in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php:40
+Stack trace:
+#0 /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php(40): PDO->__construct('mysql:host=calc...', 'passono_erp', 'erp@magento', Array)
+#1 /home/kservido/public_html/erp/magmi/inc/magmi_engine.php(424): DBHelper->initDb('calcadospassono...', 'passono_nobre2', 'passono_erp', 'erp@magento', '3306', '/var/lib/mysql/...', 'net', NULL)
+#2 /home/kservido/public_html/erp/magmi/engines/magmi_productimportengine.php(1490): Magmi_Engine->connectToMagento()
+#3 /home/kservido/public_html/erp/magmi/integration/inc/productimport_datapump.php(38): Magmi_ProductImportEngine->initImport(Array)
+#4 /home/kservido/public_html/erp/produtos/ajax_cadastrar.php(15): Magmi_ProductImport_DataPump->beginImportSession('default', 'create')
+#5 {main}
+  thrown in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php on line 40
+[01-Nov-2013 11:57:30 America/Chicago] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[28000] [1045] Access denied for user 'passono_erp'@'107.6.144.21' (using password: YES)' in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php:40
+Stack trace:
+#0 /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php(40): PDO->__construct('mysql:host=calc...', 'passono_erp', 'erp@magento', Array)
+#1 /home/kservido/public_html/erp/magmi/inc/magmi_engine.php(424): DBHelper->initDb('calcadospassono...', 'passono_nobre2', 'passono_erp', 'erp@magento', '3306', '/var/lib/mysql/...', 'net', NULL)
+#2 /home/kservido/public_html/erp/magmi/engines/magmi_productimportengine.php(1490): Magmi_Engine->connectToMagento()
+#3 /home/kservido/public_html/erp/magmi/integration/inc/productimport_datapump.php(38): Magmi_ProductImportEngine->initImport(Array)
+#4 /home/kservido/public_html/erp/produtos/ajax_cadastrar.php(15): Magmi_ProductImport_DataPump->beginImportSession('default', 'create')
+#5 {main}
+  thrown in /home/kservido/public_html/erp/magmi/inc/dbhelper.class.php on line 40
+[01-Nov-2013 12:01:42 America/Chicago] PHP Fatal error:  Uncaught SoapFault exception: [101] Product not exists. in /home/kservido/public_html/erp/produtos/ajax_cadastrar.php:253
+Stack trace:
+#0 /home/kservido/public_html/erp/produtos/ajax_cadastrar.php(253): SoapClient->__call('catalogProductI...', Array)
+#1 /home/kservido/public_html/erp/produtos/ajax_cadastrar.php(253): SoapClient->catalogProductInfo('f4f2e47e2037b1e...', '7252013110140', '', '', 'sku')
+#2 {main}
+  thrown in /home/kservido/public_html/erp/produtos/ajax_cadastrar.php on line 253

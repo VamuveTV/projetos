@@ -1,0 +1,236 @@
+<?php
+use Application\Constants\Constants;
+$title = 'Opine';
+$this->headTitle($title);
+?>
+
+<?php
+$basePath = $this->basePath();
+
+$idx = 100;
+$this->headLink()->offsetSetStylesheet(++$idx, $basePath . '/js/star-rating/jquery.rating.css');
+
+$idx = 100;
+$this->headScript()->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.form.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.MetaData.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.rating.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/holder.js', 'text/javascript')
+;
+
+?>
+
+<?php $this->headScript()->captureStart(); ?>
+<script type="text/javascript">
+$('input.wow').rating({
+callback: function(value){
+	<?php $this->ranking = value;?>
+	alert(value); 
+}
+})
+
+$('.hover-star').rating({ 
+    focus: function(value, link){ 
+        var tip = $('#hover-test'); 
+        tip[0].data = tip[0].data || tip.html(); 
+        tip.html(link.title || 'value: '+value); 
+    }, 
+    blur: function(value, link){ 
+        var tip = $('#hover-test'); 
+        $('#hover-test').html(tip[0].data || ''); 
+    } 
+});
+
+$(document).ready(function() {
+	$('#star1',this.form).rating('select',<?php $this->rating; ?>);
+})
+</script>
+<?php $this->headScript()->captureEnd(); ?>
+
+<!-- FIXME: implementar o carregamento de páginas dinâmico (alunos, professores e minha escola).
+Atualmente as três páginas são carregadas na inicializacao -->
+
+<?php $this->headScript()->captureStart(); ?>
+
+//$(document).ready(function(){
+//    $("#students").click(function(){
+//        $('#result').load('student.phtml');
+//        //alert("Thanks for visiting std!");
+//    }); 
+    
+//    $("#teachers").click(function(){
+//        $('#result').load('teachers.phtml');
+        //alert("Thanks for visiting tea!");
+//    });
+    
+//    $("#school").click(function(){
+//        $('#result').load('school.phtml');
+        //alert("Thanks for visiting sch!");
+//    });
+//});
+
+<?php $this->headScript()->captureEnd(); ?>
+
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php 
+$form = $this->form;
+$form->setAttribute('action', $this->url('opinion'));
+//$form->setMethod('post')->setAction('opinion',
+//    array('action' => 'filter',
+//    		'acad_year' => '5s',
+//    )
+//);
+//$form->setAttribute('action', $this->url(
+//    'opinion', 
+//    array('action' => 'filter', 
+//        'acad_year' => '5s',
+//    ))
+//);
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+
+<?php $this->headScript()->captureStart(); ?>
+function show(id) {
+    document.getElementById(id).style.display = 'block';
+}
+
+function hide(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function loadStudents() {
+    $.get("somepage.php");
+    return false;
+}
+<?php $this->headScript()->captureEnd(); ?>
+
+Dê sua opinião sobre: 
+<a href="#" onclick="show('content1'); hide('content2'); hide('content3'); return false;">Alunos</a> |
+<a href="#" onclick="show('content2'); hide('content1'); hide('content3'); return false;">Professores</a> |
+<a href="#" onclick="show('content3'); hide('content1'); hide('content2'); return false;">Minha Escola</a>
+<div id="result" style="clear: both;"></div>
+
+<hr />
+
+<div id="content1" style="display: none;">
+	<h2>Alunos</h2>
+	<div class="row">
+    	<div style="float:left; margin-right:10px;">Filtrar por:</div>
+        <div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('classes'), null, true); ?></div>
+        
+        <div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('acad_year'), null, true); ?></div>
+    	
+        <div style="float:left; margin-right:10px;"><?php echo $this->formSubmit($form->get('submit_student')); ?></div>
+    </div>
+    
+	<div class="row">
+        <?php $star = 0; foreach ($students as $profile) : ?>
+            <div class="col-sm-4 col-md-2">
+        		<div class="thumbnail">
+        			<img data-src="holder.js/100x100" alt="">
+        			<div class="caption">
+        				<div class="starContainer">
+            				<h5>
+            				    <a href="<?php echo 'opinion/edit/' . $profile->getId() . '/' . Constants::PROFILE_STUDENT; ?>">
+                                    <?php echo $this->escapeHtml($profile->getDisplayName());?>
+                                </a>
+                            </h5>
+        				
+                            <input name=<?="star-student-".$star ?> type="radio" class="star {split:1}" value="0" />
+                            <input name=<?="star-student-".$star ?> type="radio" class="star {split:1}" value="1" />
+                            <input name=<?="star-student-".$star ?> type="radio" class="star {split:1}" value="2" />
+                            <input name=<?="star-student-".$star ?> type="radio" class="star {split:1}" value="3" />
+                            <input name=<?="star-student-".$star ?> type="radio" class="star {split:1}" value="4" />
+                            <?php $star = $star + 1;?>
+                            
+                            <?php if (in_array($profile->getId(), $bombs)) : ?>
+                                <img src="<?php echo $this->basePath().'/img/bomb1.png'?>" />
+                            <?php endif; ?>
+                        </div>
+        			</div>
+        		</div>
+        	</div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<div id="content2" style="display: none;">
+	<h2>Professores</h2>
+	<div class="row">
+    	<div style="float:left; margin-right:10px;">Filtrar por:</div>
+        <div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('disciplines'), null, true); ?></div>
+        
+        <div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('position'), null, true); ?></div>
+    	
+        <div style="float:left; margin-right:10px;"><?php echo $this->formSubmit($form->get('submit_staff')); ?></div>
+    </div>
+    
+	<div class="row">
+        <?php $star = 0; foreach ($staff as $profile) : ?>
+            <div class="col-sm-4 col-md-2">
+        		<div class="thumbnail">
+        			<img data-src="holder.js/100x100" alt="">
+        			<div class="caption">
+        				<div class="starContainer">
+            				<h5>
+            				    <a href="<?php echo 'opinion/edit/' . $profile->getId() . '/' . Constants::PROFILE_STAFF; ?>">
+                                    <?php echo $this->escapeHtml($profile->getDisplayName());?>
+                                </a>
+                            </h5>
+        				
+                            <input name=<?="star-staff-".$star ?> type="radio" class="star {split:1}" value="0" />
+                            <input name=<?="star-staff-".$star ?> type="radio" class="star {split:1}" value="1" />
+                            <input name=<?="star-staff-".$star ?> type="radio" class="star {split:1}" value="2" />
+                            <input name=<?="star-staff-".$star ?> type="radio" class="star {split:1}" value="3" />
+                            <input name=<?="star-staff-".$star ?> type="radio" class="star {split:1}" value="4" />
+                            <?php $star = $star + 1; ?>
+                            
+                            <?php if (in_array($profile->getId(), $bombs)) : ?>
+                                <img src="<?php echo $this->basePath().'/img/bomb1.png'?>" />
+                            <?php endif; ?>
+                        </div>
+        			</div>
+        		</div>
+        	</div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<div id="content3" style="display: none;">
+	<h2>Minha Escola</h2>
+	
+	<div class="row">
+        <?php foreach ($school as $profile) : ?>
+            <div class="col-sm-4 col-md-2">
+        		<div class="thumbnail">
+        			<img data-src="holder.js/100x100" alt="">
+        			<div class="caption">
+        				<div class="starContainer">
+            				<h5>
+            				    <a href="<?php echo 'opinion/edit/' . $profile->getId() . '/' . Constants::PROFILE_SCHOOL; ?>">
+                                    <?php echo $this->escapeHtml($profile->getDisplayName());?>
+                                </a>
+                            </h5>
+        				
+                            <input name="star-school" type="radio" class="star {split:1}" value="0" />
+                            <input name="star-school" type="radio" class="star {split:1}" value="1" />
+                            <input name="star-school" type="radio" class="star {split:1}" value="2" />
+                            <input name="star-school" type="radio" class="star {split:1}" value="3" />
+                            <input name="star-school" type="radio" class="star {split:1}" value="4" />
+                            
+                            <?php if (in_array($profile->getId(), $bombs)) : ?>
+                                <img src="<?php echo $this->basePath().'/img/bomb1.png'?>" />
+                            <?php endif; ?>
+                        </div>
+        			</div>
+        		</div>
+        	</div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<?php echo $this->form()->closeTag(); ?>

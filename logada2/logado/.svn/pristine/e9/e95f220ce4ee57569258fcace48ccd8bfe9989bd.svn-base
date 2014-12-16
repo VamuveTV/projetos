@@ -1,0 +1,70 @@
+<?php
+
+$title = 'Adicionar Atividade';
+$this->headTitle($title);
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="nome">Nome do evento</label>
+        <div class="controls">
+            <input type="text" id="nome" name="nome" class="input-medium">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="local">Local do evento</label>
+        <div class="controls">
+            <input type="text" id="local" name="local" class="input-medium">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="data">Data</label>
+        <div class="controls">
+            <input type="text" id="data" name="data">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="hora_inicio">Hora início</label>
+        <div class="controls">
+            <input type="text" id="hora_inicio" name="hora_inicio">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="hora_fim">Hora término</label>
+        <div class="controls">
+            <input type="text" id="hora_fim" name="hora_fim">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Descrição</label>
+        <div class="controls">
+            <textarea id="descricao" name="descricao" cols="50" rows="5"></textarea>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </div>
+    </div>
+</form>

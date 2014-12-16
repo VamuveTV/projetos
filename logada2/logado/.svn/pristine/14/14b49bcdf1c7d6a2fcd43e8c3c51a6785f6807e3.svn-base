@@ -1,0 +1,117 @@
+<?php
+use Application\Constants\Constants;
+$profileName = $this->profile->getDisplayName();
+$title = "Opine sobre " . $profileName;
+
+$this->headTitle($title);
+?>
+
+<?php
+//Star-rating libs
+$basePath = $this->basePath();
+
+$idx = 100;
+$this->headLink()->offsetSetStylesheet(++$idx, $basePath . '/js/star-rating/jquery.rating.css');
+//$this->headLink()->offsetSetStylesheet(++$idx, $basePath . '/css/rating.css');
+
+$idx = 100;
+$this->headScript()->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.form.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.MetaData.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.rating.js', 'text/javascript')
+//    ->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.rating.pack.js', 'text/javascript')
+//$this->headScript()->offsetSetFile(++$idx, $basePath . '/js/rating.js', 'text/javascript')
+;
+
+?>
+
+<?php $this->headScript()->captureStart(); ?>
+<script type="text/javascript">
+//$('.auto-submit-star').rating({ 
+//    callback: function(value, link){ 
+//        <?php $this->ranking = value;?>
+//        alert(value); 
+//    } 
+//});
+$('input.wow').rating({
+callback: function(value){
+	<?php $this->ranking = value;?>
+	alert(value); 
+}
+})
+
+$('.hover-star').rating({ 
+    focus: function(value, link){ 
+        var tip = $('#hover-test'); 
+        tip[0].data = tip[0].data || tip.html(); 
+        tip.html(link.title || 'value: '+value); 
+    }, 
+    blur: function(value, link){ 
+        var tip = $('#hover-test'); 
+        $('#hover-test').html(tip[0].data || ''); 
+    } 
+});
+
+$(document).ready(function() {
+	$('#adv1',this.form).rating('select',<?php $this->rating; ?>);
+})
+
+//$('#rate2').rating('www.url.php', {maxvalue:5, curvalue:3});
+</script>
+<?php $this->headScript()->captureEnd(); ?>
+
+<?php 
+$this->form->setAttribute('action', $this->url('opinion', 
+    array('action' => 'submitOpinion', 
+        'id' => $this->profile->getId(),
+        //'rating' => $this->rating,
+        'rating' => 3,
+    ))
+);
+$this->form->prepare();
+echo $this->form()->openTag($this->form); 
+?>
+
+<div class="row">
+    <div class="col-lg-2">
+        <img src="http://www.chic-and-ethic.com/useruploads/profilepics/profile_img.jpg" alt="perfil" class="img-thumbnail"/>
+    </div>        
+    <div class="col-lg-8">
+        <h2><?=$profileName ?></h2>
+        <ul  class="list-unstyled">
+            <li><? if ($school != null  && $proftype != Constants::PROFILE_SCHOOL) echo $school; ?></li>
+            
+            <li><? if ($proftype == Constants::PROFILE_STUDENT) echo $class->getName(); ?></li>
+            
+            <li><? if ($proftype == Constants::PROFILE_STUDENT) echo $class->getAcademicYear(); ?></li>
+            <br />
+            <br /> <!-- TODO: remover esses br -->
+            <li><? //echo $this->url(array('controller' => 'home', 'action' => 'index'), null, true); ?></li>
+            <li><a>
+                Localização
+            </a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <h2>Opine sobre <?php echo $profileName ?></h2>
+    <input name="adv1" type="radio" class="star {split:1}" value="0" />
+    <input name="adv1" type="radio" class="star {split:1}" value="1" />
+    <input name="adv1" type="radio" class="star {split:1}" value="2" />
+    <input name="adv1" type="radio" class="star {split:1}" value="3" />
+    <input name="adv1" type="radio" class="star {split:1}" value="4" />
+</div>
+<!-- <div id="rate2" class="rating">&nbsp;</div> -->
+
+<br />
+
+<div class="row">
+    <?php echo $this->formrow($form->get('submit_bomb'), null, true); ?>
+</div>
+
+<div class="row">
+    <h2>Gostaria sua opinião privada sobre <?php echo $profileName ?>?</h2>
+    <?php echo $this->postCreate; ?>
+</div>
+
+<?php echo $this->form()->closeTag(); ?>

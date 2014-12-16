@@ -1,0 +1,81 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript">
+    function enviaIcone(icone)
+    {
+        $.ajax({
+            type: "POST",
+            data: {'icone': icone,'posta_icone':1,'remetente':<?php echo $aluno->getId();?>,'tipo_remetente':'<?php echo $tipo_logado;?>','destinatario':<?php echo $aluno->getId();?>,'tipo_destinatario':'<?php echo $tipo_logado;?>'},
+            url: '/acesso/envia',
+            success: function(dados) {
+                return true;
+            }
+        });
+        $('.icon').removeAttr( "onclick" );
+        $('#bt_continuar').show();
+    }
+    //EXIBIR E OCULTAR DIV
+    function exibe(id) {
+        if(document.getElementById(id).style.display=="none") {
+            document.getElementById(id).style.display = "inline";
+            document.getElementById('btSaibaMaisSentindo').style.display = "none";
+            document.getElementById('btOcultarFace').style.display = "inline";
+
+        }
+        else {
+            document.getElementById(id).style.display = "none";
+            document.getElementById('btSaibaMaisSentindo').style.display = "inline";
+            document.getElementById('btOcultarFace').style.display = "none";
+
+        }
+
+    }
+</script>
+<div id="conteudo">
+<h2>COMO ESTÁ SE SENTINDO?</h2>
+<ul class="btsAlterarFontes">
+    <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+    <li><a href="javascript:mudaTamanho('texto', 1);"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+    <li><a href="javascript:mudaTamanho('texto', -1);"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+
+</ul>
+<ul class="faces">
+    <li><a href="#" class="icon" onclick="enviaIcone('alegre')"><img src="/public/imagens/faces/alegre.png" width="39" height="43" border="0" /></a></li>
+    <li><a href="#" class="icon" onclick="enviaIcone('alegre-oculos')"><img src="/public/imagens/faces/alegre-oculos.png" width="42" height="39" border="0" /></a></li>
+    <li><a href="#" class="icon" onclick="enviaIcone('apaixonado')"><img src="/public/imagens/faces/apaixonado.png" width="39" height="43" border="0" /></a></li>
+    <li><a href="#" class="icon" onclick="enviaIcone('assustado')"><img src="/public/imagens/faces/assustado.png" width="42" height="39" border="0" /></a></li>
+    <li><a href="#" class="icon" onclick="enviaIcone('confuso')"><img src="/public/imagens/faces/confuso.png" width="39" height="43" border="0" /></a></li>
+    <li><a href="#" class="icon" onclick="enviaIcone('triste-cansado')"><img src="/public/imagens/faces/triste-cansado.png" width="39" height="43" border="0" /></a></li>
+    <li><a href="#" class="icon" onclick="enviaIcone('vergonha')"><img src="/public/imagens/faces/vergonha.png" width="39" height="43" border="0" /></a></li>
+</ul>
+<div class="limpa"></div>
+<a href="#" onclick="javascript: exibe('outrasfaces');"><img src="/public/imagens/bt-saiba-mais-sentindo.png" id="btSaibaMaisSentindo" border="0" width="99" height="27" class="imgBtSaibaMaisSentindo"/></a>
+<a href="#" onclick="javascript: exibe('outrasfaces');"><img src="/public/imagens/bt-ocultar-face.png" id="btOcultarFace" border="0" width="99" height="27" class="imgBtSaibaMaisSentindo" style="display:none;"/></a>
+<div id="outrasfaces" style="display: none;">
+    <ul class="faces">
+        <li><a href="#" class="icon" onclick="enviaIcone('diab')"><img src="/public/imagens/faces/diab.png" width="39" height="43" border="0" /></a></li>
+        <li><a href="#" class="icon" onclick="enviaIcone('chorando')"><img src="/public/imagens/faces/chorando.png" width="39" height="43" border="0" /></a></li>
+        <li><a href="#" class="icon" onclick="enviaIcone('apaixonado')"><img src="/public/imagens/faces/apaixonado.png" width="39" height="43" border="0" /></a></li>
+        <li><a href="#" class="icon" onclick="enviaIcone('assustado')"><img src="/public/imagens/faces/assustado.png" width="42" height="39" border="0" /></a></li>
+        <li><a href="#" class="icon" onclick="enviaIcone('confuso')"><img src="/public/imagens/faces/confuso.png" width="39" height="43" border="0" /></a></li>
+        <li><a href="#" class="icon" onclick="enviaIcone('triste-cansado')"><img src="/public/imagens/faces/triste-cansado.png" width="39" height="43" border="0" /></a></li>
+        <li><a href="#" class="icon" onclick="enviaIcone('vergonha')"><img src="/public/imagens/faces/vergonha.png" width="39" height="43" border="0" /></a></li>
+    </ul>
+</div>
+
+
+<div class="limpa"></div>
+<a href="/sentindo2" id="bt_continuar" style="display: none"><img src="/public/imagens/bt-continuar-sentindo.png" width="112" height="34" border="0" class="btContinuarSentindo" /></a>
+</div>

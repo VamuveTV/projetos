@@ -1,0 +1,43 @@
+<style type="text/css">
+#tudo{
+    width: 600px;
+    margin: 40px auto;
+}
+.h3_logada{
+color: #a1235e;
+font-size: 14px;
+font-weight: bold;
+}
+#logo{
+    192px;
+    float: left;
+}
+#formulario{
+    height: 240px;
+}
+</style>
+<form method="post" action="">
+<div id="tudo">
+    <h3 class="h3_logada">Faça seu LOGIN</h3>
+    <div id="logo">
+        <img src="<?php echo $this->basePath('/public/img/logo_login.png') ?>" alt="" />
+    </div>
+    <div id="formulario">
+        <div class="control-group">
+            <label class="control-label" for="login">Login</label>
+            <div class="controls">
+                <input type="text" id="login" name="login">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="senha">Senha</label>
+            <div class="controls">
+                <input type="text" id="senha" name="senha">
+            </div>
+        </div>
+        <br>
+        <a class="btn btn-success">Login</a><br>
+    </div>
+</div>
+</form>

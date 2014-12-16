@@ -1,0 +1,58 @@
+<?php
+$title = 'Editar Turma';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="turma">Turma</label>
+        <div class="controls">
+            <input type="text" id="turma" name="turma" value="<?php echo $turma->getTurma(); ?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="numero">Número</label>
+        <div class="controls">
+            <input type="text" id="numero" name="numero" value="<?php echo $turma->getNumero(); ?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="escola">Escola</label>
+        <div class="controls">
+            <select name="escola" id="escola">
+                <?php foreach($escolas AS $escola){
+                    echo "<option value='".$escola->getId()."'";
+                        echo $escola->getNome() == $turma->getEscola()?' selected':'';
+                    echo ">".$escola->getNome()."</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Bairro</label>
+        <div class="controls">
+            <input type="text" id="bairro" name="bairro" value="<?php echo $turma->getBairro(); ?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Região</label>
+        <div class="controls">
+            <input type="text" id="regiao" name="regiao" value="<?php echo $turma->getRegiao(); ?>">
+        </div>
+    </div>
+
+
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='../'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>

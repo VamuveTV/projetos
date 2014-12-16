@@ -1,0 +1,56 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript">
+    function enviaIcone(icone)
+    {
+        $.ajax({
+            type: "POST",
+            data: {'icone': icone,'posta_icone':1,'remetente':<?php echo $aluno->getId();?>,'tipo_remetente':'<?php echo $tipo_logado;?>','destinatario':<?php echo $aluno->getId();?>,'tipo_destinatario':'<?php echo $tipo_logado;?>'},
+            url: '/acesso/envia',
+            success: function(dados) {
+                return true;
+            }
+        });
+        //$('.icon').remove();
+        $('.icon').removeAttr( "onclick" );
+        alert('Enviado com sucesso');
+
+    }
+    //EXIBIR E OCULTAR DIV
+    function exibe(id) {
+        if(document.getElementById(id).style.display=="none") {
+            document.getElementById(id).style.display = "inline";
+            document.getElementById('btSaibaMaisSentindo').style.display = "none";
+            document.getElementById('btOcultarFace').style.display = "inline";
+
+        }
+        else {
+            document.getElementById(id).style.display = "none";
+            document.getElementById('btSaibaMaisSentindo').style.display = "inline";
+            document.getElementById('btOcultarFace').style.display = "none";
+
+        }
+
+    }
+</script>
+<div id="conteudo">
+<h2>GOSTARIA DE COMENTAR MAIS ALGUMA COISA?</h2>
+<form method="post">
+    <textarea name="comentario" id="comentario" cols="" rows="" class="comentar-sentindo"></textarea>
+    <div class="limpa" style="height: 10px"></div>
+    <input type="image" src="/public/imagens/bt-continuar-sentindo.png" width="112" height="34" border="0" class="btContinuarSentindo" />
+    </form>
+    <a class="link_simples" style="float: right; text-decoration: none" href="/">Não quero comentar</a>
+</div>

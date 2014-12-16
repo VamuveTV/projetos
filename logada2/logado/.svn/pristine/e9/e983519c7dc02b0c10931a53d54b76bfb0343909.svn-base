@@ -1,0 +1,41 @@
+# pack-refs with: peeled fully-peeled 
+1990bf61ac02745c7b65cb874961c0ae81264271 refs/remotes/origin/master
+0e9e906067fcd1e0070605e8039d87985fc4340f refs/tags/zf/release-2.0.0
+^f712792e913ac88dfcc67e064a184a1d238c00b4
+0c492f9736e7105e6f0348caf09afee85c974e66 refs/tags/zf/release-2.0.0beta1
+^5468d07acc0b01f413540c0178985870bbecc43d
+42a025bbceb0075d0f53c9c57cf9b979f34b09fb refs/tags/zf/release-2.0.0beta2
+^6f0edf13b0c344d270841f17ed455fc144b2d0df
+20762032d6f0a465b462cc313e92f7919bd57414 refs/tags/zf/release-2.0.0beta3
+8c7b3c0e3ac8c4846818c4c5304dafbc04322993 refs/tags/zf/release-2.0.0beta4
+^a1ef4bda06a0e7178e6656cc87d54fbde1a4c195
+bad2f8788feba84992ace4d4b5c4a198958c3b6e refs/tags/zf/release-2.0.0beta5
+82351cd23a29b4da0be3758bdf41f14c2efaeecc refs/tags/zf/release-2.0.0rc1
+29ab23fdd03a35e6057848b0eb0feda961e4c51c refs/tags/zf/release-2.0.0rc2
+^0062d0f8fc69a54ecd97702b528329406bf88bcd
+b5ae52a721ea5329f215b3ab721a45b7ea77602d refs/tags/zf/release-2.0.0rc3
+^365751ee70450a5eb4d112f1e3d2700c1f83dd98
+28fe127cd91e0aaf598c07e9a56f70db00c15144 refs/tags/zf/release-2.0.0rc4
+^e01f8dfb851c2a6289be444061868f8ced43bd8f
+12ac426fc119cff603038cd43ab36d063fecd452 refs/tags/zf/release-2.0.0rc5
+^735381043229263d21ce395d9d283d5ef86b331d
+b00722d7b07ca024ba16d0a4afe524a8d255bc26 refs/tags/zf/release-2.0.0rc6
+^811eb8096c038df2582d0d928b8c1cdf60313771
+cbe0db89e71e049a634522594526c6437a8da98d refs/tags/zf/release-2.0.0rc7
+^95cfa7051ee84a4c717ab5e157941e052470d078
+aa72885143126bde9fffd15e330870a1ab951606 refs/tags/zf/release-2.0.1
+^bf98792df3e8b3e80eb407263f6493f9b5f25aa4
+c8ad4b9bb0b6cdf32038b2d754a08d4b938f990e refs/tags/zf/release-2.0.2
+^98c1354a1bc8ddad205e65f03fa9c8354fdea28b
+ba2e913bc2071f87fdc58be1c31e9fca20ef2b94 refs/tags/zf/release-2.0.3
+^657a752282ea3b986cda9659a6edb1a0e1d09726
+620bac06e7ec8c83e57baa7bb25e52a0095cdec8 refs/tags/zf/release-2.0.4
+^53f22f1700b6e01d008ef948bf862d29b23ef3a6
+ceacefd6a9e58988d4b7db2e3d70052d5aedd4c2 refs/tags/zf/release-2.0.5
+^5e01648be96899654c9e2dcfda029c0cfd469992
+b7cfe21a8048ecc813229cd8233110d2f622880f refs/tags/zf/release-2.0.6
+^bd51bb0c8dce9ea7261c40664e0cc69d2f19218c
+39423b6457ab8ae2f13ce35fde9155b8f9fcc9a7 refs/tags/zf/release-2.0.7
+^7dce98e187e9ac5cc19341152323b889d33c96db
+d551c674c9439dbf4efd263d5f1cb06f83e62239 refs/tags/zf/release-2.1.0
+^33ca80ea80eccb54fab229d7ca5d07f1bbb4d172

@@ -1,0 +1,116 @@
+
+<script type="text/javascript" src="/public/js/paging.js"></script>
+
+<link id="" rel="stylesheet" type="text/css" href="/public/css/paging.css" media="all" />
+
+<?php
+
+global $tpValueInRouter;
+
+$tpValueInRouter ='[0-9]+';
+
+# se ADMIN tiver disparado/clicado no que pretende ( Estatística Qualitativa, Quantitativa, Turmas e/ou Séries ) aprensente grid.
+
+echo 
+
+	'<h2>'.
+	'ESTATÍSTICAS'.
+	'</h2>'.
+	'<a href='.$this->url( 'admin' , array( 'action' => 'statisticsoptions' , 'id' => 0 , 'tpView' => 'individuais' , 'llaveX' => 0 ) ).' class="btn btn-success btn-large" target="_self">Individuais</a> '.
+	' <a href='.$this->url( 'admin' , array( 'action' => 'statisticsoptions' , 'id' => 0 , 'tpView' => 'turmas' , 'llaveX' => 0 ) ).' class="btn btn-success btn-large" target="_self">Turmas</a> '.
+	' <a href='.$this->url( 'admin' , array( 'action' => 'statisticsoptions' , 'id' => 0 , 'tpView' => 'series' , 'llaveX' => 0 ) ).' class="btn btn-success btn-large" target="_self">Séries</a>'.
+	'<br>';
+
+if ( !empty ( $tpView )	) {
+
+	switch ($tpView) {
+	
+		case 'individuais' :
+			
+			echo 
+
+				"individuais";
+			
+		break;
+		
+		case 'turmas' :
+		
+			# examine se houve retorno de valores ...
+			 
+			if ( sizeof ( $cmmd_schoolclass  ) ) {
+
+				echo
+				
+					"<table class=table id='tb10' align=center>".
+					"<thead>".
+					"<tr>".
+					"<th align=><b> Escola </th>".
+					"<th align=><b> Turma </th>".
+					"<th align=><b> Série </th>".
+					"<th align=><b> Período </th>".
+					"<th></th>".
+					"</tr>".
+					"</thead>";
+					
+				# laço foreach(), repetir exibição de lista com registros de turmas (segmentando-as por: escola, série e período).
+				
+				foreach ( $cmmd_schoolclass as $cmmd_sc ) {
+
+					# retirando caracteres especiais da string, a seguir.
+					
+					$llaveQ = strtr($cmmd_sc['periodo'], "áàãâéêíóôõúüçÁÀÃÂÉÊÍÌÒÓÔÕÚÜÇ", "aaaaeeiooouucAAAAEEIIOOOOUUC");
+
+					echo 
+					
+						"<tbody>".
+						"<tr>".
+						"<td align=>".$cmmd_sc['nm_escola']."</td>".
+						"<td align=>".$cmmd_sc['nm_turma']."</td>".
+						"<td align=>".$cmmd_sc['serie']."</td>".
+						"<td align=>".$cmmd_sc['periodo']."</td>".
+						"<td align=>".
+						"<a href='".$this->url( 'admin', array( 'action' => 'statisticsperschoolclass' , 'id' => $cmmd_sc['id_escola'] , 'tpView' => 'quantitativo' , 'llaveX' => 0 , 'llaveY' => $cmmd_sc['id_turmaEmAluno'] , 'llaveZ' => $cmmd_sc['serie'] , 'llaveQ' => $llaveQ ) )."' target='_blank' class='btn btn-warning'> Quantitativo </a> ".
+						"<a href='".$this->url( 'admin', array( 'action' => 'statisticsperschoolclass' , 'id' => $cmmd_sc['id_escola'] , 'tpView' => 'qualitativo' , 'llaveX' => 0 , 'llaveY' => $cmmd_sc['id_turmaEmAluno' ], 'llaveZ' => $cmmd_sc['serie'] , 'llaveQ' => $llaveQ ) )."' target='_blank' class='btn btn-danger'> Qualitativo </a>".
+						"</td>".
+						"</tr>".
+						"</tbody>";
+
+				}
+
+				echo 
+				
+					"</table>".
+					"<br>".
+					"<div id='pageNav' align='center'></div>".
+					"<script>".
+					"var pager = new Pager('tb10', 5); ".
+					"pager.init(); ".
+					"pager.showPageNav('pager', 'pageNav'); ".
+					"pager.showPage(1);".
+					"</script>";
+			 
+			# ... caso inexistam registros, explique!
+			 
+			} else {
+			 
+				echo 
+				
+					"<br>".
+					"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+			 
+			}
+
+		break;
+		
+		case 'series' :
+		
+			echo "series";
+			
+		break;
+		
+	}
+	
+}
+	
+?>

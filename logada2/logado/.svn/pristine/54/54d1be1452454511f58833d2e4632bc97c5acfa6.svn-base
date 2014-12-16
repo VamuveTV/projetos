@@ -1,0 +1,22 @@
+<?php /*
+$title = 'Delete User';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php 
+$form = $this->form;
+$form->setAttribute('action', 'delete');
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+
+<?php
+echo 'Você quer mesmo apagar o usuário' . $user->getName() . '?';
+
+echo $this->formCollection($form);
+echo $this->form()->closeTag();*/
+?>

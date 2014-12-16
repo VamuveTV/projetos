@@ -1,0 +1,55 @@
+<?php
+
+$title = 'Adicionar Turma';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="turma">Turma</label>
+        <div class="controls">
+            <input type="text" id="turma" name="turma" class="input-medium">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="escola">Escola</label>
+        <div class="controls">
+            <select name="escola" id="escola">
+                <?php foreach($escolas AS $escola){
+                    echo "<option value='".$escola->getId()."'>".$escola->getNome()."</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="numero">Número</label>
+        <div class="controls">
+            <input type="text" id="numero" name="numero">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Região</label>
+        <div class="controls">
+            <input type="text" id="regiao" name="regiao">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="bairro">Bairro</label>
+        <div class="controls">
+            <input type="text" id="bairro" name="bairro">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='/turmas'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>

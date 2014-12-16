@@ -1,0 +1,62 @@
+<?php
+$profileName = $this->profile->getDisplayName();
+$title = "Perfil de " . $profileName;
+
+$this->headTitle($title);
+?>
+
+
+<div class="row">
+    <div class="col-lg-2">
+        <img src="http://www.chic-and-ethic.com/useruploads/profilepics/profile_img.jpg" alt="perfil" class="img-thumbnail"/>
+    </div>        
+    <div class="col-lg-8">
+        <h2><?php echo $profileName ?></h2>
+        <ul  class="list-unstyled">
+            <li>Escola 1</li>
+            <li>Primeiro ano</li>
+        </ul>
+        
+        <ul  class="list-unstyled">
+            <li><i class="glyphicon glyphicon-heart"></i> <?php echo $this->profile->getHeartCount() ?> corações (<a>enviar coração</a>)</li>
+            <li><i class="glyphicon glyphicon-thumbs-up"></i> <?php echo $this->profile->getHandshakeCount() ?> apertos de mão (<a>enviar aperto de mão</a>)</li>
+        </ul>
+    </div>
+    <div class="col-lg-2">
+        <ul class="list-unstyled">
+            <li>
+                <a>
+                <?php
+                    if ($this->hasFriendship)
+                    {
+                        echo "Desfazer amizade";
+                    }
+                    else 
+                    {
+                        echo "Pedir amizade";
+                    }
+                ?>
+                </a>
+            </li>
+            <li><a>Denunciar esta pessoa</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <h2>Gostaria de falar algo para <?php echo $profileName ?>?</h2>
+    <?php
+        $this->form->setAttribute('action', $this->url('profile', 
+            array('action' => 'postToWall', 'id' => $this->profile->getId()))
+        );
+        $this->form->prepare();
+        echo $this->form()->openTag($this->form);        
+        echo $this->postCreate;
+        echo $this->form()->closeTag();
+    ?>
+</div>
+
+<div class="row">
+    <h2>O que <?php echo $profileName ?> postou</h2>
+    <?php echo $this->postDisplay;?>
+</div>

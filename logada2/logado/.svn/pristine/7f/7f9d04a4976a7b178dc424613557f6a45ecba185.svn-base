@@ -1,0 +1,1340 @@
+
+<script type="text/javascript" src="/public/js/paging.js"></script>
+
+<link id="" rel="stylesheet" type="text/css" href="/public/css/paging.css" media="all" />
+
+
+<?php
+
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# discernir se o conteúdo a ser exibido terá de ser "quantitativo" ou "qualitativo".
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+
+switch ( $tpView ) {
+
+	case "quantitativo" :
+
+	echo 
+
+	"<br>".
+	"<table border=0 class='table' >".
+	#"<table border=1 >".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Cabeçalho.
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<thead>".
+	"<tr>".
+	"<th colspan=2> <b> Assunto </th>".
+	"<th > <b> Quantidade </th>".
+	"<th > <b> Ação </th>".
+	"</tr>".
+	"</thead>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas denúncias esse Aluno registrou?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	#"<tbody>".
+	"<tr>".
+	"<td colspan=2><p> Quantas denúncias esse Aluno registrou ? </p></td>".
+	"<td > ".$amountOfReports[0][1]." </td>".
+	"<td > Denúncia </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas atividades foram registradas por esse aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p> Quantas atividades foram registradas por esse aluno? </p></td>".
+	"<td > ".$amountOfActivitiesThatStudent[0][1]." </td>".
+	"<td rowspan=2><br> Atividades </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas atividades foram registradas para esse aluno, por terceiros?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantas atividades foram registradas para esse aluno, por terceiros? </p></td>".
+	"<td > ".$amountOfActivitiesThatStudentByOther[0][1]." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos amigos (Alunos) esse Aluno possui?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p> Quantos amigos (Alunos) esse Aluno possui? </p></td>".
+	"<td > ".$amountOfStudentFriends[0][1]." </td>".
+	"<td rowspan=2><br><br> Amigos </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos amigos (Funcionalismo - Diretores, Professores e/ou Funcionário) esse Aluno possui?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantos Amigos (Funcionalismo - Diretores, Professores e/ou Funcionário) esse Aluno possui? </p></td>".
+	"<td > ".$amountOfFriendsOfficials[0][1]." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos amigos preferidos esse Aluno possui?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantas amigos preferidos esse Aluno possui? </p></td>".
+	"<td > ".$amountOfFriendsAsFavorite[0][1]." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos SMILES esse Aluno postou/enviou?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p> Quantos Smiles esse Aluno postou/enviou ? </p></td>".
+	"<td > ".$amountOfSmilesSent[0][1]." </td>".
+	"<td > Smiles </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos postagens foram realizadas por esse Aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p> Quantos postagens foram realizadas por esse Aluno? </p></td>".
+	"<td > ".$amountOfPostsSent[0][1]." </td>".
+	"<td rowspan=4><br><br><br> Posts </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos posts esse Aluno destinou a um amigo?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantos posts esse Aluno destinou a um amigo? </p></td>".
+	"<td > ".$amountOfPostsSentForFriends[0][1]." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos posts esse Aluno recebeu?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantos posts esse Aluno recebeu? </p></td>".
+	"<td > ".$amountOfPostsReceived[0][1]." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas pessoas enviaram post para esse Aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantos posts esse Aluno recebeu? </p></td>".
+	"<td > ".$amountOfUsersSendPost[0][1]." </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos "aperto de mão" foram enviados para esse Aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	'<td colspan=2><p> Quantos "aperto de mão" foram enviados para esse Aluno? </p></td>'.
+	"<td > ".$amountOfHandshakeSentByThisStudent[0][1]." </td>".
+	"<td rowspan=2><br> Aperto de Mão </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos "aperto de mão" esse Aluno enviou a um Amigo?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	'<td colspan=2><p > Quantos "aperto de mão" esse Aluno enviou a um Amigo? </p></td>'.
+	"<td > ".$amountOfHandshakeSentByFriend[0][1]." </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos "coração" foram enviados para esse Aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	'<td colspan=2><p> Quantos "coração" foram enviados para esse Aluno? </p></td>'.
+	"<td > ".$amountOfHeartSentByThisStudent[0][1]." </td>".
+	"<td rowspan=2><br> Coração </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos "coração" esse Aluno enviou a um Amigo?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	'<td colspan=2><p > Quantos "coração" esse Aluno enviou a um Amigo? </p></td>'.
+	"<td > ".$amountOfHeartSentByFriend[0][1]." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos Alunos foram avaliados por esse Aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	'<td colspan=2><p> Quantos Alunos foram avaliados por esse Aluno? </p></td>'.
+	"<td > ".$amountOfAvaliationsForStudents[0][1]." </td>".
+	"<td rowspan=3><br><br> Avaliação </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos Funcionários foram avaliados por esse Aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	'<td colspan=2><p > Quantos Funcionários foram avaliados por esse Aluno? </p></td>'.
+	"<td> ".$amountOfAvaliationsForOfficials[0][1]." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas Escolas foram avaliadas por esse Aluno?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	'<td colspan=2><p > Quantas Escolas foram avaliadas por esse Aluno? </p></td>'.
+	"<td > ".$amountOfAvaliationsForSchools[0][1]." </td>".
+	"</tr>".
+	"</table>".
+	"<br>".
+	"<br>";
+
+	break;
+
+	case "qualitativo" :
+		
+	# -----------------------------
+	# menu, exibir lista de opções.
+	# -----------------------------
+	
+	if ( $llaveX == 0 ) {
+
+		echo 
+
+			"<br>".
+			"<br>".
+			"<br>".
+			"<p align=center>".
+			"<select class=estiloSelectPerfil multiple onchange='myChangeHandler.apply(this)' style='font-size:18px; text-align:left; weight: autopx; height:433px;'  />".
+			"<option value='' selected=selected /> POR FAVOR, CLIQUE SOBRE A OPÇÃO PRETENDIDA </option>".
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 1, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 1 . DADOS CADASTRAIS QUE PERTENÇAM A ESSE ALUNO. </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 2, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 2 . QUAL AVALIAÇÃO ESSE ALUNO DESTINOU A OUTRO ALUNO ? </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 3, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 3 . QUAL AVALIAÇÃO ESSE ALUNO DESTINOU AO FUNCIONALISMO ? </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 4, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 4 . QUAL AVALIAÇÃO ESSE ALUNO DESTINOU ÀS ESCOLAS ? </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 5, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 5 . QUAIS POSTS HAVIAM SIDO DIRECIONADOS PARA ESSE ALUNO, POR OUTRO ALUNO ? </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 6, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 6 . QUAIS POSTS HAVIAM SIDO DIRECIONADOS PARA ESSE ALUNO, PELO FUNCIONALISMO ? </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 7, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 7 . EXIBA HISTÓRICO DE POSTS DESSE ALUNO </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 8, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 8 . QUAIS AVALIAÇÕES ESSE ALUNO DESTINOU AOS AMIGOS, ALUNOS ? </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 9, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 9 . QUAIS AVALIAÇÕES ESSE ALUNO DESTINOU AOS AMIGOS, FUNCIONALISMO ? </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 10, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 10 . RELACIONE QUAIS NOTAS ESCOLARES ESSE ALUNO ALCANÇOU. </option>'.
+			'<option value='.$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 11, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 11 . RELACIONE TODAS AS PÁGINAS WEB ACESSADAS POR ESSE ALUNO. </option>'.
+			"</select>".
+			"</p>";
+	
+	# ------------------------------------------------
+	# quais endereços web mais vezes foram acessados ?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 1 ) {
+	
+		if ( sizeof ( $dataOfStudents ) > 0 ) {
+		
+			print 
+			
+				"<br>".
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Matrícula</th>".
+				"<th>Nome Completo</th>".
+				"<th>E-mail</th>".
+				"<th>Sexo</th>".
+				"</tr>".
+				"<tr>".
+				 "<td>".$dataOfStudents[0]['matricula']."</td>".
+				 "<td>".$dataOfStudents[0]['nome_completo']."</td>".
+				 "<td>".$dataOfStudents[0]['email']."</td>".
+				 "<td>".$dataOfStudents[0]['sexo']."</td>".
+				 "</tr>".
+				 "</table>";
+				
+		# ... caso inexistam registros, explique!
+		
+		} else {
+				
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+	
+	# ------------------------------------------------
+	# qual avaliação esse aluno destinou a outro aluno?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 2 ) {
+
+
+		if ( !empty ( $avaliationsForStudents ) ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Avaliação</th>".
+				"<th>Papel</th>".
+				"<th>Observação</th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $avaliationsForStudents ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$avaliationsForStudents[$corr]['nome_avaliado'].
+					"</td>";
+					
+					$s = $avaliationsForStudents[$corr]['nota_aluno'];
+					
+					$f = floor($s);
+
+					$r = 0;
+					
+					if ( $s < 1 ) {
+					
+						echo "<td>";
+						
+						while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+					
+						echo "</td>";
+					
+					} else {
+					
+						echo "<td>";
+						
+						while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+						$f = strpos($s,'.5');
+
+						!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+						
+						echo "</td>";
+
+					}
+					
+					#"<td>".
+					#$avaliationsForStudents[$corr]['nota_aluno'].
+					#"</td>".
+					
+				echo 
+				
+					"</td>".
+					"<td> ALUNO </td>".
+					
+					"<td>".
+					substr ($avaliationsForStudents[$corr]['observacao_avaliacao'], 0,35).
+					"</td>".
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+		
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+		
+		}
+
+	# ------------------------------------------------
+	# qual avaliação esse aluno destinou ao funcionalismo?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 3 ) {
+	
+		if ( sizeof ( $avaliationsForOfficials ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Avaliação</th>".
+				"<th>Papel</th>".
+				"<th>Observação</th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $avaliationsForOfficials ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$avaliationsForOfficials[$corr]['nome_funcionario'].
+					"</td>";
+
+					$s = $avaliationsForOfficials[$corr]['nota_funcionario'];
+					
+					$f = floor($s);
+
+					$r = 0;
+					
+					if ( $s < 1 ) {
+					
+						echo "<td>";
+						
+						while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+					
+						echo "</td>";
+					
+					} else {
+					
+						echo "<td>";
+						
+						while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+						$f = strpos($s,'.5');
+
+						!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+						
+						echo "</td>";
+
+					}
+
+					#"<td>".
+					#$avaliationsForOfficials[$corr]['nota_funcionario'].
+					#"</td>";
+
+					$avaliationsForOfficials[$corr]['funcao_funcionario'] == "F" ? print "<td> FUNCIONALISMO </td>" : "";
+					$avaliationsForOfficials[$corr]['funcao_funcionario'] == "D" ? print "<td> DIRETORIA </td>" : "";
+					$avaliationsForOfficials[$corr]['funcao_funcionario'] == "P" ? print "<td> PROFESSOR </td>" : "";
+
+				echo 
+				
+					"<td>".
+					substr ($avaliationsForOfficials[$corr]['observacao_avaliacao'], 0,35).
+					"</td>".
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+	
+	# ------------------------------------------------
+	# qual avaliação esse aluno destinou às escolas?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 4 ) {
+
+		if ( sizeof ( $avaliationsForSchools ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Avaliação</th>".
+				"<th>Papel</th>".
+				"<th>Observação</th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $avaliationsForSchools ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$avaliationsForSchools[$corr]['nome_escola'].
+					"</td>";
+
+					$s = $avaliationsForStudents[$corr]['nota_avaliacao'];
+					
+					$f = floor($s);
+
+					$r = 0;
+
+					if ( $s < 1 ) {
+					
+						echo "<td>";
+						
+						while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+					
+						echo "</td>";
+					
+					} else {
+					
+						echo "<td>";
+						
+						while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+						$f = strpos($s,'.5');
+
+						!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+						
+						echo "</td>";
+
+					}
+					
+					#"<td>".
+					#$avaliationsForSchools[$corr]['nota_avaliacao'].
+					#"</td>".
+					
+				echo	
+
+					"<td> ESCOLA </td>".
+					
+					"<td>".
+					substr ($avaliationsForSchools[$corr]['observacao_avaliacao'], 0,35).
+					"</td>".
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+	
+	# ------------------------------------------------
+	# quais posts haviam sido direcionados para esse aluno, por outro aluno?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 5 ) {
+	
+		if ( sizeof ( $postsSentByStudents ) > 0 ) {
+	
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Quantidade de Posts</th>".
+				"<th>Último Post</th>".
+				"<th></th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $postsSentByStudents ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$postsSentByStudents[$corr]['nome_remetente'].
+					"</td>".
+
+					"<td>".
+					$postsSentByStudents[$corr]['quantidade_posts'].
+					"</td>".
+
+					"<td>".  
+					date("d/m/Y", strtotime($postsSentByStudents[$corr]['ultimo_post'])).
+					"</td>".
+					
+					"<td>".
+					"<a href='".$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 5000 , 'llaveY' => $postsSentByStudents[$corr]['id_remetente_aluno'] , 'llaveZ' => 0 , 'llaveQ' => $llaveQ ) )."' target='_self' class='btn btn-success btn-large'> Detalhar </a> ".
+					"</td>".
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 5000 ) {
+	
+		if ( sizeof ( $postsSentByStudents ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Post</th>".
+				"<th>Data</th>".
+				"<th></th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $postsSentByStudents ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					substr ($postsSentByStudents[$corr]['descricao_post'], 0,35).
+					"</td>".
+
+					"<td>".
+					date("d/m/Y", strtotime($postsSentByStudents[$corr]['data_post'])).
+					"</td>".
+
+					"<td>".
+					"<a href='".$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 5001 , 'llaveY' => $postsSentByStudents[$corr]['id_post'] , 'llaveZ' => 0 , 'llaveQ' => 0 ) )."' target='_self' class='btn btn-success btn-large'> Detalhar </a> ".
+					"</td>".
+					
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 5001 ) {
+
+		if ( sizeof ( $postsSentByStudents ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Post</th>".
+				"<th>Data</th>".				
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $postsSentByStudents ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$postsSentByStudents[$corr]['descricao_post'].
+					"</td>".
+
+					"<td>".
+					date("d/m/Y", strtotime($postsSentByStudents[$corr]['data_post'])).
+					"</td>".
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# ------------------------------------------------
+	# quais posts haviam sido direcionados para esse aluno, a partir do funcionalismo?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 6 ) {
+	
+		if ( sizeof ( $postsSentByOfficials ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Quantidade<BR> de Posts</th>".
+				"<th>Último Post</th>".
+				"<th></th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $postsSentByOfficials ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$postsSentByOfficials[$corr]['nome_remetente'].
+					"</td>".
+
+					"<td>".
+					$postsSentByOfficials[$corr]['quantidade_posts'].
+					"</td>".
+
+					"<td>".  
+					date("d/m/Y", strtotime($postsSentByOfficials[$corr]['ultimo_post'])).
+					"</td>".
+					
+					"<td>".
+					"<a href='".$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 6000 , 'llaveY' => $postsSentByOfficials[$corr]['id_remetente_funcionario'] , 'llaveZ' => 0 , 'llaveQ' => $llaveQ ) )."' target='_self' class='btn btn-success btn-large'> Detalhar </a> ".
+					"</td>".
+					
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 6000 ) {
+	
+		if ( sizeof ( $postsSentByOfficials ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Post</th>".
+				"<th>Data</th>".
+				"<th></th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $postsSentByOfficials ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					substr ($postsSentByOfficials[$corr]['descricao_post'], 0,35).
+					"</td>".
+
+					"<td>".
+					date("d/m/Y", strtotime($postsSentByOfficials[$corr]['data_post'])).
+					"</td>".
+
+					"<td>".
+					"<a href='".$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 6001 , 'llaveY' => $postsSentByOfficials[$corr]['id_post'] , 'llaveZ' => 0 , 'llaveQ' => 0 ) )."' target='_self' class='btn btn-success btn-large'> Detalhar </a> ".
+					"</td>".
+					
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+		
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 6001 ) {
+
+		if ( sizeof ( $postsSentByOfficials ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Post</th>".
+				"<th>Data</th>".				
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $postsSentByOfficials ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$postsSentByOfficials[$corr]['descricao_post'].
+					"</td>".
+
+					"<td>".
+					date("d/m/Y", strtotime($postsSentByOfficials[$corr]['data_post'])).
+					"</td>".
+
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+	
+	# ------------------------------------------------
+	# histórico de posts que pertença a esse Aluno.
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 7 ) {
+	
+		if ( sizeof ( $historyOfPosts ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Post</th>".
+				"<th>Smile<BR>Posts</th>".
+				"<th>Data</th>".
+				"<th></th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $historyOfPosts ); $corr++ ) {
+
+				
+				($historyOfPosts[$corr]['descricao_post'] != "") ? print "<tr><td>".$historyOfPosts[$corr]['descricao_post']."</td>" : print "<tr><td>Usuário optou por não comentar!</td>";
+					
+				($historyOfPosts[$corr]['smile_post'] != "") ? print "<td>".'<img src="/public/imagens/faces/'.$historyOfPosts[$corr]['smile_post'].'.png" width="39" height="39" border="0" />'."</td>" : print "<td></td>";
+						
+				echo
+
+					"<td>".  
+					date("d/m/Y", strtotime($historyOfPosts[$corr]['data_post'])).
+					"</td>".
+					
+					"<td>".
+					"<a href='".$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 7000 , 'llaveY' => $historyOfPosts[$corr]['id_post'] , 'llaveZ' => 0 , 'llaveQ' => 0 ) )."' target='_self' class='btn btn-success btn-large'> Detalhar </a> ".
+					"</td>".
+					
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 7000 ) {
+
+		if ( sizeof ( $historyOfPosts ) > 0 ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Post</th>".
+				"<th>Data</th>".				
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $historyOfPosts ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".
+					"<td>".
+					$historyOfPosts[$corr]['descricao_post'].
+					"</td>".
+
+					"<td>".
+					date("d/m/Y", strtotime($historyOfPosts[$corr]['data_post'])).
+					"</td>".
+
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# ------------------------------------------------
+	# Quais Avaliações esse Aluno destinou aos amigos, Alunos?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 8 ) {
+
+		if ( ( sizeof ( $avaliationsForFriendsStudents ) > 0 ) && ( $someColumnsNotNull == 'S' ) ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Amigo recebeu Aperto de Mão?</th>".
+				"<th>Amigo recebeu Coração?</th>".
+				"<th>É uma Amizade Preferida?</th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $avaliationsForFriendsStudents ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".					
+					"<td>".
+					$avaliationsForFriendsStudents[$corr][0]['nome_avaliado_aluno'].
+					"</td>".
+
+					"<td>".
+					$avaliationsForFriendsStudents[$corr][0][0].
+					"</td>".
+					
+					"<td>".
+					$avaliationsForFriendsStudents[$corr][0][1].
+					"</td>".
+
+					"<td>".
+					$avaliationsForFriendsStudents[$corr][0][2].
+					"</td>".					
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# ------------------------------------------------
+	# Quais Avaliações esse Aluno destinou aos amigos, Funcionalismo?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 9 ) {
+	
+		if ( ( sizeof ( $avaliationsForFriendsOfficials ) > 0 ) && ( $someColumnsNotNull == 'S' ) ) {
+
+			echo 
+			
+				"<br>".
+				"<table class='table' id='tb1' align='center'>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Recebeu Aperto de Mão?</th>".
+				"<th>Recebeu Coração?</th>".
+				"<th>É um Amigo Preferido?</th>".
+				"</tr>";
+
+			for ( $corr=0; $corr < sizeof ( $avaliationsForFriendsOfficials ); $corr++ ) {
+
+				echo 
+				
+					"<tr>".					
+					"<td>".
+					$avaliationsForFriendsOfficials[$corr][0]['nome_avaliado_funcionario'].
+					"</td>".
+
+					"<td>".
+					$avaliationsForFriendsOfficials[$corr][0][0].
+					"</td>".
+					
+					"<td>".
+					$avaliationsForFriendsOfficials[$corr][0][1].
+					"</td>".
+
+					"<td>".
+					$avaliationsForFriendsOfficials[$corr][0][2].
+					"</td>".					
+					"</tr>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+			
+		} else {
+
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+		}
+
+	# ------------------------------------------------
+	# Relação de notas escolares desse Aluno.
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 10 ) {
+	
+		if ( sizeof ( $avgNotesStudents ) > 0 ) {
+		
+			echo 
+			
+				"<table id='tb10' align='center' class='table' border=0>".
+				"<tr>".
+				"<th rowspan=2> Dados Pessoais </th>".
+				"<th rowspan=2> Disciplinas </th>".
+				"<th colspan=4> Períodos </th>".
+				"</tr>".
+				"<tr>".
+				"<th> I </th>".
+				"<th> II </th>".
+				"<th> III </th>".
+				"<th> IV </th>".
+				"</tr>";
+
+			for ( $corr13 = 0 ; $corr13 < sizeof ( $avgNotesStudents ) ; $corr13++ ) {
+					
+				$corr13 == 0 ?
+					
+				print 
+				
+					"<br>".
+					"<tr>".
+					"<td rowspan=4>".
+					"<br>Nome: ".strtolower ( $avgNotesStudents[$corr13]['nome_aluno'] ).
+					"<br>Matrícula: ".strtolower ( $avgNotesStudents[$corr13]['matricula_aluno'] ).
+					"<br>Escola: ".strtolower ( $avgNotesStudents[$corr13]['escola_aluno'] ).
+					"<br>Turma: ".strtolower ( $avgNotesStudents[$corr13]['turma_aluno'] ).
+					"<br>Localização: ".strtolower ( $avgNotesStudents[$corr13]['bairro_turma'] )."</td>" : "";
+					
+				print
+				
+					"<td>".mb_strtolower( $avgNotesStudents[$corr13]['materia_escolar'], 'UTF-8' )."</td>";
+				
+				print
+				
+					"<td>".$avgNotesStudents[$corr13]['ntI']."</td>".
+					"<td>".$avgNotesStudents[$corr13]['ntII']."</td>".
+					"<td>".$avgNotesStudents[$corr13]['ntIII']."</td>".
+					"<td>".$avgNotesStudents[$corr13]['ntIV']."</td>".
+					"</tr>";
+				
+			}
+							
+			echo 
+			
+				"</table>";
+
+		} else {
+				
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+
+	# ------------------------------------------------
+	# Relação dos sites mais acessados ?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 11 ) {
+
+		if ( sizeof ( $accessToPagesByThisStudent ) > 0 ) {
+		
+			print 
+			
+				"<br>".
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th width=50%>Endereço Web</th>".
+				"<th width=40%>Quantidade de Acessos</th>".
+				"<th width=10%></th>".
+				"</tr>";
+
+			foreach ( $accessToPagesByThisStudent as $accessToPagesByThisStudent ) {
+
+				print 
+				
+					"<tr>".				
+					"<td>".$accessToPagesByThisStudent['endereco']."</td>".
+					"<td>".$accessToPagesByThisStudent['qt_acessos']."</td>".
+					#"<td>"."<a href='".$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 11000 , 'llaveY' => $accessToPagesByThisStudent['id_url'] , 'llaveZ' => 0 , 'llaveQ' => 0 ) )."' target='_self' class='btn btn-success btn-large'> Detalhar </a> "."</td>".
+					"<td>"."<a href='".$this->url( 'statisticsperstudents', array( 'action' => 'statisticsperstudents' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 11000 , 'llaveY' => $accessToPagesByThisStudent['id_url'] , 'llaveZ' => 0 , 'llaveQ' => $accessToPagesByThisStudent['id_aluno'] ) )."' target='_self' class='btn btn-success btn-large'> Detalhar </a> "."</td>".
+					"</tr>";
+					
+			}
+				
+			print 
+			
+				#"</tr>".
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 5); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+				
+		# ... caso inexistam registros, explique!
+		
+		} else {
+				
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+	
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 11000 ) {
+	
+		if ( sizeof ( $accessToPagesByThisStudent ) > 0 ) {
+		
+			print 
+			
+				"<br>".
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Endereço Web</th>".
+				"<th>Data</th>".
+				"<th>Hora</th>".
+				"<th>Usuário</th>".
+				"</tr>";
+			
+			for ( $running = 0 ; $running < sizeof ( $accessToPagesByThisStudent ) ; $running++ ) {
+			
+				print 
+				
+					"<tr>".
+					"<td>".$accessToPagesByThisStudent[$running]['endereco']."</td>".
+					"<td>".date("d/m/Y", strtotime($accessToPagesByThisStudent[$running]['data_acesso']))."</td>".
+					"<td>".date("h:i:s A", strtotime($accessToPagesByThisStudent[$running]['data_acesso']))."</td>".						
+					"<td>".$accessToPagesByThisStudent[$running]['nome_aluno']."</td>".
+					"</tr>";
+
+			}
+							
+			print 
+			
+				#"</tr>".
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 5); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+				
+		# ... caso inexistam registros, explique!
+		
+		} else {
+				
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+
+	}
+	
+	break;
+	
+}
+
+?>
+
+<script language='javascript'>
+
+function show(id) {
+    document.getElementById(id).style.display = 'block';
+}
+
+function hide(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function myChangeHandler() {
+	window.open(this.options[this.selectedIndex].value, '_blank');
+}
+
+</script>

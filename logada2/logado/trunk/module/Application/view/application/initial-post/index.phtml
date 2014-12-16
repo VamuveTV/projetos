@@ -1,0 +1,22 @@
+<?php
+$title = 'Como está se sentindo hoje?';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', 'initial-post');
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+
+<?php
+echo $this->formRow($form->get('moods'), null, true);
+echo $this->formRow($form->get('submit'), null, true);
+?>
+
+<?php
+echo $this->form()->closeTag();
+?>

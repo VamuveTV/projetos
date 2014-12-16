@@ -1,0 +1,228 @@
+body{ background-color:#6F294E; font-family:Arial, Helvetica, sans-serif; margin-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; background-attachment:scroll;}
+ul, menu, dir {display: block; list-style-type: none; -webkit-margin-before: 1em; -webkit-margin-after: 1em; -webkit-margin-start: 0px;- webkit-margin-end: 0px; -webkit-padding-start: 0px;
+}
+h2{ font-size:13px; color:#fff; font-weight:bold; float:left; margin-left: 3px; width:990px;}
+.faces{ width:990px; -webkit-padding-start: 0px;}
+.faces li{ display:inline; float: left; padding-right:25px;}
+.imgBtSaibaMaisSentindo{ float:left; margin-top:5px;}
+.btsAlterarFontes{ float:right; width:115px; height:33px; margin-top: -36px; margin-right:33px;}
+.btsAlterarFontes li{display:inline; float:right; padding-right:5px;}
+.btContinuarSentindo{ float:right; margin-right:30px;}
+#outrasfaces{ clear: both; float: left; width: 980px; margin-top: 27px;}
+.comentar-sentindo{ width: 926px; height: 242px; border:#909090 solid 1px;}
+.limpa{clear: both}
+
+.link_simples, .link_simples:hover{ font-size:10px; color:#fff; font-weight:bold; float:left; margin-left: 3px; width:990px;}
+
+/*TELAS INTERNAS TOPO*/
+#topo, #menu{ background: #353535}
+#menu li a{ color:#ffffff; text-decoration:none; }
+#menu li a:hover{ background: #353535; color:#ffffff; text-decoration:underline; }
+
+#rodape{
+    background:#fff;
+}
+
+.faces{ width:990px; -webkit-padding-start: 0px;}
+.faces li{ display:inline; float: left; padding-right:25px;}
+.imgBtSaibaMaisSentindo{ float:left; margin-top:5px;}
+.btsAlterarFontes{ float:right; width:115px; height:33px; margin-top: -36px; margin-right:33px;}
+.btsAlterarFontes li{display:inline; float:right; padding-right:5px;}
+.btContinuarSentindo{ float:right; margin-right:30px;}
+#outrasfaces{ clear: both; float: left; width: 980px; margin-top: 27px;}
+.comentar-sentindo{ width: 926px; height: 242px; border:#909090 solid 1px;}
+.limpa{clear: both}
+
+.postagensAlunos{ float:left;}
+.postagensAlunos li{ display:inline; border-top: solid 1px #C0C0C0; padding-top: 18px; float: left; padding-bottom: 45px;}
+.imgPostagens{ float:left; width: 152px; height: 141px;}
+.imagePostagens{ margin-bottom:5px;}
+.imgPostagens span{ font-weight:bold; color:#fff; font-size:16px; padding-top:3px;}
+.txtPostagens{ float:left; font-size:13px; color:#fff; width: 800px; margin-left: 10px; line-height: 20px;}
+#foto_perfil{
+    float: left;
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+}
+
+#foto_perfil{
+    float: left;
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+}
+.limpa{
+    clear: both;
+}
+#meio_perfil textarea{
+    width: 550px;
+    height: 120px;
+}
+
+div, #topo_perfil, #meio_perfil, #fim_perfil, #teste, td, th{
+    color: #fff;
+}
+
+.usuario_mini{
+    float: left;
+    width: 200px;
+}
+.foto_mini{
+    width: 60px;
+    height: 60px;
+    margin: 0 4px;
+    float: left;
+}
+
+#icones_opine p{
+    width: 140px;
+    float: left;
+}
+
+
+
+/** COPIADO DE estiloalunoEscuro.css **/
+
+body{ background-color:#6F294E; font-family:Arial, Helvetica, sans-serif; margin-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; background-attachment:scroll;}
+#geral{  width:100%;}
+ul, menu, dir {display: block; list-style-type: none; -webkit-margin-before: 1em; -webkit-margin-after: 1em; -webkit-margin-start: 0px;- webkit-margin-end: 0px; -webkit-padding-start: 0px;
+}
+
+/*TELA DE LOGIN ESCURO*/
+#geralLoginEsc{position:absolute; width:500px; height:500px; margin:0 auto; left: 50%; top:50%; margin-left: -250px; margin-top: -250px;}
+#loginEsc{ width:470px; height:415px; float:left;}
+.titLoginEsc{ color:#ffffff; font-weight:bold; font-size:15px; float:left;}
+#formLoginEsc{ float:right; width:232px; margin-right: 15px; margin-top: 26px; line-height: 24px;}
+#formLoginEsc span{ font-size:15px; color:#ffffff;}
+#formLoginEsc .camposLoginEsc{ width:232px; height:24px; border:#909090 solid 1px; color:#A0265F; font-size:15px;}
+#formLoginEsc a{ margin:0; font-size:9px; color:#ffffff; text-align:right;}
+.termosUsoEsc{ color:#78613D; font-size:13px; font-weight:normal; margin-top:5px;}
+.termosUsoEsc a{ color:#78613D; font-size:13px; font-weight:normal; margin-top:5px;}
+.escolherTema{margin:0 auto; width:990px; text-align:right; color:#ffffff; font-size:18px; padding-top:20px;}
+.estiloSelect{ color:#AA466D; width: 157px;}
+/*FIM TELA DE LOGIN ESCURO*/
+
+/*TELAS INTERNAS TOPO
+#geralTopo{ background-image:url(../imagens/bg-topo-escuro.png); height:81px; }
+#topo{ width:990px; margin:0 auto;}
+#logo{ float:left; width:129px; height:45px; margin-top: 9px; margin-left: 3px;}
+#menu{ float:right; -webkit-padding-start: 0px; margin-right: 38px;}
+#menu li{ display:inline; padding-left: 22px; margin-top: 12px; float: left;}
+#menu li a{ color:#ffffff; font-size:13px; text-decoration:none; }
+#menu li a:hover{ color:#ffffff; font-size:13px; text-decoration:underline; }
+FIM TELAS TOPO*/
+
+/*CONTEÚDO*/
+#geralConteudo{ width:990px; margin:0 auto;}
+/*#conteudo{ float:left; margin-bottom: 115px;}*/
+#conteudo h2{ font-size:13px; color:#ffffff; font-weight:bold; float:left; margin-left: 3px; width:990px;}
+.faces{ float:left; width:990px; -webkit-padding-start: 0px;}
+.faces li{ display:inline; float: left; padding-right:25px;}
+.imgBtSaibaMaisSentindo{ float:left; margin-top:5px;}
+.btsAlterarFontes{ float:right; width:115px; height:33px; margin-top: -36px; margin-right:33px;}
+.btsAlterarFontes li{display:inline; float:right; padding-right:5px;}
+.btContinuarSentindo{ float:right; margin-right:30px;}
+#outrasfaces{ float: left; width: 980px; margin-top: 27px;}
+.comentar-sentindo{ width: 926px; height: 242px; border:#909090 solid 1px;}
+
+.postagensAlunos{ float:left;}
+.postagensAlunos li{ display:inline; border-top: solid 1px #C0C0C0; padding-top: 18px; float: left; padding-bottom: 45px;}
+.imgPostagens{ float:left; width: 152px; height: 141px;}
+.imagePostagens{ margin-bottom:5px;}
+.imgPostagens span{ font-weight:bold; color:#fff; font-size:16px; padding-top:3px;}
+.txtPostagens{ float:left; font-size:13px; color:#FFF; width: 800px; margin-left: 10px; line-height: 20px;}
+
+.bt-postar{ margin-left: 840px; margin-top: -36px; position: absolute;}
+.textoArea{ float:left; width: 954px;}
+
+#mce_16-open{ display:none;}
+#mce_17-open{ display:none;}
+#mce_18-open{ display:none;}
+#mce_19-open{ display:none;}
+#mce_15-body{ display:none;}
+
+
+#fotoPerfil{float: left; margin-right: 10px;}
+#infoPerfil{ font-size:15px; color:#fff; font-family:Arial, Helvetica, sans-serif; float: left; line-height: 25px;}
+#infoPerfil a{ color:#fff; font-size:14px;}
+.estiloSelectPerfil{ color:#909090; width: 179px;}
+.escolherTemaPerfil{ color:#fff; font-size:14px;}
+.escolherTemaPerfil span{ font-size:13px;}
+#temaCorFonte{float:right; margin-right: -114px; margin-top: 12px;}
+#textAreaPerfil{ float: left; margin-top: 16px;}
+#textAreaPerfil h2{ font-size:16px;}
+.titPostou{ font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:16px; font-weight:bold; float:left; width:990px; margin-top:45px;}
+textarea{ border: solid 1px #909090;}
+#amigoDenunciar{float:right; margin-right: -114px; margin-top: 68px; color:#fff; font-weight:bold; line-height:35px;}
+#amigoDenunciar a{color:#fff; font-weight:bold;}
+
+.materia{ font-size:15px; font-weight:bold; color:#333333;}
+.bimestres{ font-size:15px; font-weight:bold; color:#fff; text-align:center;}
+.notaAzul{ font-size:15px; font-weight:bold; color:#0000FF; text-align:center;}
+.notaVermelha{ font-size:15px; font-weight:bold; color:#FF0000; text-align:center;}
+.semNota{ font-size:15px; font-weight:bold; color:#666666; text-align:center;}
+#formNotas{ float:left; width:950px; margin-top:10px; margin-bottom:15px; font-size:15px; color:#fff;} 
+#formNotas form{ float:left;}
+.verTodosBoletim a{ font-size:16px; float:right; color:#fff;}
+.anoBoletim{ color:#fff; font-size:18px;}
+.notificacoes{ float:left; width:990px; color:#fff; margin-top:30px; }
+.notificacoes a{ color:#fff; font-weight:bold;}
+.notificacoes ul{ line-height: 21px; font-weight:bold; border-left: solid 1px; padding-left: 10px; margin-left: 16px;}
+.btFecharNotificacoes{ float: right; margin-right: 37px;}
+#mapa{ float:left; margin-bottom:40px; width:981px; text-align:center;}
+#lista{ float:left;}
+#lista .titulo{ color:#fff; font-size:22px; font-weight:bold; padding-top: 10px; float: left; padding-left: 11px;}
+.listaMapa{ width:965px; border:solid #fff 1px; float:left; padding: 10px; margin-top: 15px;}
+.imgMapa{ float:left; margin-right:10px;}
+.nomeLoja{ color:#fff; font-size:18px;}
+.distanciaMapa{ color:#fff; font-size:15px;}
+.marcadorMapa{float: right; height: 58px; width: 44px;}
+
+/*PAGINAÇÃO*/
+.paginacao{margin-top: 8px;}
+.paginacao a:link, a:visited{ padding:5px; background-color:#fff; color:#909090; text-decoration:none; border: solid 1px #909090;}
+.paginacao a:hover{ padding:5px; background-color:#CCCCCC; color:#fff; text-decoration:none;}
+.paginacao .ativo{ background-color:#ffc411 !important;}
+.paginacao span{padding: 5px; background-color: #909090; color: #fff; text-decoration: none; margin-left: 4px; margin-right: 4px;}
+
+
+.textNomeAlunos{ border: solid 1px #909090; width:552px; color:#999999;}
+.inputBuscaAlunos{ width:175px; border: solid 1px #909090; color:#999999;}
+#titPreferidos{ border-bottom:solid 1px #C0C0C0; float:left; width:956px; font-size:16px; font-weight:bold; color:#fff; margin-top:25px;}
+#listaAmigosPreferidos{ float:left; width:956px;}
+#listaAmigosPreferidos ul li .fotoAmigo{ border:solid 2px #909090; float:left; margin-right:8px;}
+#listaAmigosPreferidos ul li .nomeAluno{ font-size:14px; color:#fff; text-decoration:underline;}
+#listaAmigosPreferidos ul li .nomeEscola{ font-size:14px; color:#fff;}
+#listaAmigosPreferidos ul li .preferirAmigo a{ font-size:14px; color:#fff;}
+#listaAmigosPreferidos ul li {line-height: 24px; float: left; width: 239px; margin-bottom: 23px;}
+#qtdAmigosPreferidos{ width:956px; text-align:center; font-size:12px; color:#fff; font-weight:bold;}
+
+#titTodosAmigos{ border-bottom:solid 1px #fff; float:left; width:956px; font-size:16px; font-weight:bold; color:#fff; margin-top:25px;}
+
+#titResultadoBusca{ border-bottom:solid 1px #C0C0C0; float:left; width:956px; font-size:16px; font-weight:bold; color:#fff; margin-top:25px;}
+.btVoltarBusca{ width:956px; text-align:right; width: 956px; text-align: right; float: left; margin-top: 15px; margin-bottom: 16px;}
+.deSuaOpiniao{ border-bottom: solid 1px #fff; float: left; width: 956px; padding-bottom: 15px;}
+.icoOpiniao{ float:right;}
+.icoOpiniao ul li{ float:left; margin-left:55px;}
+.titSuaOpiniao{ float: left; margin-top: 21px; color:#fff; font-size:14px;}
+
+.filtroOpine{ float:left; width:956px;}
+.filtroOpine ul li{ float:left; width:119px; text-align:center; margin-bottom:15px;}
+.filtroOpine ul li .imgFiltroOpine{border:solid 2px #909090;}
+.filtroOpine ul li span{ font-size:14px; color:#fff; text-decoration:underline;}
+.formFiltrar{ float: left; margin-top: 16px; color: #fff; margin-bottom: 40px; padding-left: 21px;}
+
+.formFaleconosco{ color:#fff; font-size:14px;}
+.textFaleconosco{ width:340px; border:solid 1px #909090; margin-bottom:20px; color:#909090;}
+.textareaFaleconosco{ width:576px; height:133px; border:solid 1px #909090; color:#909090; float:right;}
+
+/*FIM CONTEÚDO*/
+
+
+/*RODAPÉ*/
+#geralRodape{ background-image:url(../imagens/bg-rodape-escuro.jpg); height:235px; clear:both;}
+#rodape{ width:990px; margin:0 auto; text-align: center; padding-top: 70px;}
+#rodape p{ padding-top: 51px; font-size: 12px; color: #fff;}
+
+/*FIM RODAPÉ*/

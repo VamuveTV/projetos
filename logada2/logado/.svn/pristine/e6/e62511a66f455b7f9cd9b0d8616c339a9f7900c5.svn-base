@@ -1,0 +1,44 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h3>Turmas</h3>
+            </div>
+            <div>
+                <a href="<?php echo $this->url('turmas', array('action'=>'add'));?>"class="btn btn-success">Adicionar Turma</a><br>
+                <?php
+                if (isset($turmas)) : ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Turma</th>
+                            <th>Número</th>
+                            <th>Escola</th>
+                            <th>Bairro</th>
+                            <th>Região</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <?php foreach($turmas as $turma): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $turma->getId(); ?></td>
+                                <td><?php echo $turma->getTurma(); ?></td>
+                                <td><?php echo $turma->getNumero(); ?></td>
+                                <td><?php echo $turma->getEscola(); ?></td>
+                                <td><?php echo $turma->getBairro(); ?></td>
+                                <td><?php echo $turma->getRegiao(); ?></td>
+                                <td>
+                                    <a href="<?php echo $this->url('turmas', array('action'=>'edit', 'id' => $turma->getId()));?>" class="btn btn-warning">Editar</a>
+                                    <a href="<?php echo $this->url('turmas', array('action'=>'delete', 'id' => $turma->getId()));?>" class="btn btn-danger">Excluir</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

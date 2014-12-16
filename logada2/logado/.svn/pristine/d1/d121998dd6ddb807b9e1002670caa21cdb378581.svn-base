@@ -1,0 +1,177 @@
+
+<!-- FIM HTML DAVI - CODIGO ANTIGO -->
+<form method="post">
+<div id="tudo">
+    <div id="esquerda">
+        <label>Nome:*</label><br>
+        <input type="text" name="nome" id="nome"><br>
+        <label>Sexo:*</label><br>
+        <input type="checkbox" name="sexo" value="M"> Masculino
+        <input type="checkbox" name="sexo" value="F"> Feminino<br>
+        <label>Data de nascimento:*</label><br>
+        <input type="text" name="data_nasc" id="data_nasc"><br>
+        <label>Endereço:*</label><br>
+        <input type="text" name="endereco" id="endereco"><br>
+        <label>Cidade:*</label><br>
+        <input type="text" name="cidade" id="cidade"><br>
+        <label>CEP:*</label><br>
+        <input type="text" name="cep" id="cep"><br>
+        <label>Série:*</label><br>
+        <input type="text" name="serie" id="serie"><br>
+        <label>Turma:*</label><br>
+        <select name="turma" id="turma">
+            <?php foreach($turmas AS $turma){
+                echo "<option value='".$turma->getId()."'>".$turma->getTurma()."</option>";
+            }
+            ?>
+        </select>
+        <hr>
+        <label>Quantas pessoas moral na sua casa?*</label><br>
+        <input type="text" name="npessoas" id="npessoas"><br>
+        <label>Você possui alguma doen&ccedil;a cr&ocirc;nica:*</label><br>
+        <input type="radio" name="doenca" value="S"> Sim
+        <input type="radio" name="doenca" value="N"> Não<br>
+        Se sim, qual?<br>
+        <input type="text" name="nome_doenca"><br>
+        <label>Quais matérias você MENOS gosta?*</label><br>
+        <input type="checkbox" name="materia_menos[]" value="Matemática"> Matemática<br>
+        <input type="checkbox" name="materia_menos[]" value="Português"> Português<br>
+        <input type="checkbox" name="materia_menos[]" value="Literatura"> Literatura<br>
+        <input type="checkbox" name="materia_menos[]" value="Biologia"> Biologia<br>
+        <label>Quais habilidades você possui?*</label><br>
+        <input type="checkbox" name="habilidades[]" value="Pintura"> Pintura<br>
+        <input type="checkbox" name="habilidades[]" value="Futebol"> Futebol<br>
+        <input type="checkbox" name="habilidades[]" value="Esportes"> Esportes<br>
+        <input type="checkbox" name="habilidades[]" value="Nadar"> Nadar<br>
+        Outras<br>
+        <input type="text" name="outras_habilidades"><br>
+        <label>Interesse de profissão:</label><br>
+        <input type="text" name="profissao">
+        <hr>
+        <label>Renda familiar?*</label><br>
+        <input type="radio" name="renda" value="1"> Menos de 1 salário mínimo<br>
+        <input type="radio" name="renda" value="2"> Até 2 salários mínimos<br>
+        <input type="radio" name="renda" value="3"> De 2 a 3 salários mínimos<br>
+        <input type="radio" name="renda" value="4"> De 3 a 5 salários mínimos<br>
+        <input type="radio" name="renda" value="5"> Mais de 5 salários mínimos<br>
+        <label>Tem celular?*</label><br>
+        <input type="radio" name="celular" value="S"> Sim
+        <input type="radio" name="celular" value="N"> Não<br>
+        <label>Usa aplicativos no celular?*</label><br>
+        <input type="radio" name="app_celular" value="S"> Sim
+        <input type="radio" name="app_celular" value="N"> Não<br>
+        <label>Cite seus preferidos:</label><br>
+        <textarea name="app_preferidos"></textarea><br>
+        <label>Você faz compras na internet?*</label><br>
+        <input type="radio" name="compras_net" value="S"> Sim
+        <input type="radio" name="compras_net" value="N"> Não<br>
+        <label>Possui geladeira em casa?*</label><br>
+        <input type="radio" name="geladeira" value="S"> Sim
+        <input type="radio" name="geladeira" value="N"> Não<br>
+        <label>Na sua casa alguém recebe bolsa família?</label><br>
+        <input type="radio" name="bolsa" value="S"> Sim
+        <input type="radio" name="bolsa" value="N"> Não<br>
+        Se SIM, quem?
+        <input type="text" name="bolsa_quem"><br>
+        <hr>
+        <label>Pratica esportes? Quais?</label><br>
+        <input type="text" name="esportes"><br>
+        <label>Filmes preferidos:</label><br>
+        <textarea name="filmes"></textarea><br>
+        <label>Músicas preferidas:</label><br>
+        <textarea name="musicas"></textarea><br>
+        <span class="termosUso"><input name="" type="checkbox" value="" /> Eu aceito os <a href="/termo" target="_blank">termos de uso</a></span><br>
+        <input type="submit" value="Enviar" class="btn btn-admin">
+
+    </div>
+
+    <div id="direita">
+        <label>Complemento:</label><br>
+        <input type="text" name="complemento" id="complemento"><br>
+        <label>Bairro:*</label><br>
+        <input type="text" name="bairro" id="bairro"><br>
+        <label>Estado:*</label><br>
+        <input type="text" name="estado" id="estado"><br>
+        <label>Escola:*</label><br>
+        <select name="escola" id="escola">
+            <?php foreach($escolas AS $escola){
+                echo "<option value='".$escola->getId()."'>".$escola->getNome()."</option>";
+            }
+            ?>
+        </select>
+        <hr>
+        <label>Frequenta algum atendimento complementar/de apoio?*</label><br>
+        <input type="radio" name="atendimento" value="S"> Sim
+        <input type="radio" name="atendimento" value="N"> Não<br>
+        Se sim, qual?<br>
+        <select name="tipo_atendimento">
+            <option value=""></option>
+            <option>Fonaudiologia</option>
+            <option>Terapia ocupacional</option>
+        </select><br>
+        <label>Voc&ecirc; possui alguma deficiência?*</label><br>
+        <input type="radio" name="deficiencia" value="S"> Sim
+        <input type="radio" name="deficiencia" value="N"> Não<br>
+        Se sim, qual?<br>
+        <select name="tipo_deficiencia">
+            <option value=""></option>
+            <option>Deficiencia 1</option>
+        </select><br>
+        <label>Quais matérias você MAIS gosta?*</label><br>
+        <input type="checkbox" name="materia_mais[]" value="Matemática"> Matemática<br>
+        <input type="checkbox" name="materia_mais[]" value="Português"> Português<br>
+        <input type="checkbox" name="materia_mais[]" value="Literatura"> Literatura<br>
+        <input type="checkbox" name="materia_mais[]" value="Biologia"> Biologia<br>
+        <label>Pretende fazer vestibular?*</label><br>
+        <input type="radio" name="vestibular" value="S"> Sim
+        <input type="radio" name="vestibular" value="N"> Não<br>
+        Se sim, qual?<br>
+        <select name="tipo_vestibular">
+            <option value=""></option>
+            <option>Veterinária</option>
+        </select><br>
+        <hr>
+        <label>Tem computador em casa?*</label><br>
+        <input type="radio" name="computador" value="S"> Sim
+        <input type="radio" name="computador" value="N"> Não<br>
+        <label>Com que frequência usa a internet?</label><br>
+        <input type="text" name="frequencia_net"><br>
+        <label>Usa internet no celular?*</label><br>
+        <input type="radio" name="celular_net" value="S"> Sim
+        <input type="radio" name="celular_net" value="N"> Não<br>
+        <label>Quais redes sociais você usa?*</label><br>
+        <input type="checkbox" name="redes[]" value="1"> Facebook<br>
+        <input type="checkbox" name="redes[]" value="2"> Twitter<br>
+        <input type="checkbox" name="redes[]" value="3"> Instagram<br>
+        <input type="checkbox" name="redes[]" value="4"> Google+<br>
+        <input type="checkbox" name="redes[]" value="5"> Blog<br>
+        <label>Possui TV em casa?*</label><br>
+        <input type="radio" name="tv" value="S"> Sim
+        <input type="radio" name="tv" value="N"> Não<br>
+        <label>Possui máquina de lavar em casa?*</label><br>
+        <input type="radio" name="maquina" value="S"> Sim
+        <input type="radio" name="maquina" value="N"> Não<br>
+        <label>Na sua casa alguém recebe outro incentivo do governo?</label><br>
+        <input type="radio" name="incentivo" value="S"> Sim
+        <input type="radio" name="incentivo" value="N"> Não<br>
+        Se SIM, quem?
+        <input type="text" name="incentivo_quem"><br>
+        <hr>
+        <label>Fala algum idioma? Quais?</label>
+        <input type="text" name="idiomas"><br>
+        <label>Quais livros você já leu?</label><br>
+        <textarea name="livros"></textarea><br>
+        <label>Lugares que frequenta:</label><br>
+        <textarea name="lugares"></textarea><br>
+    </div>
+</div>
+</form>
+<?php
+if(isset($erro)){
+    if($erro)
+        echo '<p>Falha no cadastro</p>';
+    else
+        echo '<p>Cadastro efetuado com sucesso</p>';
+}
+?>
+<div style="clear: both; height: 100px"></div>

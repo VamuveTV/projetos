@@ -1,0 +1,150 @@
+<?php
+$title = "Atividades";
+
+$this->headTitle($title);
+?>
+
+<?php
+$basePath = $this->basePath();
+
+$idx = 100;
+$this->headLink()->offsetSetStylesheet(++$idx, $basePath . '/css/jquery/fullcalendar/fullcalendar.css')
+    ->offsetSetStylesheet(++$idx, $basePath . '/css/jquery/fullcalendar/fullcalendar.print.css', 'print');
+
+$idx = 100;
+$this->headScript()->offsetSetFile(++$idx, $basePath . '/js/jquery-ui.custom.min.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/jquery/fullcalendar/fullcalendar.js', 'text/javascript');
+
+//$this->headLink()->appendStylesheet('/css/fullcalendar.css');
+//$this->headLink()->appendStylesheet('/css/fullcalendar.print.css');
+
+//$this->headScript()->appendFile('/js/fullcalendar/fullcalendar.min.js');
+//$this->headScript()->appendFile('/js/fullcalendar/jquery-ui.custom.min.js');
+
+?>
+
+
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+<div id='calendar'></div>
+
+
+<?php $this->headStyle()->captureStart(); ?>
+body {
+	margin-top: 40px;
+	text-align: center;
+	font-size: 14px;
+	font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+	}
+
+#calendar {
+	width: 700px;
+	margin: 0 auto;
+}
+<?php $this->headStyle()->captureEnd(); ?>
+
+
+
+<?php $this->headScript()->captureStart(); ?>
+var locale = '<?php echo $this->locale; ?>';
+
+$(document).ready(function() {
+	var format = "dd-MM-yyyy HH:mm:ss";
+    $('#calendar').fullCalendar({ 
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        events: [
+            {
+                "title":"Prova de Matemática",
+                "start":"2013-11-02T16:30:00Z"
+            },
+            {
+                "title":"Trabalho de História",
+                "start":"2013-11-03T21:00:00Z"
+            },
+            {
+        		"id" : 14,
+        		"title" : "Semana Científica",
+        		"start" : "2013-11-11",
+        		"end" : "2013-11-15",
+        		"allDay" : true
+    		},
+        ],
+        theme: true,
+		//editable: true,
+		//eventDrop: function(event, delta) {
+			//alert(event.title + ' was moved ' + delta + ' days\n' +
+			//	'(should probably update your database)');
+		//},
+		//loading: function(bool) {
+		//	if (bool) $('#loading').show();
+		//	else $('#loading').hide();
+		//},
+		firstDay: 0, // Segunda
+		// localization
+		//monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+		//monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+		//dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', Sábado'],
+		//dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+		//buttonText: {today: 'hoje', month: 'mês', week: 'semana', day: 'dia'}
+		monthNames: [
+			'<?php echo $this->translate('January', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('February', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('March', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('April', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('May', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('June', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('July', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('August', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('September', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('October', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('November', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('December', 'evl-calendar'); ?>',
+		],
+		monthNamesShort: [
+			'<?php echo $this->translate('Jan', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Feb', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Mar', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Apr', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('May', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Jun', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Jul', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Aug', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Sep', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Oct', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Nov', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Dec', 'evl-calendar'); ?>'
+		],
+		dayNames: [
+			'<?php echo $this->translate('Sunday', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Monday', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Tuesday', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Wednesday', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Thursday', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Friday', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Saturday', 'evl-calendar'); ?>'
+		],
+		dayNamesShort: [
+			'<?php echo $this->translate('Sun', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Mon', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Tue', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Wed', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Thu', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Fri', 'evl-calendar'); ?>',
+			'<?php echo $this->translate('Sat', 'evl-calendar'); ?>'
+		],
+		buttonText: {
+			today: '<?php echo $this->translate('today', 'evl-calendar'); ?>',
+			month: '<?php echo $this->translate('month', 'evl-calendar'); ?>',
+			week: '<?php echo $this->translate('week', 'evl-calendar'); ?>',
+			day: '<?php echo $this->translate('day', 'evl-calendar'); ?>'
+		}
+    });
+});
+
+<?php $this->headScript()->captureEnd(); ?>

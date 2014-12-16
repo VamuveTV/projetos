@@ -1,0 +1,171 @@
+<?php
+
+namespace Alunos\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use Zend\Stdlib\Hydrator;
+
+/**
+ * @ORM\Table(name="nota")
+ * @ORM\Entity
+ */
+class Nota {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /** @ORM\Column(type="integer") */
+    protected $aluno;
+
+    /** @ORM\Column(type="integer") */
+    protected $materia;
+
+    /** @ORM\Column(type="integer") */
+    protected $nota1;
+
+    /** @ORM\Column(type="integer") */
+    protected $nota2;
+
+    /** @ORM\Column(type="integer") */
+    protected $nota3;
+
+    /** @ORM\Column(type="integer") */
+    protected $nota4;
+
+    /** @ORM\Column(type="integer") */
+    protected $ano;
+
+    /**
+     * @param mixed $aluno
+     */
+    public function setAluno($aluno)
+    {
+        $this->aluno = $aluno;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAluno()
+    {
+        return $this->aluno;
+    }
+
+    /**
+     * @param mixed $ano
+     */
+    public function setAno($ano)
+    {
+        $this->ano = $ano;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAno()
+    {
+        return $this->ano;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $materia
+     */
+    public function setMateria($materia)
+    {
+        $this->materia = $materia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMateria()
+    {
+        return $this->materia;
+    }
+
+    /**
+     * @param mixed $nota1
+     */
+    public function setNota1($nota1)
+    {
+        $this->nota1 = $nota1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNota1()
+    {
+        return $this->nota1;
+    }
+
+    /**
+     * @param mixed $nota2
+     */
+    public function setNota2($nota2)
+    {
+        $this->nota2 = $nota2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNota2()
+    {
+        return $this->nota2;
+    }
+
+    /**
+     * @param mixed $nota3
+     */
+    public function setNota3($nota3)
+    {
+        $this->nota3 = $nota3;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNota3()
+    {
+        return $this->nota3;
+    }
+
+    /**
+     * @param mixed $nota4
+     */
+    public function setNota4($nota4)
+    {
+        $this->nota4 = $nota4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNota4()
+    {
+        return $this->nota4;
+    }
+
+
+}
+
+

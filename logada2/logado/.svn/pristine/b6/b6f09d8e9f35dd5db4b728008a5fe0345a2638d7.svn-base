@@ -1,0 +1,84 @@
+<?php
+
+$title = 'Adicionar Atividade';
+$this->headTitle($title);
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript">
+function buscaDestino(){
+    $.ajax({
+        type: "POST",
+        data: {'tipo_destino': $('#tipo_destino').val()},
+        url: '/admin/atividades/buscaDestino',
+        success: function(dados) {
+            $('#destino').html(dados);
+        }
+    });
+}
+</script>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="nome">Nome do evento</label>
+        <div class="controls">
+            <input type="text" id="nome" name="nome" class="input-medium">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="local">Local do evento</label>
+        <div class="controls">
+            <input type="text" id="local" name="local" class="input-medium">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="tipo_destino">Para quem é o evento?</label>
+        <div class="controls">
+            <select name="tipo_destino" id="tipo_destino" onchange="buscaDestino()">
+                <option value=""></option>
+                <option value="A">Aluno</option>
+                <option value="T">Turma</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group" id="destino">
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="data">Data</label>
+        <div class="controls">
+            <input type="text" id="data" name="data">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="hora_inicio">Hora início</label>
+        <div class="controls">
+            <input type="text" id="hora_inicio" name="hora_inicio">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="hora_fim">Hora término</label>
+        <div class="controls">
+            <input type="text" id="hora_fim" name="hora_fim">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Descrição</label>
+        <div class="controls">
+            <textarea id="descricao" name="descricao" cols="50" rows="5"></textarea>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='/admin/atividades'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>

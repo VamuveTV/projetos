@@ -1,0 +1,44 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Opec\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Opec\Entity\Opec;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $opec = $this->getObjectManager()->getRepository('\Opec\Entity\Opec')->findAll();
+        $opec = $opec[0];
+
+        if ($this->request->isPost()) {
+            $nova = $this->getRequest()->getPost('opec');
+            $opec->setLink($nova);
+            $this->getObjectManager()->persist($opec);
+            $this->getObjectManager()->flush();
+        }
+
+
+        return new ViewModel(array('opec' => $opec));
+    }
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+}

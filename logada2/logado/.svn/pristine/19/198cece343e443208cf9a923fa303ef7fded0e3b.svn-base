@@ -1,0 +1,175 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Funcionarios\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Funcionarios\Entity\Funcionario;
+use Acesso\Utils\Location;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $funcs = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findAll();
+
+        return new ViewModel(array('funcs' => $funcs));
+    }
+
+    public function addAction()
+    {
+		$msg = "";
+        if ($this->request->isPost()) {
+            $func = new Funcionario();
+            $func->setNome($this->getRequest()->getPost('nome'));
+            $func->setEscola($this->getRequest()->getPost('escola'));
+            $func->setTurmas($this->getRequest()->getPost('turmas'));
+            $func->setMateria($this->getRequest()->getPost('materia'));
+            $func->setFuncao($this->getRequest()->getPost('funcao'));
+            $func->setLogin($this->getRequest()->getPost('login'));
+            $func->setSenha($this->getRequest()->getPost('senha'));
+			
+			//Conta wikimapa foi achada ou criada
+			$wm = false;
+			$locobj = new Location();
+			
+			//Se funcionario já possui conta no Wikimapa
+			if ($this->getRequest()->getPost('wikimapa') == "sim") { 
+				$json = $locobj->generateToken($this->getRequest()->getPost('login'), $this->getRequest()->getPost('senha_wikimapa'));
+				$tokens = json_decode($json);
+				
+				//Se foi possivel obter os tokens:
+				if (property_exists($tokens, 'access_token')) {
+					$json = $locobj->getUserByToken($tokens->access_token);
+					$user = json_decode($json);
+					
+					$func->setIdWikimapa($user->id);
+					$func->setSenhaWikimapa($this->getRequest()->getPost('senha_wikimapa'));
+					$func->setTokenAcesso($tokens->access_token);
+					$func->setTokenRefresh($tokens->refresh_token);
+					
+					$wm = true;
+				} else {
+					$msg = "Não foi possível logar no Wikimapa com o email e senha informados";
+				}
+				
+			} else { //Senão, criar conta no wikimapa
+				$func->setSenhaWikimapa($this->getRequest()->getPost('senha'));
+				
+				//Criar usuário no Wikimapa
+				$json = $locobj->createUser($func->getNome(), $func->getLogin(), $func->getSenha(), '', '', '');
+				//Decodificar JSON
+				$func_wikimapa = json_decode($json);
+				
+				//Se email já está sendo usado
+				if(property_exists($func_wikimapa, 'error') || $func_wikimapa == null) {
+					$msg = "Já existe conta para este email no Wikimapa";
+				} else {
+					//Salvando ID no Wikimapa
+					$func->setIdWikimapa($func_wikimapa->id);
+					
+					$wm = true;
+				}
+			}
+			
+			if ($wm) {
+				$this->getObjectManager()->persist($func);
+				$this->getObjectManager()->flush();
+				$newId = $func->getId();
+
+				return $this->redirect()->toRoute('funcionarios');
+				//echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+			}
+        }
+        return new ViewModel(array('msg'=>$msg));
+    }
+
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $func = $this->getObjectManager()->find('\Funcionarios\Entity\Funcionario', $id);
+
+        if ($this->request->isPost()) {
+            $func->setNome($this->getRequest()->getPost('nome'));
+            $func->setEscola($this->getRequest()->getPost('escola'));
+            $func->setTurmas($this->getRequest()->getPost('turmas'));
+            $func->setMateria($this->getRequest()->getPost('materia'));
+            $func->setFuncao($this->getRequest()->getPost('funcao'));
+            $func->setLogin($this->getRequest()->getPost('login'));
+            if($this->getRequest()->getPost('senha'))
+                $func->setSenha($this->getRequest()->getPost('senha'));
+
+            $this->getObjectManager()->persist($func);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('funcionarios');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('func' => $func));
+    }
+
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $func = $this->getObjectManager()->find('\Funcionarios\Entity\Funcionario', $id);
+
+        if ($this->request->isPost()) {
+            $this->getObjectManager()->remove($func);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('funcionarios');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('func' => $func));
+    }
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+
+	/**
+	 * Obter ou renovar token de acesso ao wikimapa do funcionario
+	 */
+	private function getAccessToken($func)
+	{
+		//Criar utilitario do wikimapa
+		$locobj = new Location();
+		
+		//Obter token refresh para atualizacao
+		$token_refresh = $func->getTokenRefresh();
+		$json = $locobj->refreshToken($token_refresh);
+		//Decodificar JSON
+		$tokens = json_decode($json);
+		//Verificar se houve erro na atualizacao do token e, se sim, gerar um novo
+		if(array_key_exists('error', $tokens)) {
+			$json = $locobj->generateToken($func->getLogin(), $func->getSenha());
+			$tokens = json_decode($json);
+		}
+		
+		//Armazenar novo token refresh e novo token acesso
+		$func->setTokenAcesso($tokens->access_token);
+		$func->setTokenRefresh($tokens->refresh_token);
+		
+		//Persistir funcionario
+		$this->getObjectManager()->persist($func);
+		$this->getObjectManager()->flush();
+		
+		return $tokens->access_token;
+	}
+}

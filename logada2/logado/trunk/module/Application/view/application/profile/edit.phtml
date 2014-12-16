@@ -1,0 +1,41 @@
+<?php
+//$profileName = $this->profile->getDisplayName();
+$title = "Perfil de ";// . $profileName;
+
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php 
+$form = $this->form;
+//$form->setAttribute('action', 'edit');
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+
+<?php
+echo $this->formRow($form->get('fullname'), null, true);
+?>
+
+<?php
+echo $this->formRow($form->get('displayname'), null, true);
+?>
+
+<?php
+echo $this->formRow($form->get('sex'), null, true);
+?>
+
+<?php
+echo $this->formRow($form->get('email'), null, true);
+?>
+
+<?php
+echo $this->formSubmit($form->get('submit'));
+?>
+
+<?php
+echo $this->form()->closeTag();
+?>

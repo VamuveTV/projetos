@@ -1,0 +1,806 @@
+<?php
+
+$basePath = $this->basePath();
+
+$idx = 100;
+
+$this->headLink()
+	->offsetSetStylesheet(++$idx, $basePath . '/css/paging.css')
+	->offsetSetStylesheet(++$idx, $basePath . '/js/star-rating/jquery.rating.css');
+
+$idx = 100;
+
+$this->headScript()
+	->offsetSetFile(++$idx, $basePath . '/js/paging.js', 'text/javascript')
+	->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.form.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.MetaData.js', 'text/javascript')
+    ->offsetSetFile(++$idx, $basePath . '/js/star-rating/jquery.rating.js', 'text/javascript');
+
+
+switch ( $tpView ) {
+
+	case 3 : 
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV MENU = EXIBIR LISTA DE OPÇÕES - ESTATÍSTICAS QUALITATIVAS.
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	echo 
+
+		"<p align=center>	
+		<select multiple onchange='myChangeHandler.apply(this)' style='text-align:center; height:136px;'  />	".
+		"<option value='' selected=selected />FAVOR, CLICAR SOBRE A OPÇÃO PRETENDIDA ...</option>".
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 4 )).' />DADOS CADASTRAIS INFORMADOS PELO USUÁRIO.</option>'.
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 5 )).' />QUAIS USUÁRIOS POSTARAM ALGO PARA ESSE USUÁRIO ?</option>'.
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 8 )).' />HISTÓRICO DE POSTS.</option>'.
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 10 )).' />QUAIS AMIGOS FORAM AVALIADOS POR USUÁRIO ?</option>'.
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 11 )).' />QUAIS AVALIAÇÕES FORAM DESIGNADAS AOS ALUNOS ?</option>'.
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 12 )).' />QUAIS AVALIAÇÕES FORAM DESIGNADAS AOS FUNCIONÁRIOS ?</option>'.
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 13 )).' />QUAIS AVALIAÇÕES FORAM DESIGNADAS ÀS ESCOLAS ?</option>'.
+		'<option value='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 14 )).' />QUAIS NOTAS, POR DISCIPLINA, FORAM ALCANÇADAS ?</option>'.
+		'</select>
+		</p>';
+
+	break;
+
+	case 4 : 
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV QUALITATIVA = DADOS CADASTRAIS INFORMADOS PELO USUÁRIO.
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	if ( !empty ( $detailsDataUser ) ) {
+
+	echo 
+	
+		"<table id='tb1' align='center'>".
+		"<tr>".
+		"<th width='65%'>NOME COMPLETO</th>".
+		"<th width='10%'>E-MAIL</th>".
+		"<th width='10%'>TIPO DE ACESSO</th>".
+		"<th width='5%'>SEXO</th>".
+		"<th width='10%'>CADASTRAMENTO</th>".
+		"</tr>".
+		"<tr>".
+		"<td>".$detailsDataUser[0][2]."</td>".
+		"<td>".$detailsDataUser[0][3]."</td>";
+
+	switch ( $detailsDataUser[0][4] ) {
+
+		case 0 :
+		
+			print "<td>ADMINISTRADOR/ESCOLA</td>";
+			
+		break;
+
+		case 1 :
+		
+			print "<td>ESTUDANTE</td>";
+			
+		break;
+
+		case 2 :
+		
+			print "<td>FUNCIONÁRIO</td>";
+			
+		break;
+
+	}
+
+	# Qual o tipo sexual de `USER` ?
+
+	$detailsDataUser[0][1]==0 ? print "<td>M</td>" : print "<td>F</td>"; 
+
+	print 
+	
+		"<td>".date("d/m/Y", strtotime($detailsDataUser[0][5])).
+		"</td>".
+		"</tr>".
+		"</table>";
+			
+	} else {
+	
+				echo 
+			
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+
+	}
+	
+	break;
+
+	case 5 :
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	# 		DIV QUALITATIVA =	QUAIS USUÁRIOS POSTARAM ALGO PARA ESSE USUÁRIO ?
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	if ( !empty ( $postCatchForUser ) ) {
+	
+		echo 
+		
+			"<table id='tb1' align='center'>".
+			"<tr>".
+			"<th width='45%'>NOME</th>".
+			"<th width='5%'>QUANT. POSTS</th>".
+			"<th width='45%'>ÚLTIMIO POST</th>".
+			"<th width='5%'>ESPECIFICAR</th>".
+			"</tr>";
+
+		for ( $corr=0; $corr < sizeof ( $postCatchForUser ); $corr++ ) {
+
+			echo 
+			
+				"<td>".
+				$postCatchForUser[$corr]['display_name'].
+				"</td>".
+
+				"<td>".
+				$postCatchForUser[$corr][1].
+				"</td>".
+
+				"<td>".
+				$sql2X[$corr].
+				"</td>".
+
+				"<td>".
+				"<a href='".$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $postCatchForUser[$corr]['id'], 'tpView' => 6, 'llaveDest' => $id,'llaveRemet' => $postCatchForUser[$corr]['id'] ) )."' target='_blank'><input type='button' class='bt-view' alt='bt-view'></a>".
+				"</td>".
+				"</tr>";
+
+		}
+
+		echo 
+		
+			"</table>".
+			"<br>".
+			"<div id='pageNav' align='center'></div>".
+			"<script>".
+			"var pager = new Pager('tb1', 3); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>";
+		
+	} else {
+	
+		echo 
+		
+			"<p align='center'>Não há Registros para a ocasião.</p>";
+	
+	}
+		
+	break;
+
+	case 6 :
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		LISTAGEM DE POSTS RECEBIDOS POR DETERMINADO USUÁRIO.
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	echo 
+	
+		"<table id='tb1' align='center'>".
+		"<tr>".
+		"<th width='75%'>POST</th>".
+		"<th width='15%'>DATA</th>".
+		"<th width='5%'>DETALHAR</th>".
+		"</tr>";
+
+	for ( $corr=0; $corr < sizeof ( $postCatchForUserY ); $corr++ ) {
+
+		echo 
+		
+			"<td>".substr ($postCatchForUserY[$corr][2], 0,35)."</td>".
+			"<td>".date("d/m/Y", strtotime($postCatchForUserY[$corr][3]))."</td>".
+			"<td>".
+			"<a href='".$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 7, 'llaveDest' => 0,'llaveRemet' => 0, 'llavePost' => $postCatchForUserY[$corr][1] ) )."' target='_blank'><input type='button' class='bt-view' alt='bt-view'></a>".
+			"</td>".
+			"</tr>";
+
+	}
+
+	echo 
+	
+		"</table>".
+		"<br>".
+		"<div id='pageNav' align='center'></div>".
+		"<script>".
+		"var pager = new Pager('tb1', 3); ".
+		"pager.init(); ".
+		"pager.showPageNav('pager', 'pageNav'); ".
+		"pager.showPage(1);".
+		"</script>";
+
+	break;
+
+	case 7 :
+	
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	# 		EXIBINDO POST ENVIADO POR DETERMINADO USUÁRIO, ORIUNDO DA LISTAGEM (case `6`).
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	echo 
+	
+		"<table id='tb1' align='center'>".
+		"<tr>".
+		"<th width='95%'>POST</th>".
+		"<th width='5%'>DATA</th>".
+		"</tr>".
+		"<td>".$postCatchForUserZ[0][1]."</td>".
+		"<td>".date("d/m/Y", strtotime($postCatchForUserZ[0][2]))."</td>".
+		"</tr>".
+		"</table>".
+		"<br>";
+
+	break;
+
+	case 8 :
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV QUALITATIVA =	HISTÓRICO DE POSTS.
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	if ( !empty ( $allPosts ) ) {
+	
+		echo "<table id='tb1' align='center'>".
+		"<tr>".
+		"<th width='75%'>POST</th>".
+		"<th width='5%'>ÂNIMO</th>".
+		"<th width='15%'>DATA</th>".
+		"<th width='5%'>DETALHAR</th>".
+		"</tr>";
+
+		for ( $corr = 0; $corr < sizeof ( $allPosts ); $corr++ ) {
+
+			echo 
+			
+				"<td>".substr ($allPosts[$corr][1], 0,35)."</td>";
+
+			( $allPosts[$corr][2] == 0 ) ? print "<td><input type='button' class='alegre-smile' alt='alegre-smile'></td>" : print "<td><input type='button' class='triste-smile' alt='triste-smile'></td>";
+
+			echo 
+			
+				"<td>".date("d/m/Y", strtotime($allPosts[$corr][3]))."</td>".
+				"<td>".
+				"<a href='".$this->url( 'report', array( 'action' => 'qualitativo','id' => $id, 'tpView' => 9, 'llaveDest' => 0,'llaveRemet' => 0, 'llavePost' => $allPosts[$corr][4] ) )."' target='_blank'><input type='button' class='bt-view' alt='bt-view'></a>".
+				"</td>".
+				"</tr>";
+
+		}
+
+		echo 
+
+			"</table>".
+			"<br>".
+			"<div id='pageNav' align='center'></div>".
+			"<script>".
+			"var pager = new Pager('tb1', 3); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>";
+		
+	} else {
+			
+		echo 
+		
+			"<p align='center'>Não há Registros para a ocasião.</p>";
+			
+	}
+
+	break;
+
+	case 9 :
+	
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		EXIBINDO POST ACIONADO, DETERMINADO USUÁRIO ENVIOU.
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	echo 
+	
+		"<table id='tb1' align='center'>".
+		"<tr>".
+		"<th width='90%'>POST</th>".
+		"<th width='5%'>ÂNIMO</th>".
+		"<th width='5%'>DATA</th>".
+		"</tr>".
+		"<tr>".
+		"<td>".$allPostsX[0][1]."</td>";
+
+	( $allPostsX[0][2] == 0 ) ? print "<td><input type='button' class='alegre-smile' alt='alegre-smile'></td>" : print "<td><input type='button' class='triste-smile' alt='triste-smile'></td>";
+	
+	echo 
+	
+		"<td>".date("d/m/Y", strtotime($allPostsX[0][3]))."</td>".
+		"</tr>".
+		"</table>";
+
+	break;
+
+	case 10 :
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV QUALITATIVA =	QUAIS AMIGOS FORAM AVALIADOS POR USUÁRIO ?
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	if ( !empty ( $typesEvaluationsFriends ) ) {
+	
+		echo 
+		
+			"<table id='tb1' align='center'>".
+			"<tr>".
+			"<th width='75%'>NOME</th>".
+			"<th width='5%'>PREFERIDO</th>".
+			"<th width='15%'>APERTOU MÃO ?</th>".
+			"<th width='5%'>ENVIOU CORAÇÃO ?</th>".
+			"<th width='5%'>ENVIOU BOMBA ?</th>".
+			"</tr>";
+
+		for ( $corr10 = 0 ; $corr10 < sizeof ( $typesEvaluationsFriends ) ; $corr10++ ) {
+
+			# conferir a quantidade de avaliações que 'User' realizou para um mesmo amigo.
+
+			# se a quant. estiver equivalente a 3, enviou: Heart, Handshake, Bomb.
+
+			# caso a quant. estiver inferior a 3 então teremos de averiguar se houve envio de: Heart, Handshake, Bomb.
+			
+			$qqTpEvaluations = sizeof($typesEvaluationsFriends[$corr10]);	
+
+			for ( $dorr10 = 0 ; $dorr10 < sizeof ( $typesEvaluationsFriendsX ) ; $dorr10++ ) {
+
+				# conferir nome de amigo que fora avalidado, por 'User' escolhido.
+				
+				if ( $typesEvaluationsFriendsX[$dorr10]["id"] == $typesEvaluationsFriends[$corr10][0][1] ) {
+					
+					switch ($qqTpEvaluations) {
+
+						# és preferido por `USER` ? SIM ou NÃO ?
+						
+						# se a quant. estiver equivalente a 3, enviou: Heart, Handshake, Bomb.
+						
+						case 3 :
+
+							# averiguar se 'Amigo' de 'User' é favorito ou não.
+							
+							$typesEvaluationsFriendsX[$dorr10][1] == 1 ? $isFavorite10 = "SIM": $isFavorite10 = "NÃO";
+							echo 
+							
+								"<tr>".
+								"<td>".$typesEvaluationsFriendsX[$dorr10]["display_name"]."</td>".
+								"<td>".$isFavorite10."</td>".
+								"<td>SIM</td>".
+								"<td>SIM</td>".
+								"<td>SIM</td>".
+								"</tr>";
+
+						break;
+
+						# caso a quant. estiver inferior a 3 então teremos de averiguar se houve envio de: Heart, Handshake, Bomb.
+						
+						default :
+
+							$eorr10 = 0;
+							
+							# averiguar se 'Amigo' de 'User' é favorito ou não.
+							
+							$typesEvaluationsFriendsX[$dorr10][1] == 1 ? $isFavorite10 = "SIM": $isFavorite10 = "NÃO";
+
+							while ( $eorr10 < $qqTpEvaluations ) {
+								
+								# se for a primeira posição então atribua valor HtMl.
+								
+								( $eorr10 == 0 ) ? $showRow1 = "<tr><td>".$typesEvaluationsFriendsX[$dorr10]["display_name"]."</td><td>".$isFavorite10."</td>" : print "";
+								
+								# houve aperto de mão, handshake ?
+								
+								( $typesEvaluationsFriends[$corr10][$eorr10][2] == 1 ) ? $showRow2 = "<td>SIM</td>" : $showRow2 = "<td>NÃO</td>";
+
+								# houve coração, heart ?
+								
+								$typesEvaluationsFriends[$corr10][$eorr10][2] == 0 ? $showRow3 = "<td>SIM</td>" : $showRow3 = "<td>NÃO</td>";
+
+								# houve bomba ?
+								
+								$typesEvaluationsFriends[$corr10][$eorr10][2] == 2 ? $showRow4 = "<td>SIM</td>"."</tr>" : $showRow4 = "<td>NÃO</td>"."</tr>";
+								
+								$eorr10++;
+							
+							}
+							
+							# imprimindo resultado, formato HtMl ( table - linhas <TD> ) ... 
+							
+							# ... grid ( espécies de avaliações executadas a partir de 'User' para 'Friends' ).
+							
+							print 
+							
+								$showRow1.
+								$showRow2.
+								$showRow3.
+								$showRow4;
+
+						break;
+
+					}
+
+
+				
+					}
+				
+				}
+		}
+
+		echo 
+		
+			"</table>".
+			"<br>".
+			"<div id='pageNav' align='center'></div>".
+			"<script>".
+			"var pager = new Pager('tb1', 3); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>";
+
+	} else {
+			
+		echo 
+		
+			"<p align='center'>Não há Registros para a ocasião.</p>";
+			
+	}
+	
+	break;
+
+	case 11 :
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV - Quais avaliações `USER` designou a Aluno(s) ?
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	if ( !empty ( $evaluationsPerTypeRole[0] ) ) {
+
+		for ( $corr11 = 0 ; $corr11 < sizeof ( $evaluationsPerTypeRole ) ; $corr11++ ) {
+
+			if ( !empty ( $evaluationsPerTypeRole[$corr11] ) ) {
+
+				$tpAccess_role = "ALUNO";
+								
+				echo 
+				
+					"<table id='tb1' align='center'>".
+					"<tr>".
+					"<th width='35%'>NOME</th>".
+					"<th width='55%'>AVALIAÇÃO</th>".
+					"<th width='10%'>PAPEL</th>";
+
+				for ( $dorr11 = 0 ; $dorr11 < sizeof ( $evaluationsPerTypeRole[$corr11] ); $dorr11++ ) {
+
+					$value_rate 	= $evaluationsPerTypeRole[$corr11][$dorr11][2];
+					
+					$aux_dorr11		= $corr11+$dorr11*3;
+									
+					# imprimir o resultado condizente com a avaliação atribuída pelo usuário.
+					
+					print 
+					
+						"<tr>".
+						"<td>".$evaluationsPerTypeRole[$corr11][$dorr11][1]."</td>".
+						"<td>";
+					
+					# designando seleção de estrelas, na proporlção do valor que determinado funcionário/escola/aluno fora avaliado.
+					
+					( $value_rate == 1 ) ? print '<input name='.$aux_dorr11.' checked type="radio" class="star {split:0}" value="1" />' : print '<input name='.$aux_dorr11.' type="radio" class="star {split:0}" value="1" />';
+					
+					( $value_rate == 2 ) ? print '<input name='.$aux_dorr11.' checked type="radio" class="star {split:0}" value="2" />' : print '<input name='.$aux_dorr11.' type="radio" class="star {split:0}" value="2" />';
+					
+					( $value_rate == 3 ) ? print '<input name='.$aux_dorr11.' checked type="radio" class="star {split:0}" value="3" />' : print '<input name='.$aux_dorr11.' type="radio" class="star {split:0}" value="3" />';
+					
+					( $value_rate == 4 ) ? print '<input name='.$aux_dorr11.' checked type="radio" class="star {split:0}" value="4" />' : print '<input name='.$aux_dorr11.' type="radio" class="star {split:0}" value="4" />';
+					
+					( $value_rate == 5 ) ? print '<input name='.$aux_dorr11.' checked type="radio" class="star {split:0}" value="5" />' : print '<input name='.$aux_dorr11.' type="radio" class="star {split:0}" value="5" />';
+					
+					print 
+					
+						"</td>".
+						"<td>".$tpAccess_role."</td>".
+						"</tr>";
+				
+				}
+				
+				
+				echo 
+				
+					"</table>".
+					"<div id='pageNav' align='center'></div>".
+					"</div>".
+					"<script>".
+					"var pager = new Pager('tb1', 3); ".
+					"pager.init(); ".
+					"pager.showPageNav('pager', 'pageNav'); ".
+					"pager.showPage(1);".
+					"</script>".
+					"<br>".
+					"<br>".
+					"<br>";
+
+			}
+		}
+
+	} else {
+			
+		echo 
+		
+			"<p align='center'>Não há Registros para a ocasião.</p>";
+			
+	}
+
+	break;
+
+	case 12 : 
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV - Quais avaliações `USER` designou a Funcionário(s) ?
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	if ( !empty ( $evaluationsPerTypeRole[0] ) ) {
+
+		for ( $corr12 = 0 ; $corr12 < sizeof ( $evaluationsPerTypeRole ) ; $corr12++ ) {
+
+			if ( !empty ( $evaluationsPerTypeRole[$corr12] ) ) {
+
+				$tpAccess_role = "FUNCIONÁRIO";
+								
+				echo 
+				
+					"<table id='tb1' align='center'>".
+					"<tr>".
+					"<th width='35%'>NOME</th>".
+					"<th width='55%'>AVALIAÇÃO</th>".
+					"<th width='10%'>PAPEL</th>";
+
+				for ( $dorr12 = 0 ; $dorr12 < sizeof ( $evaluationsPerTypeRole[$corr12] ) ; $dorr12++ ) {
+
+					$value_rate 	= $evaluationsPerTypeRole[$corr12][$dorr12][2];
+
+					$aux_dorr12		= $corr12+$dorr12*3;
+					
+					print 
+					
+						"<tr>".
+						"<td>".$evaluationsPerTypeRole[$corr12][$dorr12][1]."</td>".
+						"<td>";
+					
+					# designando seleção de estrelas, na proporlção do valor que determinado funcionário/escola/aluno fora avaliado.
+					
+					( $value_rate == 1 ) ? print '<input name='.$aux_dorr12.' checked type="radio" class="star {split:0}" value="1" />' : print '<input name='.$aux_dorr12.' type="radio" class="star {split:0}" value="1" />';
+					
+					( $value_rate == 2 ) ? print '<input name='.$aux_dorr12.' checked type="radio" class="star {split:0}" value="2" />' : print '<input name='.$aux_dorr12.' type="radio" class="star {split:0}" value="2" />';
+					
+					( $value_rate == 3 ) ? print '<input name='.$aux_dorr12.' checked type="radio" class="star {split:0}" value="3" />' : print '<input name='.$aux_dorr12.' type="radio" class="star {split:0}" value="3" />';
+					
+					( $value_rate == 4 ) ? print '<input name='.$aux_dorr12.' checked type="radio" class="star {split:0}" value="4" />' : print '<input name='.$aux_dorr12.' type="radio" class="star {split:0}" value="4" />';
+					
+					( $value_rate == 5 ) ? print '<input name='.$aux_dorr12.' checked type="radio" class="star {split:0}" value="5" />' : print '<input name='.$aux_dorr12.' type="radio" class="star {split:0}" value="5" />';
+					
+					print 
+					
+						"</td>".
+						"<td>".$tpAccess_role."</td>".
+						"</tr>";
+				
+				}
+				
+				echo 
+				
+					"</table>".
+					"<div id='pageNav' align='center'></div>".
+					"</div>".
+					"<script>".
+					"var pager = new Pager('tb1', 3); ".
+					"pager.init(); ".
+					"pager.showPageNav('pager', 'pageNav'); ".
+					"pager.showPage(1);".
+					"</script>".
+					"<br>".
+					"<br>".
+					"<br>";
+				
+			}
+			
+		}
+
+	} else {
+			
+		echo 
+		
+			"<p align='center'>Não há Registros para a ocasião.</p>";
+			
+	}
+
+	break;
+
+	case 13 : 
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV - Quais avaliações `USER` designou a Escola(s) ?
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	if ( !empty ( $evaluationsPerTypeRole[0] ) ) {
+
+		for ( $corr13 = 0 ; $corr13 < sizeof ( $evaluationsPerTypeRole ) ; $corr13++ ) {
+
+			if ( !empty ( $evaluationsPerTypeRole[$corr13] ) ) {
+
+				$tpAccess_role = "ESCOLA";
+								
+				echo "<table id='tb1' align='center'>".
+				"<tr>".
+				"<th width='35%'>NOME</th>".
+				"<th width='55%'>AVALIAÇÃO</th>".
+				"<th width='10%'>PAPEL</th>";
+
+				for ( $dorr13 = 0 ; $dorr13 < sizeof ( $evaluationsPerTypeRole[$corr13] ) ; $dorr13++ ) {
+
+					$value_rate 	= $evaluationsPerTypeRole[$corr13][$dorr13][2];
+					
+					$aux_dorr13		= $corr13+$dorr13*3;
+					
+					# imprimir o resultado condizente com a avalilação atribuída pelo usuário.
+					
+					print 
+					
+						"<tr>".
+						"<td>".$evaluationsPerTypeRole[$corr13][$dorr13][1]."</td>".
+						"<td>";
+					
+					# designando seleção de estrelas, na proporlção do valor que determinado funcionário/escola/aluno fora avaliado.
+					
+					( $value_rate == 1 ) ? print '<input name='.$aux_dorr13.' checked type="radio" class="star {split:0}" value="1" />' : print '<input name='.$aux_dorr13.' type="radio" class="star {split:0}" value="1" />';
+					
+					( $value_rate == 2 ) ? print '<input name='.$aux_dorr13.' checked type="radio" class="star {split:0}" value="2" />' : print '<input name='.$aux_dorr13.' type="radio" class="star {split:0}" value="2" />';
+					
+					( $value_rate == 3 ) ? print '<input name='.$aux_dorr13.' checked type="radio" class="star {split:0}" value="3" />' : print '<input name='.$aux_dorr13.' type="radio" class="star {split:0}" value="3" />';
+					
+					( $value_rate == 4 ) ? print '<input name='.$aux_dorr13.' checked type="radio" class="star {split:0}" value="4" />' : print '<input name='.$aux_dorr13.' type="radio" class="star {split:0}" value="4" />';
+					
+					( $value_rate == 5 ) ? print '<input name='.$aux_dorr13.' checked type="radio" class="star {split:0}" value="5" />' : print '<input name='.$aux_dorr13.' type="radio" class="star {split:0}" value="5" />';
+					
+					print 
+					
+						"</td>".
+						"<td>".$tpAccess_role."</td>".
+						"</tr>";
+				
+				}
+				
+				
+				echo 
+				
+					"</table>".
+					"<div id='pageNav' align='center'></div>".
+					"</div>".
+					"<script>".
+					"var pager = new Pager('tb1', 3); ".
+					"pager.init(); ".
+					"pager.showPageNav('pager', 'pageNav'); ".
+					"pager.showPage(1);".
+					"</script>".
+					"<br>".
+					"<br>".
+					"<br>";
+
+				
+			}
+		}
+
+	} else {
+			
+		echo 
+		
+			"<p align='center'>Não há Registros para a ocasião.</p>";
+			
+	}
+	
+	break;
+
+	case 14 :
+
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	#		DIV - Quais notas foram alcançadas por `USER` - Boletim Escolar ( Matéria X Desempenho X Período ) ?
+	#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	if ( !empty ( $avgPerSchoolSubjectOfUser ) ) {
+	
+		echo 
+		
+			"<div style='display:'block'> ".
+			"<table border='1' id='tb1' align='center'>".
+			"<tr>".
+			#"<th rowspan=2> MÉDIA DO ALUNO </th>".
+			"<th rowspan=2> MATÉRIAS ESCOLARES </th>".
+			"<th colspan=4> PERÍODOS </th>".			
+			"</tr>".
+			"<tr>".
+			"<th> I </th>".
+			"<th> II </th>".
+			"<th> III </th>".
+			"<th> IV </th>".
+			"</tr>";
+
+		for ( $corr14 = 0 ; $corr14 < sizeof ( $avgPerSchoolSubjectOfUser ) ; $corr14++ ) {
+
+			print 
+
+				"<tr>".
+				#"<td>".number_format($avgPerSchoolSubjectOfUser[$corr14][2] , 2)."</td>".
+				"<td> ".strtoupper($avgPerSchoolSubjectOfUser[$corr14][1])." </td>";
+
+			for ( $eorr14 = 1 ; $eorr14 <= 4 ; $eorr14++ ) {
+
+				print 
+
+					"<td>";			
+
+				for ( $dorr14 = 0 ; $dorr14 < sizeof ( $valueSchoolSubjectOfUser ) ; $dorr14++ ) {
+
+					if ( $avgPerSchoolSubjectOfUser[$corr14][1] == $valueSchoolSubjectOfUser[$dorr14][2] ) {
+
+						if ( $eorr14 == $valueSchoolSubjectOfUser[$dorr14][4] ) {
+
+							print 
+
+								$valueSchoolSubjectOfUser[$dorr14][3];
+						
+						}
+
+					}
+
+				}
+
+
+				print 
+
+					"</td>";
+
+			}
+
+			print 
+
+				"</tr>";
+
+		}
+
+		print 
+		
+			"</table>".
+			"</div>";
+
+	} else {
+			
+		echo 
+		
+			"<p align='center'>Não há Registros para a ocasião.</p>";
+			
+	}
+
+	break;
+
+}
+
+?>
+
+<?php $this->headScript()->captureStart(); ?>
+
+function show(id) {
+    document.getElementById(id).style.display = 'block';
+}
+
+function hide(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function myChangeHandler() {
+	window.open(this.options[this.selectedIndex].value, '_self');
+}
+
+<?php $this->headScript()->captureEnd(); ?>

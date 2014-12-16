@@ -1,0 +1,115 @@
+<?php
+
+$basePath = $this->basePath();
+
+$idx = 100;
+
+$this->headLink()->offsetSetStylesheet(++$idx, $basePath . '/css/paging.css');
+
+$idx = 100;
+
+$this->headScript()->offsetSetFile(++$idx, $basePath . '/js/paging.js', 'text/javascript');
+
+$this->headScript()->captureEnd(); 
+
+$form = $this->form;
+
+$form->setAttribute('action', $this->url('report'));
+
+$form->prepare();
+
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+
+# primeira aparição dEfAuLt ...
+
+# se ADIM optar por algo então o redirecione para modalidade pretendida ( Estatística Qualitativa, Quantitativa, Turmas e/ou Séries ).
+
+echo 
+
+	'<p align=center>'.
+	'<a href='.$this->url( 'report', array( 'action' => 'index', 'id' => $id, 'tpView' => 1 ) ).' class="btn btn-success btn-large" target="_self"> Estatísticas Individuais </a> '.
+	'<a href="" class="btn btn-success btn-large" target="_self"> Turmas </a> '.
+	'<a href="" class="btn btn-success btn-large" target="_self"> Séries </a>'.
+	'</p>'.
+	'<br>';
+
+# se ADMIN tiver disparado/clicado no que pretende ( Estatística Qualitativa, Quantitativa, Turmas e/ou Séries ) aprensente grid.
+	
+if ( !empty ( $tpView ) ) {
+
+	switch ( $tpView ) {
+
+		case 1 : 
+
+			echo 
+			
+				"<table id='tb1' align='center'>".
+				"<tr>".
+				"<th width='auto'>Nome</th>".
+				"<th width='auto'>Inscrito em</th>".
+				"<th width='auto'>Operações</th>".
+				"</tr>";
+
+				# reproduzindo todos os registros de `USER` em grid.
+					
+				foreach ( $users as $user ) :
+
+					echo 
+					
+						"<tr>".
+						"<td>".$user->getName()."</td>".
+						"<td>".$user->getCreationTime()->format('d-m-Y')."</td>".
+						"<td><a href='".$this->url( 'report', array( 'action' => 'index','id' => $user->getId(),'tpView' => 2  ) )."' target=''><input type='button' class='bt-view' alt='bt-view'>"."</a></td>".
+						"</tr>";
+
+				endforeach;
+			
+			# paginação na grid, *.jS.
+			
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb1', 3); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+
+
+		break;
+		
+		case 2 : 
+			
+			echo 
+			
+				'<a href='.$this->url( 'report', array( 'action' => 'quantitativo', 'id' => $id, 'tpView' => 2 ) ).' class="btn btn-success btn-large" target="_blank"> Análise Quantitativa </a> <br><br>'.
+				' <a href='.$this->url( 'report', array( 'action' => 'qualitativo', 'id' => $id, 'tpView' => 3 ) ).' class="btn btn-success btn-large" target="_blank"> Análise Qualitativa </a>';
+		
+		break;
+
+	}
+
+}
+
+?>
+
+<?php $this->headScript()->captureStart(); ?>
+
+function show(id) {
+    document.getElementById(id).style.display = 'block';
+}
+
+function hide(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function myChangeHandler() {
+	window.open(this.options[this.selectedIndex].value, '_blank');
+}
+
+<?php $this->headScript()->captureEnd(); ?>

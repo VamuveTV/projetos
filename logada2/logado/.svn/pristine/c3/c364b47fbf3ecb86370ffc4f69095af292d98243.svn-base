@@ -1,0 +1,146 @@
+<?php
+//logica da paginacao
+if(!$pagina)
+    $pagina = 1;
+
+$qtd = 5;
+$n_paginas = round(count($posts) / $qtd);
+$inicio = (($pagina * $qtd) - $qtd)+1;
+$fim = $inicio + ($qtd - 1);
+
+$anterior = $pagina - 1;
+$proxima = $pagina + 1;
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<style type="text/css">
+    .atual a:link{
+        background: #aaa;
+        color: #000;
+    }
+</style>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+<div>
+    <div>
+        <div>
+            <div style="margin-top: 20px">
+                <h2>POSTAGENS DE AMIGOS</h2>
+                <ul class="btsAlterarFontes">
+                    <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+                    <li><a href="#" id="aumenta"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+                    <li><a href="#" id="diminui"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+
+                </ul>
+            </div>
+            <br class="limpa">
+            <div>
+                <?php if (isset($posts)) :
+                    echo '<ul class="postagensAlunos">';
+                    $ct = 1;
+                    foreach($posts as $i=>$msg){
+                        if($ct >= $inicio && $ct <= $fim){
+                            echo '<li>
+                                    <div class="imgPostagens">';
+                                    if($fotos_remetentes[$i] != ''){
+                                        $foto = $fotos_remetentes[$i];
+                                        echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\" style='border: 4px #AAA solid'>";
+                                    }else
+                                        echo '<img src="/public/img/semfoto.jpg" id="foto_perfil"style="border: 4px #AAA solid">';
+                                    echo '<span>'.$nomes_remetentes[$i].'</span>';
+                                echo '</div>
+                                        <div class="txtPostagens">';
+                                        echo nl2br($msg->getMensagem());
+                                        if($icones[$i])
+                                        echo '<br><img src="/public/imagens/faces/'.$icones[$i].'.png" border="0" /> <b>'.ucfirst($icones[$i]).'</b>
+                                        </div>
+                                    </li>';
+
+                            /*
+                            if($fotos_remetentes[$i] != ''){
+                                $foto = $fotos_remetentes[$i];
+                                echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+                            }else
+                                echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+
+                            echo  '<br>'.$nomes_remetentes[$i];
+                            echo " > ".$nomes_destinatarios[$i];
+
+                            $timestamp = strtotime($msg->getData());
+                            $new_date = date('d/m/Y', $timestamp);
+                            echo " - ".$new_date;
+                            echo "</b><br>";
+
+                            echo $msg->getMensagem();
+                            echo "</p><hr>";
+                            */
+                        }
+                        $ct++;
+                    }
+                    echo '</ul>';
+                endif;
+                ?>
+            </div>
+            <br class="limpa">
+            <a data-toggle="modal" href="#myModal2" style="float: right"><img src="/public/img/ico-libras-escuro.png" alt="" border="0"></a>
+            <br class="limpa">
+        </div>
+    </div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+        <tr>
+            <td width="84">
+                <?php
+                if($pagina > 1)
+                    echo "<a href='/$anterior'><img src=\"/public/imagens/bt-anterior.png\" width=\"84\" height=\"39\" border=\"0\"></a>";
+                ?>
+            </td>
+            <td width="800" align="center">
+                <div class="paginacao">
+                    <?php
+                    for($i=1;$i <= $n_paginas; $i++){
+                        if($i==$pagina)
+                            echo "<span>$i</span>";
+                        else
+                            echo "<a href='/$i's>$i</a> ";
+                    }
+                    ?>
+                </div>
+            </td>
+            <td width="84">
+                <?php
+                if($pagina != $n_paginas)
+                    echo "<a href='/$proxima'><img src=\"/public/imagens/bt-proximo.png\" width=\"84\" height=\"39\" border=\"0\"></a>";
+                ?>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br class="limpa">
+</div>
+
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <?php
+                echo $video->getVideo();
+                ?>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Fechar</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

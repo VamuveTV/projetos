@@ -1,0 +1,50 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<div>
+    <h3>FALE CONOSCO</h3>
+    <form method="post">
+        <div class="control-group">
+            <label class="control-label" for="nome">Nome</label>
+            <div class="controls">
+                <input type="text" id="nome" name="nome" class="input-medium" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="email">E-mail</label>
+            <div class="controls">
+                <input type="text" id="email" name="email" class="input-medium" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="assunto">Assunto</label>
+            <div class="controls">
+                <input type="text" id="assunto" name="assunto" class="input-medium" >
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="mensagem">Mensagem</label>
+            <div class="controls">
+                <textarea rows="5" cols="40" id="mensagem" name="mensagem"></textarea>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">Enviar</button>
+
+    </form>
+</div>
+

@@ -1,0 +1,70 @@
+<?php
+$title = 'Autenticação';
+$this->headTitle($title);
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro')
+            $('#file_estilo').attr('href','/public/css/estiloalunos.css');
+        else
+            $('#file_estilo').attr('href','/public/css/estiloalunosE.css');
+
+        $('#estilo').change(function(){
+            $.cookie('estilo', $(this).val());
+            if($.cookie('estilo')==null || $.cookie('estilo')=='claro')
+                $('#file_estilo').attr('href','/public/css/estiloalunos.css');
+            else
+                $('#file_estilo').attr('href','/public/css/estiloalunosE.css');
+        })
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<div class="escolherTema">
+    Escolher tema:<br />
+    <select name="estilo" id="estilo" class="estiloSelect">
+        <option value=""></option>
+        <option value="claro">Claro</option>
+        <option value="escuro">Escuro</option>
+    </select>
+</div>
+<div id="geralLogin">
+<div id="login">
+    <form method="post">
+        <div class="titLogin">
+            Fa&ccedil;a o seu LOGIN no LOGAD@<br />
+            <img src="/public/img/logo--logada-login.png" width="189" height="237" border="0" style="margin-top:11px; margin-bottom:10px;" /><br />
+            <span class="termosUso"><a href="/cadastro">Cadastre-se</a></span>
+        </div>
+        <div id="formLogin">
+
+            <span>Matricula:</span><br />
+            <input class="camposLogin" name="matricula" id="matricula" type="text" value="Sua matr&iacute;cula" onblur="if(this.value.length == 0) this.value='Sua matr&iacute;cula';" onfocus="if(this.value=='Sua matr&iacute;cula') this.value='';" /><br />
+            <span>Escola:</span><br />
+            <select name="escola" id="escola" class="camposLogin">
+                <?php foreach($escolas AS $escola){
+                    echo "<option value='".$escola->getId()."'>".$escola->getNome()."</option>";
+                }
+                ?>
+            </select><br>
+            <span>Senha:</span><br />
+            <input class="camposLogin" name="senha" id="senha" type="password" value="Sua senha" onblur="if(this.value=='') this.value='Sua senha';" onfocus="if(this.value=='Sua senha') this.value='';" /><br />
+            <input name="" type="image" class="botaoLogin" src="/public/img/botao-login.png" style="margin-top:16px;" />
+            <a href="/esqueci">Esqueceu sua senha?</a>
+            <?php
+            if(isset($error)){
+                if($error == true)
+                    echo "<p>Falha na autentica&ccedil;&atilde;o</p>";
+                else
+                    echo "<p>Ok</p>";
+            }
+            ?>
+
+        </div>
+    </form>
+</div>
+</div>
+<?php
+die();
+?>

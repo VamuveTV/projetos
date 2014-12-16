@@ -1,0 +1,118 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+	$(document).ready(initialize);
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+
+<!-- Google Maps Script 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<script type="text/javascript">
+var map;
+
+function initialize() {
+	var myLatlng = new google.maps.LatLng(-22.89645,-43.18434);
+	var mapOptions = {
+		zoom: 15,
+		center: myLatlng
+	}
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	
+	// Colocar marcacao de escola no mapa
+	var escLatlng;
+	var lat = <?php echo $escola_lat; ?>;
+	var lng = <?php echo $escola_lng; ?>;
+	if (lat != 0 && lng != 0) {
+		escLatlng = new google.maps.LatLng(lat, lng);
+		var marker = new google.maps.Marker({
+			position: escLatlng,
+			map: map,
+			title: 'Escola',
+			draggable: false,
+			animation: google.maps.Animation.DROP,
+			icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+		});
+	} 
+	
+	// Place markers on map
+	var marker = new google.maps.Marker({
+		position: myLatlng,
+		map: map,
+		title: 'Arraste este marcador para a nova localização',
+		draggable: true,
+		animation: google.maps.Animation.DROP
+	});
+	google.maps.event.addListener(marker, 'dragend', function(event) 
+	{
+		document.getElementById("latitude").value = event.latLng.lat();
+		document.getElementById("longitude").value = event.latLng.lng();
+		//$.ajax({url: "Localizacao/acesso/?lat="+arg1+"&lng="+arg2}).done(function(data) {
+		//	console.log(data);
+		//});
+		//alert(ok);
+	});
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<!-- End Google Maps Script -->
+
+<div>
+    <div>
+        <br>
+        <?php
+        //if($foto != '')
+        //    echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+        //else
+        //    echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+        ?>
+		<div style="margin-top: 20px">
+            <h2>Cadastro de Localização</h2>
+            <ul class="btsAlterarFontes">
+                <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+                <li><a href="#" id="aumenta"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+                <li><a href="#" id="diminui"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+            </ul>
+        </div>
+        <br class="limpa">
+		
+        <p style="clear:both"></p>
+        <form method="post" enctype="multipart/form-data">
+			Nome: <input type="text" name="nome_loc" id="nome_loc">
+			Descricao: <input type="text" name="desc" id="desc">
+			Endereco: <input type="text" name="endereco" id="endereco">
+			<input type="hidden" name="latitude" id="latitude">
+			<input type="hidden" name="longitude" id="longitude">
+			<br>
+			<div class="form-group">
+				<label for="fotoloc">Selecione a foto</label>
+				<input type="file" name="fotoloc" id="fotoloc" style="clear:both">
+				<p class="help-block">Esta será a foto da localização.</p>
+			</div>
+			<br>
+			
+			<!-- Map -->
+			Escolha a localização movendo o marcador no mapa:
+			<div id="map-canvas" style="height:500px;width:600px;"></div>
+			
+			<input type="submit" value="Cadastrar" class="btn btn-success">
+        </form>
+        <?php
+        if($msg != ''){
+            echo "<h4>$msg</h4>";
+        }
+        ?>
+    </div>
+</div>

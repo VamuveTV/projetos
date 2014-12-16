@@ -1,0 +1,129 @@
+<?php
+use Application\Constants\Constants;
+$title = 'Seus Amigos';
+$this->headTitle($title);
+?>
+
+<?php
+$basePath = $this->basePath();
+
+$idx = 100;
+$this->headScript()->offsetSetFile(++$idx, $basePath . '/js/holder.js', 'text/javascript');
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php 
+$form = $this->form;
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+
+<div style="float:left; margin-right:10px;">Procure um amigo:</div>
+
+<div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('username'), null, true); ?></div>
+
+<div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('school'), null, true); ?></div>
+
+<div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('class'), null, true); ?></div>
+
+<div style="float:left; margin-right:10px;"><?php echo $this->formRow($form->get('day_period'), null, true); ?></div>
+
+<div style="float:left;"><?php echo $this->formSubmit($form->get('submit_search')); ?></div>
+
+<div style="float:left;"><?php echo $this->formSubmit($form->get('submit_clean')); ?></div>
+
+<br />
+<br />
+<br />
+
+<?php if($found_friends == null) : ?>
+<span style="font-family:Arial;font-size:20px;font-weight:bold;font-style:normal;text-decoration:none;color:#999999;float:left">
+Preferidos
+</span>
+
+<br />
+<br />
+
+<div class="row">
+    <?php if ($favfriends != null) : 
+    foreach ($favfriends as $profile) : ?>
+        <div class="col-sm-4 col-md-2">
+    		<div class="thumbnail">
+    			<img data-src="holder.js/80x80" alt="">
+				<div class="friendsContainer">
+    				<h5>
+    				    <a href="<?php echo 'view/' . $profile->getId(); ?>">
+                            <?php echo $this->escapeHtml($profile->getDisplayName());?>
+                        </a>
+                        <br />
+                        <h5>Escola Finxi</h5>
+                    </h5>
+                </div>
+    		</div>
+    	</div>
+    <?php endforeach; 
+    endif; ?>
+</div>
+
+<span style="font-family:Arial;font-size:20px;font-weight:bold;font-style:normal;text-decoration:none;color:#999999;float:left">
+Todos os seus amigos
+</span>
+
+<br />
+<br />
+
+<div class="row">
+    <?php if ($friends != null) : 
+    foreach ($friends as $profile) : ?>
+        <div class="col-sm-4 col-md-2">
+    		<div class="thumbnail">
+    			<img data-src="holder.js/80x80" alt="">
+				<div class="friendsContainer">
+    				<h5>
+    				    <a href="<?php echo 'view/' . $profile->getId(); ?>">
+                            <?php echo $this->escapeHtml($profile->getDisplayName());?>
+                        </a>
+                        <br />
+                        <h5>Escola Finxi</h5>
+                    </h5>
+                </div>
+    		</div>
+    	</div>
+    <?php endforeach;
+    endif; ?>
+    
+</div>
+
+<?php else : ?>
+
+<span style="font-family:Arial;font-size:20px;font-weight:bold;font-style:normal;text-decoration:none;color:#999999;float:left">
+Amigos
+</span>
+
+<br />
+<br />
+
+<div class="row">
+    <?php foreach ($found_friends as $profile) : ?>
+        <div class="col-sm-4 col-md-2">
+    		<div class="thumbnail">
+    			<img data-src="holder.js/80x80" alt="">
+				<div class="friendsContainer">
+    				<h5>
+    				    <a href="<?php echo 'view/' . $profile->getId(); ?>">
+                            <?php echo $this->escapeHtml($profile->getDisplayName());?>
+                        </a>
+                        <br />
+                        <h5>Escola Finxi</h5>
+                    </h5>
+                </div>
+    		</div>
+    	</div>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
+
+<?php echo $this->form()->closeTag(); ?>

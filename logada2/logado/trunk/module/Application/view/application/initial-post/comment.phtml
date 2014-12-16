@@ -1,0 +1,21 @@
+<?php
+$title = 'Gostaria de comentar mais alguma coisa?';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$form = $this->form;
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+
+<?php
+echo $this->postCreate;
+echo $this->formRow($form->get('skip'), null, true);
+?>
+
+<?php
+echo $this->form()->closeTag();
+?>

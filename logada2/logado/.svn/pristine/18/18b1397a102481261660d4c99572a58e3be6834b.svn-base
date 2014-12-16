@@ -1,0 +1,3 @@
+ALTER TABLE  `aluno` ADD  `token_acesso` VARCHAR( 100 ) NOT NULL ,
+ADD  `token_refresh` VARCHAR( 100 ) NOT NULL ,
+ADD  `id_wikimapa` INT NOT NULL ;

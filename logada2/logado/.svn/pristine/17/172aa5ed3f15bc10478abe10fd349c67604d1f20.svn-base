@@ -1,0 +1,54 @@
+<?php
+$title = 'Adicionar novo usuário';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php 
+$form = $this->form;
+$form->setAttribute('action', 'add');
+$form->prepare();
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+
+<div class="form_element">
+<?php
+echo $this->formRow($form->get('name'), null, true);
+
+//Tambem funciona:
+/*$name = $form->get('name');
+echo $formLabel->openTag() . $name->getOption('label');
+echo $this->formInput($name);
+echo $this->formElementErrors($name);
+echo $formLabel->closeTag();*/
+?>
+</div>
+
+<?php //echo $this->formRow($form->get('displayname'), null, true); ?>
+
+<?php echo $this->formRow($form->get('email'), null, true); ?>
+
+<?php echo $this->formRow($form->get('birthday'), null, true); ?>
+
+<?php echo $this->formRow($form->get('sex'), null, true); ?>
+
+<?php echo $this->formRow($form->get('role'), null, true); ?>
+
+<?php echo $this->formRow($form->get('password'), null, true); ?>
+
+<?php echo $this->formSubmit($form->get('submit')); ?>
+
+<?php echo $this->form()->closeTag(); ?>
+
+<?php
+if ($this->messages){
+	echo '<ul>';
+	foreach($this->messages as $message)
+	{
+		echo '<li>'.$message.'</li>';
+	}
+	echo '</ul>';
+}

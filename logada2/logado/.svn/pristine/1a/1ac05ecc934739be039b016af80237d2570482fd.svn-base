@@ -1,0 +1,243 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //definindo o tema
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+
+        if($.cookie('fonte')!=null){
+            $('div, p, span, td, th, li').children().each(function(i,element){
+                var fonte = $.cookie('fonte');
+                $(this).css('font-family',fonte);
+            })
+        }
+
+        $('#estilo').change(function(){
+            $.cookie('estilo', $(this).val());
+            document.location='';
+        })
+
+        $('#fonte').change(function(){
+            $.cookie('fonte', $(this).val());
+            document.location='';
+        })
+    })
+</script>
+<style type="text/css">
+#tudo{
+    width: 850px;
+    margin: 40px auto;
+}
+#esquerda{
+    width: 50%;
+    float: left;
+    min-height: 600px;
+}
+#direita{
+    width: 50%;
+    float: right;
+    min-height: 600px;
+}
+label{
+    font-weight: normal;
+}
+</style>
+<script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<br>
+<form method="post">
+<div id="tudo">
+    <div id="esquerda">
+        <label>Nome:*</label><br>
+        <input type="text" name="nome" id="nome" value="<?php echo $aluno->getNome();?>"><br>
+        <label>Sexo:*</label><br>
+        <input type="checkbox" name="sexo" value="M"<?php echo $aluno->getSexo()=='M'?' checked':'';?>> Masculino
+        <input type="checkbox" name="sexo" value="F"<?php echo $aluno->getSexo()=='F'?' checked':'';?>> Feminino<br>
+        <label>Data de nascimento:*</label><br>
+        <input type="text" name="data_nasc" id="data_nasc" value="<?php echo $aluno->getDataNasc();?>"><br>
+        <label>Endereço:*</label><br>
+        <input type="text" name="endereco" id="endereco" value="<?php echo $aluno->getEndereco();?>"><br>
+        <label>Cidade:*</label><br>
+        <input type="text" name="cidade" id="cidade" value="<?php echo $aluno->getCidade();?>"><br>
+        <label>CEP:*</label><br>
+        <input type="text" name="cep" id="cep" value="<?php echo $aluno->getCep();?>"><br>
+        <label>Série:*</label><br>
+        <input type="text" name="serie" id="serie" value="<?php echo $aluno->getSerie();?>"><br>
+        <label>Turma:*</label><br>
+        <select name="turma" id="turma">
+            <?php foreach($turmas AS $turma){
+                echo "<option value='".$turma->getId()."'";
+                    echo $aluno->getTurma()==$turma->getId()?' selected':'';
+                echo ">".$turma->getTurma()."</option>";
+            }
+            ?>
+        </select>
+        <hr>
+        <label>Quantas pessoas moral na sua casa?*</label><br>
+        <input type="text" name="npessoas" id="npessoas" value="<?php echo $aluno->getNpessoas();?>"><br>
+        <label>Você possui alguma doen&ccedil;a cr&ocirc;nica:*</label><br>
+        <input type="radio" name="doenca" value="S"<?php echo $aluno->getDoenca()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="doenca" value="N"<?php echo $aluno->getDoenca()=='N'?' checked':'';?>> Não<br>
+        Se sim, qual?<br>
+        <input type="text" name="nome_doenca" value="<?php echo $aluno->getNomeDoenca();?>"><br>
+        <label>Quais matérias você MENOS gosta?*</label><br>
+        <?php
+        $materias_menos = explode('#',$aluno->getMateriasMenos());
+        ?>
+        <input type="checkbox" name="materia_menos[]" value="Matemática"<?php echo in_array('Matemática',$materias_menos)?' checked':'';?>> Matemática<br>
+        <input type="checkbox" name="materia_menos[]" value="Português"<?php echo in_array('Português',$materias_menos)?' checked':'';?>> Português<br>
+        <input type="checkbox" name="materia_menos[]" value="Literatura"<?php echo in_array('Literatura',$materias_menos)?' checked':'';?>> Literatura<br>
+        <input type="checkbox" name="materia_menos[]" value="Biologia"<?php echo in_array('Biologia',$materias_menos)?' checked':'';?>> Biologia<br>
+        <label>Quais habilidades você possui?*</label><br>
+        <?php
+        $habilidades = explode('#',$aluno->getHabilidades());
+        ?>
+        <input type="checkbox" name="habilidades[]" value="Pintura"<?php echo in_array('Pintura',$habilidades)?' checked':'';?>> Pintura<br>
+        <input type="checkbox" name="habilidades[]" value="Futebol"<?php echo in_array('Futebol',$habilidades)?' checked':'';?>> Futebol<br>
+        <input type="checkbox" name="habilidades[]" value="Esportes"<?php echo in_array('Esportes',$habilidades)?' checked':'';?>> Esportes<br>
+        <input type="checkbox" name="habilidades[]" value="Nadar"<?php echo in_array('Nadar',$habilidades)?' checked':'';?>> Nadar<br>
+        Outras<br>
+        <input type="text" name="outras_habilidades" value="<?php echo $aluno->getOutrasHabilidades();?>"><br>
+        <label>Interesse de profissão:</label><br>
+        <input type="text" name="profissao" value="<?php echo $aluno->getProfissao();?>">
+        <hr>
+        <label>Renda familiar?*</label><br>
+        <input type="radio" name="renda" value="1"<?php echo $aluno->getRenda()=='1'?' checked':'';?>> Menos de 1 salário mínimo<br>
+        <input type="radio" name="renda" value="2"<?php echo $aluno->getRenda()=='2'?' checked':'';?>> Até 2 salários mínimos<br>
+        <input type="radio" name="renda" value="3"<?php echo $aluno->getRenda()=='3'?' checked':'';?>> De 2 a 3 salários mínimos<br>
+        <input type="radio" name="renda" value="4"<?php echo $aluno->getRenda()=='4'?' checked':'';?>> De 3 a 5 salários mínimos<br>
+        <input type="radio" name="renda" value="5"<?php echo $aluno->getRenda()=='5'?' checked':'';?>> Mais de 5 salários mínimos<br>
+        <label>Tem celular?*</label><br>
+        <input type="radio" name="celular" value="S"<?php echo $aluno->getCelular()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="celular" value="N"<?php echo $aluno->getCelular()=='N'?' checked':'';?>> Não<br>
+        <label>Usa aplicativos no celular?*</label><br>
+        <input type="radio" name="app_celular" value="S"<?php echo $aluno->getAppCelular()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="app_celular" value="N"<?php echo $aluno->getAppCelular()=='N'?' checked':'';?>> Não<br>
+        <label>Cite seus preferidos:</label><br>
+        <textarea name="app_preferidos"><?php echo $aluno->getAppPreferidos();?></textarea><br>
+        <label>Você faz compras na internet?*</label><br>
+        <input type="radio" name="compras_net" value="S"<?php echo $aluno->getComprasNet()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="compras_net" value="N"<?php echo $aluno->getComprasNet()=='N'?' checked':'';?>> Não<br>
+        <label>Possui geladeira em casa?*</label><br>
+        <input type="radio" name="geladeira" value="S"<?php echo $aluno->getGeladeira()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="geladeira" value="N"<?php echo $aluno->getGeladeira()=='N'?' checked':'';?>> Não<br>
+        <label>Na sua casa alguém recebe bolsa família?</label><br>
+        <input type="radio" name="bolsa" value="S"<?php echo $aluno->getBolsa()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="bolsa" value="N"<?php echo $aluno->getBolsa()=='N'?' checked':'';?>> Não<br>
+        Se SIM, quem?
+        <input type="text" name="bolsa_quem" value="<?php echo $aluno->getBolsaQuem();?>"><br>
+        <hr>
+        <label>Pratica esportes? Quais?</label><br>
+        <input type="text" name="esportes" value="<?php echo $aluno->getEsportes();?>"><br>
+        <label>Filmes preferidos:</label><br>
+        <textarea name="filmes"><?php echo $aluno->getFilmes();?></textarea><br>
+        <label>Músicas preferidas:</label><br>
+        <textarea name="musicas"><?php echo $aluno->getMusicas();?></textarea><br><br>
+        <input type="submit" value="Enviar" class="btn btn-admin">
+
+    </div>
+
+    <div id="direita">
+        <label>Complemento:</label><br>
+        <input type="text" name="complemento" id="complemento" value="<?php echo $aluno->getComplemento();?>"><br>
+        <label>Bairro:*</label><br>
+        <input type="text" name="bairro" id="bairro" value="<?php echo $aluno->getBairro();?>"><br>
+        <label>Estado:*</label><br>
+        <input type="text" name="estado" id="estado" value="<?php echo $aluno->getEstado();?>"><br>
+        <label>Escola:*</label><br>
+        <select name="escola" id="escola">
+            <?php foreach($escolas AS $escola){
+                echo "<option value='".$escola->getId()."'";
+                    echo $aluno->getEscola()==$escola->getId()?' selected':'';
+                echo ">".$escola->getNome()."</option>";
+            }
+            ?>
+        </select>
+        <hr>
+        <label>Frequenta algum atendimento complementar/de apoio?*</label><br>
+        <input type="radio" name="atendimento" value="S"<?php echo $aluno->getAtendimento()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="atendimento" value="N"<?php echo $aluno->getAtendimento()=='N'?' checked':'';?>> Não<br>
+        Se sim, qual?<br>
+        <select name="tipo_atendimento">
+            <option value=""></option>
+            <option>Fonaudiologia</option>
+            <option>Terapia ocupacional</option>
+        </select><br>
+        <label>Voc&ecirc; possui alguma deficiência?*</label><br>
+        <input type="radio" name="deficiencia" value="S"<?php echo $aluno->getDeficiencia()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="deficiencia" value="N"<?php echo $aluno->getDeficiencia()=='N'?' checked':'';?>> Não<br>
+        Se sim, qual?<br>
+        <select name="tipo_deficiencia">
+            <option value=""></option>
+            <option>Deficiencia 1</option>
+        </select><br>
+        <label>Quais matérias você MAIS gosta?*</label><br>
+        <?php
+        $materias_mais = explode('#',$aluno->getMateriasMais());
+        ?>
+        <input type="checkbox" name="materia_mais[]" value="Matemática"<?php echo in_array('Matemática',$materias_mais)?' checked':'';?>> Matemática<br>
+        <input type="checkbox" name="materia_mais[]" value="Português"<?php echo in_array('Português',$materias_mais)?' checked':'';?>> Português<br>
+        <input type="checkbox" name="materia_mais[]" value="Literatura"<?php echo in_array('Literatura',$materias_mais)?' checked':'';?>> Literatura<br>
+        <input type="checkbox" name="materia_mais[]" value="Biologia"<?php echo in_array('Biologia',$materias_mais)?' checked':'';?>> Biologia<br>
+        <label>Pretende fazer vestibular?*</label><br>
+        <input type="radio" name="vestibular" value="S"<?php echo $aluno->getVestibular()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="vestibular" value="N"<?php echo $aluno->getVestibular()=='N'?' checked':'';?>> Não<br>
+        Se sim, qual?<br>
+        <select name="tipo_vestibular">
+            <option value=""></option>
+            <option>Veterinária</option>
+        </select><br>
+        <hr>
+        <label>Tem computador em casa?*</label><br>
+        <input type="radio" name="computador" value="S"<?php echo $aluno->getComputador()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="computador" value="N"<?php echo $aluno->getComputador()=='N'?' checked':'';?>> Não<br>
+        <label>Com que frequência usa a internet?</label><br>
+        <input type="text" name="frequencia_net" value="<?php echo $aluno->getFrequenciaNet();?>"><br>
+        <label>Usa internet no celular?*</label><br>
+        <input type="radio" name="celular_net" value="S"<?php echo $aluno->getCelularNet()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="celular_net" value="N"<?php echo $aluno->getCelularNet()=='N'?' checked':'';?>> Não<br>
+        <label>Quais redes sociais você usa?*</label><br>
+        <?php
+        $redes = explode('#',$aluno->getRedes());
+        ?>
+        <input type="checkbox" name="redes[]" value="1"<?php echo in_array('1',$redes)?' checked':'';?>> Facebook<br>
+        <input type="checkbox" name="redes[]" value="2"<?php echo in_array('2',$redes)?' checked':'';?>> Twitter<br>
+        <input type="checkbox" name="redes[]" value="3"<?php echo in_array('3',$redes)?' checked':'';?>> Instagram<br>
+        <input type="checkbox" name="redes[]" value="4"<?php echo in_array('4',$redes)?' checked':'';?>> Google+<br>
+        <input type="checkbox" name="redes[]" value="5"<?php echo in_array('5',$redes)?' checked':'';?>> Blog<br>
+        <label>Possui TV em casa?*</label><br>
+        <input type="radio" name="tv" value="S"<?php echo $aluno->getTv()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="tv" value="N"<?php echo $aluno->getTv()=='N'?' checked':'';?>> Não<br>
+        <label>Possui máquina de lavar em casa?*</label><br>
+        <input type="radio" name="maquina" value="S"<?php echo $aluno->getMaquina()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="maquina" value="N"<?php echo $aluno->getMaquina()=='N'?' checked':'';?>> Não<br>
+        <label>Na sua casa alguém recebe outro incentivo do governo?</label><br>
+        <input type="radio" name="incentivo" value="S"<?php echo $aluno->getIncentivo()=='S'?' checked':'';?>> Sim
+        <input type="radio" name="incentivo" value="N"<?php echo $aluno->getIncentivo()=='N'?' checked':'';?>> Não<br>
+        Se SIM, quem?
+        <input type="text" name="incentivo_quem" value="<?php echo $aluno->getIncentivoQuem();?>"><br>
+        <hr>
+        <label>Fala algum idioma? Quais?</label>
+        <input type="text" name="idiomas" value="<?php echo $aluno->getIdiomas();?>"><br>
+        <label>Quais livros você já leu?</label><br>
+        <textarea name="livros"><?php echo $aluno->getLivros();?></textarea><br>
+        <label>Lugares que frequenta:</label><br>
+        <textarea name="lugares"><?php echo $aluno->getLugares();?></textarea><br>
+    </div>
+</div>
+</form>
+<?php
+if(isset($erro)){
+    if($erro)
+        echo '<p>Falha no cadastro</p>';
+    else
+        echo '<p>Cadastro efetuado com sucesso</p>';
+}
+?>
+<div style="clear: both; height: 100px"></div>

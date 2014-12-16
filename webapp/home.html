@@ -1,0 +1,194 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>Braz Tech - Produtos eletrônicos</title>
+  <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+  <script type="text/javascript">
+  var tbProdutos = localStorage.getItem("tbProdutos");// Recupera os dados armazenados 
+  tbProdutos = JSON.parse(tbProdutos); // Converte string para objeto 
+  if(tbProdutos == null) // Caso não haja conteúdo, iniciamos um vetor vazio 
+    tbProdutos = [];
+    
+  $(document).ready(function(){
+      
+    $('#grava').click(function(){
+      Adicionar();
+    })
+  
+    $.ajax({
+        type: 'POST',
+        url: 'server/categorias.php',
+        dataType: 'json',
+        success: function( dados ){
+            for(i in dados){
+              $('#lista_categorias').append('<li><a href="#produtos" onclick="buscaProdutos('+dados[i].id+')" class="ui-btn ui-btn-icon-right ui-icon-carat-r">'+dados[i].nome+'</a></li>');
+            }
+        }
+    });
+    
+    $('#confirma').click(function(){
+      $.ajax({
+        type: 'POST',
+        url: 'server/finalizar.php',
+        data: {'tbProdutos':tbProdutos},
+        success: function( dados ){
+            alert(dados);
+        }
+    });
+    
+    })
+    
+  })
+  
+  function exibeCarrinho(){
+    $('#lista_carrinho').html('');
+    for(var i in tbProdutos){ 
+      var prod = JSON.parse(tbProdutos[i]);
+      $('#lista_carrinho').append('<li><a href="#" class="ui-btn ui-btn-icon-delete ui-icon-carat-r">'+prod.Nome+ ' ('+prod.Quantidade+')</a></li>');      
+    }  
+  }
+  
+  function Adicionar(){ 
+      var prod = JSON.stringify({ 
+        Codigo : $("#cod_produto").text(), 
+        Nome: $('#titulo').text(),
+        Quantidade: $('#quantidade').val() 
+      }); 
+      tbProdutos.push(prod); 
+      localStorage.setItem("tbProdutos", JSON.stringify(tbProdutos)); 
+      //alert("Registro adicionado.");
+      $('#popupAdiciona').popup("open");
+      return true; 
+    }
+      
+  function buscaProdutos(categoria){
+    $('#lista_produtos').html('');
+    $.ajax({
+        type: 'POST',
+        url: 'server/produtos.php',
+        data: {'categoria': categoria},
+        dataType: 'json',
+        success: function( dados ){
+            for(i in dados){
+              $('#lista_produtos').append('<li class="ui-li-has-thumb"><a href="#produto" onclick="dadosProduto('+dados[i].id+')" class="ui-btn ui-btn-icon-right ui-icon-carat-r"><img src="'+dados[i].foto+'"><h2>'+dados[i].nome+'</h2><p>R$ '+dados[i].preco+'</p></a></li>');
+            }
+        }
+    });
+  }
+  
+  function dadosProduto(produto){        
+    $.ajax({
+        type: 'POST',
+        url: 'server/produto.php',
+        data: {'produto': produto},
+        dataType: 'json',
+        success: function( dados ){
+           
+              $('#cod_produto').text(dados[0].id);
+              $('#foto_prod').attr('src',dados[0].foto)
+              $('#titulo').html(dados[0].nome);
+              $('#descricao').html(dados[0].descricao);
+              $('#valor').html(dados[0].preco);
+           
+        }
+    });
+  }
+  </script>
+</head>
+
+<body>
+
+<!-- Start of first page -->
+<div data-role="page" id="categorias">
+
+	<div data-role="header" data-theme="b">
+		<h4>BrazTech - Eletrônicos</h4>
+	</div><!-- /header -->  
+	<div role="main" class="ui-content">
+    <p>Selecione uma categoria</p>
+		<ul id="lista_categorias" data-role="listview" data-inset="true"></ul>
+  
+  <a href="#carrinho" onclick="exibeCarrinho()" class="ui-btn ui-icon-action ui-btn-icon-left ui-shadow ui-corner-all">Finalizar pedido</a>
+   
+	</div><!-- /content -->
+
+	<div data-theme="b" data-role="footer">
+		<h4></h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of first page -->
+<div data-role="page" id="produtos">
+	<div data-role="header" data-theme="b">
+		<h4>BrazTech - Eletrônicos</h4>
+    <a href="home.html" data-icon="arrow-l" theme="a" class="ui-btn-right">Voltar</a>
+	</div><!-- /header -->  
+	<div role="main" class="ui-content">
+    <p>Selecione um produto</p>
+		<ul id="lista_produtos" data-role="listview" data-inset="true">      
+    </ul>
+    
+	</div><!-- /content -->
+
+	<div data-theme="b" data-role="footer">
+		<h4></h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of first page -->
+<div data-role="page" id="produto">
+	<div data-role="header" data-theme="b">
+		<h4>BrazTech - Eletrônicos</h4>
+    <a href="produtos.html" data-icon="arrow-l" theme="a" class="ui-btn-right">Voltar</a>
+	</div><!-- /header -->  
+	<div role="main" class="ui-content">
+    <span id="cod_produto" style="display:none"></span>
+    <h4 id="titulo"></h4>
+    <img src="" id="foto_prod" style="margin-right: 10px" height="80" align="left">
+    <p id="descricao" style="font-size: 12px">    
+    </p>
+    <h4 id="valor"></h4>
+    <br style='clear: both'>
+    <label for="slider-fill">Quantidade:</label>
+    <input type="range" name="quantidade" id="quantidade" id="slider-fill" value="1" min="0" max="20" step="1" data-highlight="true">
+    <a href="#" id="grava" class="ui-shadow ui-btn ui-corner-all ui-btn-icon-left ui-icon-plus">Adicionar ao carrinho</a>
+    <a href="#carrinho" onclick="exibeCarrinho()" class="ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all">Finalizar pedido</a>
+    <a href="home.html" class="ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all">Voltar para início</a>
+    <div data-role="popup" id="popupAdiciona">
+	<p>Produto adcionado com sucesso.</p>
+	</div>
+	</div><!-- /content -->
+
+	<div data-theme="b" data-role="footer">
+		<h4></h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+<!-- Start of first page -->
+<div data-role="page" id="carrinho">
+
+	<div data-role="header" data-theme="b">
+		<h4>BrazTech - Eletrônicos</h4>
+	</div><!-- /header -->  
+	<div role="main" class="ui-content">
+    <p>Produtos do carrinho</p>
+		<ul id="lista_carrinho" data-role="listview" data-inset="true"></ul>
+    <a href="#" id="confirma" class="ui-btn ui-icon-check ui-btn-icon-left ui-shadow ui-corner-all">Confirmar pedido</a>
+    <a href="home.html" class="ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all">Voltar para início</a>
+	</div><!-- /content -->
+
+	<div data-theme="b" data-role="footer">
+		<h4></h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+
+
+</body>
+</html>

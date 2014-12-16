@@ -1,0 +1,165 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/** @ORM\Entity */
+class Post {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /** @ORM\Column(type="integer") */
+    protected $remetente_id;
+
+    /** @ORM\Column(type="integer") */
+    protected $destinatario_id;
+
+    /** @ORM\Column(type="string") */
+    protected $tipo_remetente;
+
+    /** @ORM\Column(type="string") */
+    protected $tipo_destinatario;
+
+    /** @ORM\Column(type="string") */
+    protected $mensagem;
+
+    /** @ORM\Column(type="string") */
+    protected $data;
+
+    /** @ORM\Column(type="string") */
+    protected $icon;
+
+    /**
+     * @param mixed $tipo_remetente
+     */
+    public function setTipoRemetente($tipo_remetente)
+    {
+        $this->tipo_remetente = $tipo_remetente;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTipoRemetente()
+    {
+        return $this->tipo_remetente;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $destinatario_id
+     */
+    public function setDestinatarioId($destinatario_id)
+    {
+        $this->destinatario_id = $destinatario_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDestinatarioId()
+    {
+        return $this->destinatario_id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $mensagem
+     */
+    public function setMensagem($mensagem)
+    {
+        $this->mensagem = $mensagem;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMensagem()
+    {
+        return $this->mensagem;
+    }
+
+    /**
+     * @param mixed $remetente_id
+     */
+    public function setRemetenteId($remetente_id)
+    {
+        $this->remetente_id = $remetente_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemetenteId()
+    {
+        return $this->remetente_id;
+    }
+
+    /**
+     * @param mixed $tipo_destinatario
+     */
+    public function setTipoDestinatario($tipo_destinatario)
+    {
+        $this->tipo_destinatario = $tipo_destinatario;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTipoDestinatario()
+    {
+        return $this->tipo_destinatario;
+    }
+
+    /**
+     * @param mixed $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+
+}

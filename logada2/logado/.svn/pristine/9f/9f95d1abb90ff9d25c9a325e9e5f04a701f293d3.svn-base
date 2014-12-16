@@ -1,0 +1,84 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<div>
+    <div>
+        <div>
+            <div>
+                <h3>Atividades para o Aluno</h3>
+                <button class="btn btn-primary" onclick="document.location='/calendario'">Calendário</button>
+                <button class="btn btn-success" onclick="document.location='/atividades/add'">Adicionar</button>
+            </div>
+            <div>
+                <?php
+                if (isset($atividadesA)) : ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Local</th>
+                            <th>Horário</th>
+                            <th>Descrição</th>
+                        </tr>
+                        </thead>
+                        <?php foreach($atividadesA as $atividade): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $atividade->getId(); ?></td>
+                                <td><?php echo $atividade->getNome(); ?></td>
+                                <td><?php echo $atividade->getLocal(); ?></td>
+                                <td><?php echo $atividade->getHoraInicio(); ?></td>
+                                <td><?php echo $atividade->getDescricao(); ?></td>
+                            </tr>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+            </div>
+
+            <div>
+                <h3>Atividades para a Turma</h3>
+            </div>
+            <div>
+                <?php
+                if (isset($atividadesT)) : ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Local</th>
+                            <th>Horário</th>
+                            <th>Descrição</th>
+                        </tr>
+                        </thead>
+                        <?php foreach($atividadesT as $atividade): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $atividade->getId(); ?></td>
+                                <td><?php echo $atividade->getNome(); ?></td>
+                                <td><?php echo $atividade->getLocal(); ?></td>
+                                <td><?php echo $atividade->getHoraInicio(); ?></td>
+                                <td><?php echo $atividade->getDescricao(); ?></td>
+                            </tr>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+            </div>
+
+        </div>
+    </div>
+</div>

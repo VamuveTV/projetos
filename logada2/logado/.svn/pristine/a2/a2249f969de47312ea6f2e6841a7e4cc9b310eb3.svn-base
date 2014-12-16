@@ -1,0 +1,1436 @@
+﻿
+<script type="text/javascript" src="/public/js/paging.js"></script>
+
+<link id="" rel="stylesheet" type="text/css" href="/public/css/paging.css" media="all" />
+
+<?php
+
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# discernir se o conteúdo a ser exibido terá de ser "quantitativo" ou "qualitativo".
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+
+switch ( $tpView ) {
+
+	case "quantitativo" :
+
+	echo 
+
+	"<br>".
+	"<table border=0 class='table' >".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Cabeçalho.
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	"<thead>".
+	"<tr>".
+	"<th colspan=2> <b> Assunto </th>".
+	"<th > <b> Quantidade </th>".
+	"<th > <b> Ação </th>".
+	"</tr>".
+	"</thead>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas NOTIFICAÇÕES essa turma registrou?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tbody>".
+	"<tr>".
+	"<td colspan=2><p> Quantas Denúncias Registrou ? </p></td>".
+	"<td > ".$amountNotificationsOutput." </td>".
+	"<td > Denúncia </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos POSTS essa turma transmitiu?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p> Quantas Postagens Enviou ? </p></td>".
+	"<td > ".$amountPostsOutput." </td>".
+	"<td rowspan=2><br> Posts </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos POSTS essa turma recebeu?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantas Postagens Recebeu ? </p></td>".
+	"<td > ".$amountPostsInput." </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos SMILES essa turma recebeu?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p> Quantos Smiles Enviou ? </p></td>".
+	"<td > ".$amountSmilesIconsInput." </td>".
+	"<td > Smiles </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Qual a quantidade de vezes que essa turma registrou uma ATIVIDADE?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	"<tr>".
+	"<td colspan=2><p> Quantas Atividades Agendou ? </p></td>".
+	"<td > ".$amountActivitiesOutput." </td>".
+	"<td rowspan=2> <br>Atividade </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Qual é a quantidade de ATIVIDADES registradas para essa turma, por terceiros?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantas Atividades agendaram para Turma ? </p></td>".
+	"<td> ".$amountActivitiesInput." </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos AMIGOS estão na condição de preferidos/favoritos, por essa turma?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	"<tr>".
+	"<td colspan=2><p> Quantos Amigos estão Preferidos ? </p></td>".
+	"<td > ".$amountLikesForFriendsOutput." </td>".
+	"<td > Amigo </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos "APERTO DE MÃO" essa turma transmitiu?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	"<tr>".
+	"<td colspan=2><p > Quantos Apertos de Mão Enviou ? </p></td>".
+	"<td > ".$amountHandshakeOutput." </td>".
+	"<td rowspan=2><br> Aperto de mão </td>".
+	"</tr>".
+	
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantos "APERTO DE MÃO" essa turma recebeu?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantos Apertos de Mão Recebeu ? </p></td>".
+	"<td > ".$amountHandshakeInput." </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas vezes essa turma transmitiu CORAÇÃO?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	"<tr>".
+	"<td colspan=2><p> Quantos Corações Enviou ? </p></td>".
+	"<td > ".$amountHeartOutput." </td>".
+	"<td rowspan=2><br> Coração </td>".
+	"</tr>".
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# Quantas vezes essa turma recebeu CORAÇÃO?
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	"<tr>".
+	"<td colspan=2><p > Quantos Corações Recebeu ? </p></td>".
+	"<td > ".$amountHeartInput." </td>".
+	"</tr>";
+
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+	# fechando tabela - Estatísticas Quantitativas.
+	#------------------------------------------------------------------------------------------------------------------------------------------------
+
+	echo 
+
+	"</table >".
+	"<br>".
+	"<br>";		
+
+	break;
+
+	case "qualitativo" :
+	
+	# -----------------------------
+	# menu, exibir lista de opções.
+	# -----------------------------
+	
+	if ( $llaveX == 0 ) {
+
+		echo 
+
+			"<br>".
+			"<br>".
+			"<br>".
+			"<p align=center>".
+			"<select class=estiloSelectPerfil multiple onchange='myChangeHandler.apply(this)' style='font-size:18px; text-align:left; weight: autopx; height:433px;'  />".
+			"<option value='' selected=selected /> POR FAVOR, CLIQUE SOBRE A OPÇÃO PRETENDIDA </option>".
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 1, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 1 . QUAIS ENDEREÇOS WEB MAIS VEZES FORAM ACESSADOS ? </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 2, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 2 . QUAIS FUNCIONÁRIOS MAIS VEZES FORAM AVALIADOS ? </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 3, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 3 . QUAIS ESCOLAS MAIS VEZES FORAM AVALIADAS ? </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 4, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 4 . MÉDIA AVALIATIVA DE TURMA PARA FUNCIONÁRIO </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 5, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 5 . MÉDIA AVALIATIVA DE TURMA PARA OUTRAS TURMAS </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 6, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 6 . MÉDIA AVALIATIVA DE TURMA PARA ESCOLAS </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 7, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 7 . MÉDIA AVALIATIVA DE PROFESSORES PARA ESSA TURMA ? </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 8, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 8 . HISTÓRICO DE HUMOR </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 9, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 9 . HISTÓRICO DE DENÚNCIAS </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 10, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 10 . BOLETIM ESCOLAR A CADA ALUNO DESSA TURMA </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 11, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 11 . MÉDIA ESCOLAR  POR DISCIPLINA CURSADA </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 12, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 12 . LISTAR INTEGRANTES QUE COMPÕE ESSA TURMA </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 13, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 13 . LISTAR QUAIS INTEGRANTES SEJAM P.N.E <b>*</b> </option>'.
+			'<option value='.$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass', 'id' => $id, 'tpView' => 'qualitativo', 'llaveX' => 14, 'llaveY' => $llaveY, 'llaveZ' => $llaveZ, 'llaveQ' => $llaveQ )).' /> 14 . SEGMENTAR INTEGRANTES, DESSA TURMA, POR SEXO </option>'.
+			"</select>".
+			"</p>";
+	
+	# ------------------------------------------------
+	# quais endereços web mais vezes foram acessados ?
+	# ------------------------------------------------
+	
+	} else if ( $llaveX == 1 ) {
+
+		if ( sizeof ( $accessToPagesTopFive ) > 0 ) {
+		
+			print 
+			
+				"<br>".
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Endereço Web</th>".
+				"<th>Quantidade de Acessos</th>".
+				"<th></th>".
+				"</tr>";
+
+			foreach ( $accessToPagesTopFive as $accessToPagesTopFive ) {
+
+				print 
+				
+					"<tr>".				
+					"<td>".$accessToPagesTopFive['endereco']."</td>".
+					"<td>".$accessToPagesTopFive['qt_acessos']."</td>".
+					"<td>"."<a href='".$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 1000 , 'llaveY' => $accessToPagesTopFive['id_url'] , 'llaveZ' => $llaveZ , 'llaveQ' => $llaveQ ) )."' target='_blank' class='btn btn-success btn-large'> Detalhar </a> "."</td>";
+					
+			}
+				
+			print 
+			
+				"</tr>".
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 5); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+				
+		# ... caso inexistam registros, explique!
+		
+		} else {
+				
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 1000 ) {
+	
+		if ( sizeof ( $accessToPagesTopFive ) > 0 ) {
+		
+			print 
+			
+				"<br>".
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Endereço Web</th>".
+				"<th>Data</th>".
+				"<th>Hora</th>".
+				"<th>Usuário</th>".
+				"<th>Role</th>".
+				"</tr>";
+			
+			for ( $running = 0 ; $running < sizeof ( $accessToPagesTopFive ) ; $running++ ) {
+				
+				for ( $j = 0 ; $j < sizeof ( $accessToPagesTopFive[$running] ) ; $j++ ) {
+				
+					print 
+					
+						"<tr>".
+						"<td>".$accessToPagesTopFive[$running][$j]['endereco']."</td>".
+						"<td>".date("d/m/Y", strtotime($accessToPagesTopFive[$running][$j]['data_acesso']))."</td>".
+						"<td>".date("h:i:s A", strtotime($accessToPagesTopFive[$running][$j]['data_acesso']))."</td>".						
+						"<td>".$accessToPagesTopFive[$running][$j]['nome_usuario']."</td>";
+
+					$accessToPagesTopFive[$running][$j]['tipo_usuario'] == "A" ? print "<td> Aluno </td>" : "";
+					
+					$accessToPagesTopFive[$running][$j]['tipo_usuario'] == "D" ? print "<td> Diretoria </td>" : "";
+					
+					$accessToPagesTopFive[$running][$j]['tipo_usuario'] == "P" ? print "<td> Professor </td>" : "";
+					
+					$accessToPagesTopFive[$running][$j]['tipo_usuario'] == "F" ? print "<td> Funcionalismo </td>" : "";
+
+				}
+					
+			}
+							
+			print 
+			
+				"</tr>".
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 5); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+				
+		# ... caso inexistam registros, explique!
+		
+		} else {
+				
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# -----------------------------------------------
+	# quais funcionários mais vezes foram avaliados ?
+	# -----------------------------------------------
+
+	} else if ( $llaveX == 2 ) {
+
+		if ( ( sizeof ( $avgEmployerSchools ) > 1 || $avgEmployerSchools[0] != NULL ) && $someColumnsNotNull=='S' ) {
+		
+			print 
+				
+				"<br>".
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Funcionário Avaliado</th>".
+				"<th>Ranking</th>".
+				"<th>Média Avalilativa</th>".
+				"</tr>";
+			
+			$corr13=1;
+			
+			for ( $running3=0 ; $running3 < sizeof ( $avgEmployerSchools ) ; $running3++ ) {
+				
+					for ( $i=0; $i < sizeof( $avgEmployerSchools[$running3] ) ; $i++ ) {
+					
+						/*!empty ( $avgEmployerSchools[$running3][$i]['nm_func'] ) ? 
+					
+						print 
+
+							"<tr>".
+							"<td>".$avgEmployerSchools[$running3][$i]['nm_func']."</td>".
+							"<td>".$corr13."ª</td>".
+							"<td>".substr($avgEmployerSchools[$running3][$i]['md_classificatoria'],0,4)."</td>" : "";*/
+
+						print 
+
+							"<tr>".
+							"<td>".$avgEmployerSchools[$running3][$i]['nm_func']."</td>".
+							"<td>".$corr13."ª</td>";
+
+							
+						$s = $avgEmployerSchools[$running3][$i]['md_classificatoria'];
+						
+						$f = floor($s);
+
+						$r = 0;
+						
+						if ( $s < 1 ) {
+						
+							echo "<td>";
+							
+							while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+						
+							echo "</td>";
+						
+						} else {
+						
+							echo "<td>";
+							
+							while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+							$f = strpos($s,'.5');
+
+							!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+							
+							echo "</td>";
+
+						}
+
+							
+					}
+
+					$avgEmployerSchools[$running3] == NULL 	? $corr13 : $corr13++;
+
+			}
+
+			print 
+
+				"</tr>".
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 5); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+				
+		# ... caso inexistam registros, explique!				
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+
+	# ------------------------------------------
+	# quais escolas mais vezes foram avaliadas ?
+	# ------------------------------------------
+	
+	} else if ( $llaveX == 3 ) {
+	
+		if ( ( sizeof ( $avgSchools ) > 1 || $avgSchools[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+		
+			$corr13=1;
+			
+			print 
+			
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Escola Avaliada</th>".
+				"<th>Ranking</th>".
+				"<th>Média Avaliativa</th>".
+				"</tr>";
+			
+			for ( $running4 = 0 ; $running4 < sizeof ( $avgSchools ) ; $running4++ ) {
+				
+					for ( $i=0; $i < sizeof( $avgSchools ) ; $i++ ) {
+					
+						if ( !empty ( $avgSchools[$running4][$i]['nm_escola'] ) ) {
+						
+							print 
+
+								"<tr>".
+								"<td>".$avgSchools[$running4][$i]['nm_escola']."</td>".
+								"<td>".$corr13."ª</td>";
+								#"<td>".substr ($avgSchools[$running4][$i]['md_classificatoria'],0,4)."</td>";
+
+							$s = $avgSchools[$running4][$i]['md_classificatoria'];
+							
+							$f = floor($s);
+
+							$r = 0;
+							
+							if ( $s < 1 ) {
+							
+								echo "<td>";
+								
+								while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+							
+								echo "</td>";
+							
+							} else {
+							
+								echo "<td>";
+								
+								while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+								$f = strpos($s,'.5');
+
+								!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+								
+								echo "</td>";
+
+							}
+							
+						
+						}
+						
+							
+					}
+					
+					$avgSchools[$running4] == NULL 	? $corr13 : $corr13++;
+
+			}
+
+			print 
+
+				"</tr>".
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 5); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+				
+		# ... caso inexistam registros, explique!				
+
+		} else {
+				
+			print
+
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+
+	# -------------------------------------------
+	# média avaliativa de turma para funcionário.
+	# -------------------------------------------
+	
+	} else if ( $llaveX == 4 ) {
+		
+		if ( ( sizeof ( $avgSchoolsClassPerTeacher ) > 1 || $avgSchoolsClassPerTeacher[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+
+		print 
+		
+			"<table id='tb10' class='table' border=0 align='center'>".
+			"<tr>".
+			"<th>Funcionário Avaliado</th>".
+			"<th>Média Avaliativa</th>".
+			"</tr>";
+			
+		$corr13=1;
+		
+		foreach ( $avgSchoolsClassPerTeacher as $avgSchoolsClassPerTeacher ) {
+		
+			if ( !empty ( $avgSchoolsClassPerTeacher ) ) {
+			
+				for ( $i=0; $i < sizeof( $avgSchoolsClassPerTeacher ) ; $i++ ) {
+				
+					print 
+
+						"<tr>".
+						"<td>".$avgSchoolsClassPerTeacher[$i]['nm_func']."</td>";#.
+						#"<td>".substr ($avgSchoolsClassPerTeacher[$i]['md_classificatoria'], 0,4)."</td>";
+						
+						$s = $avgSchoolsClassPerTeacher[$i]['md_classificatoria'];
+						
+						$f = floor($s);
+
+						$r = 0;
+						
+						if ( $s < 1 ) {
+						
+							echo "<td>";
+							
+							while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+						
+							echo "</td>";
+						
+						} else {
+						
+							echo "<td>";
+							
+							while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+							$f = strpos($s,'.5');
+
+							!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+							
+							echo "</td>";
+
+						}
+
+				}
+
+				$corr13++;
+			
+			}
+
+		}
+
+		print 
+
+			"</tr>".
+			"</table>".
+			"<div id='pageNav' align='center'></div>".
+			"</div>".
+			"<script>".
+			"var pager = new Pager('tb10', 5); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>".
+			"<br>".
+			"<br>".
+			"<br>";
+			
+		# ... caso inexistam registros, explique!
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# ---------------------------------------------
+	# média avaliativa de turma para outras turmas.
+	# ---------------------------------------------
+	
+	} else if ( $llaveX == 5 ) {
+
+		if ( ( sizeof ( $avgBetweenClassSchools ) > 1 || $avgBetweenClassSchools[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+
+			echo
+
+				"<table class='table' id='tb10' align=center>".
+				"<thead>".
+				"<tr>".
+				"<th><b> Turma </th>".
+				"<th><b> Série </th>".
+				"<th><b> Período </th>".
+				"<th><b> Quantidade de Avaliações </th>".
+				"<th><b> Média Avaliativa </th>".
+				"</tr>".
+				"</thead>";
+				
+			# laço foreach(), repetir exibição de lista com registros de turmas (segmentando-as por: escola, série e período).
+			
+			foreach ( $avgBetweenClassSchools as $cmmd_sc ) {
+
+				echo 
+				
+					"<tbody>".
+					"<tr>".
+					"<td>".$cmmd_sc['turma_aluno']."</td>".
+					"<td>".$cmmd_sc['serie_aluno']."</td>".
+					"<td>".$cmmd_sc['periodo_aluno']."</td>".
+					"<td>".$cmmd_sc['quantidade']."</td>".
+					#"<td>".number_format($cmmd_sc['media_nota'] , 2)."</td>".
+					#"<td>".substr ($cmmd_sc['media_nota'],0,4)."</td>".					
+					
+					$s = $cmmd_sc['media_nota'];
+					
+					$f = floor($s);
+
+					$r = 0;
+					
+					if ( $s < 1 ) {
+					
+						echo "<td>";
+						
+						while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+					
+						echo "</td>";
+					
+					} else {
+					
+						echo "<td>";
+						
+						while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+						$f = strpos($s,'.5');
+
+						!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+						
+						echo "</td>";
+
+					}
+					
+					"</tr>".
+					"</tbody>";
+
+			}
+
+			echo 
+			
+				"</table>".
+				"<br>".
+				"<div id='pageNav' align='center'></div>".
+				"<script>".
+				"var pager = new Pager('tb10', 5); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>";
+		 
+		# ... caso inexistam registros, explique!
+		 
+		} else {
+		 
+			echo 
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+			
+		}
+	
+	# ----------------------------------------------
+	# média avaliativa de turma para outras escolas.
+	# ----------------------------------------------
+	
+	} else if ( $llaveX == 6 ) {
+
+		if ( ( sizeof ( $avgSchools ) > 1 || $avgSchools[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+
+		print 
+		
+			"<table id='tb10' class='table' border=0 align='center'>".
+			"<tr>".
+			"<th>Escola Avaliada</th>".
+			"<th>Média Avaliativa</th>".
+			"</tr>";
+			
+		$corr13=1;
+		
+		foreach ( $avgSchools as $avgSchools ) {
+		
+			if ( !empty ( $avgSchools ) ) {
+			
+				for ( $i=0; $i < sizeof( $avgSchools ) ; $i++ ) {
+				
+					print 
+
+						"<tr>".
+						"<td>".$avgSchools[$i]['nm_escola']."</td>";#.
+						#"<td>".substr ($avgSchools[$i]['md_classificatoria'],0,4)."</td>";
+
+						$s = $avgSchools[$i]['md_classificatoria'];
+						
+						$f = floor($s);
+
+						$r = 0;
+						
+						if ( $s < 1 ) {
+						
+							echo "<td>";
+							
+							while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+						
+							echo "</td>";
+						
+						} else {
+						
+							echo "<td>";
+							
+							while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+							$f = strpos($s,'.5');
+
+							!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+							
+							echo "</td>";
+
+						}
+
+				}
+
+				$corr13++;
+			
+			}
+
+		}
+
+		print 
+
+			"</tr>".
+			"</table>".
+			"<div id='pageNav' align='center'></div>".
+			"</div>".
+			"<script>".
+			"var pager = new Pager('tb10', 5); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>".
+			"<br>".
+			"<br>".
+			"<br>";
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# -------------------------------------------------
+	# média avaliativa dos professores para essa turma.
+	# -------------------------------------------------
+
+	} else if ( $llaveX == 7 ) {
+
+		if ( ( sizeof ( $avgSchoolsClassPerTeacher ) > 1 || $avgSchoolsClassPerTeacher[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+
+		print 
+		
+			"<table id='tb10' class='table' border=0 align='center'>".
+			"<tr>".
+			"<th>Professor Avaliador</th>".
+			"<th>Média Avaliativa</th>".			
+			"</tr>";
+			
+		$corr13=1;
+		
+		foreach ( $avgSchoolsClassPerTeacher as $avgSchoolsClassPerTeacher ) {
+		
+			if ( !empty ( $avgSchoolsClassPerTeacher ) ) {
+			
+				for ( $i=0; $i < sizeof( $avgSchoolsClassPerTeacher ) ; $i++ ) {
+				
+					print 
+
+						"<tr>".
+						"<td>".$avgSchoolsClassPerTeacher[$i]['nm_func']."</td>";#.
+						#"<td>".substr ($avgSchoolsClassPerTeacher[$i]['md_classificatoria'],0,4)."</td>";
+						
+						$s = $avgSchoolsClassPerTeacher[$i]['md_classificatoria'];
+						
+						$f = floor($s);
+
+						$r = 0;
+						
+						if ( $s < 1 ) {
+						
+							echo "<td>";
+							
+							while ( $r < 5 ) { echo "<img src='/images/star-off.png'>"; $r++; }
+						
+							echo "</td>";
+						
+						} else {
+						
+							echo "<td>";
+							
+							while ( $r < $f ) { echo "<img src='/images/star-on.png'>"; $r++; }
+
+							$f = strpos($s,'.5');
+
+							!empty($f) ? print "<img src='/images/star-half.png'>" : "";
+							
+							echo "</td>";
+
+						}
+						
+				}
+
+				$corr13++;
+			
+			}
+
+		}
+
+		print 
+
+			"</tr>".
+			"</table>".
+			"<div id='pageNav' align='center'></div>".
+			"</div>".
+			"<script>".
+			"var pager = new Pager('tb10', 5); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>".
+			"<br>".
+			"<br>".
+			"<br>";
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# ---------------------------------------
+	# exiba o histórico de humor dessa turma.
+	# ---------------------------------------
+	
+	} else if ( $llaveX == 8 ) {
+
+		if ( ( sizeof ( $iconsSmilesOutput ) > 1 || $iconsSmilesOutput[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+		
+		print 
+		
+			"<table id='tb10' class='table' border=0 align='center'>".
+			"<tr>".
+			"<th>Smile Enviado</th>".
+			"<th>Quantidade Envios</th>".
+			"<th>Humor Característico</th>".
+			"<th></th>".
+			"</tr>";
+			
+		foreach ( $iconsSmilesOutput as $iconsSmilesOutput ) {
+		
+			if ( !empty ( $iconsSmilesOutput ) ) {
+			
+				for ( $i=0; $i < sizeof( $iconsSmilesOutput ) ; $i++ ) {
+				
+					print 
+
+						"<tr>".						
+						'<td><img src="/public/imagens/faces/'.$iconsSmilesOutput[$i]['situacao_animo'].'.png" width="39" height="39" border="0" /></td>'.
+						"<td>".$iconsSmilesOutput[$i]['quant_post']."</td>".
+						"<td>".$iconsSmilesOutput[$i]['situacao_animo']."</td>".
+						"<td>"."<a href='".$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 8000 , 'llaveY' => $iconsSmilesOutput[$i]['id_post'] , 'llaveZ' => $llaveZ , 'llaveQ' => $llaveQ ) )."' target='_blank' class='btn btn-success btn-large'> Detalhar </a> "."</td>";
+				
+				}
+			
+			}
+
+		}
+
+		print 
+
+			"</tr>".
+			"</table>".
+			"<div id='pageNav' align='center'></div>".
+			"</div>".
+			"<script>".
+			"var pager = new Pager('tb10', 5); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>".
+			"<br>".
+			"<br>".
+			"<br>";
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+	
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	
+	} else if ( $llaveX == 8000 ) {
+	
+		if ( ( sizeof ( $iconsSmilesOutput ) > 1 || $iconsSmilesOutput[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+		
+		print 
+		
+			"<table id='tb10' class='table' border=0 align='center'>".
+			"<tr>".
+			"<th>Smile</th>".
+			"<th>Humor</th>".
+			"<th>Data</th>".
+			"<th>Hora</th>".
+			"<th>Remetente</th>".
+			"<th>Role</th>".
+			"</tr>";
+			
+		foreach ( $iconsSmilesOutput as $iconsSmilesOutput ) {
+		
+			if ( !empty ( $iconsSmilesOutput ) ) {
+			
+				for ( $i=0; $i < sizeof( $iconsSmilesOutput ) ; $i++ ) {
+				
+					print 
+
+						"<tr>".						
+						'<td><img src="/public/imagens/faces/'.$iconsSmilesOutput[$i]['situacao_animo'].'.png" width="39" height="39" border="0" /></td>'.
+						"<td>".$iconsSmilesOutput[$i]['situacao_animo']."</td>".
+						"<td>".date("d/m/Y", strtotime($iconsSmilesOutput[$i]['mais_recentes']))."</td>".
+						"<td>".date("h:i:s A", strtotime($iconsSmilesOutput[$i]['mais_recentes']))."</td>".
+						"<td>".$iconsSmilesOutput[$i]['nome_remetente']."</td>";
+				
+					$iconsSmilesOutput[$i]['tipo_remetente'] == "A" ? print '<td>Aluno</td>' : "";
+					
+					$iconsSmilesOutput[$i]['tipo_remetente'] == "P" ? print '<td>Professor</td>' : "";
+					
+					$iconsSmilesOutput[$i]['tipo_remetente'] == "F" ? print '<td>Funcionalismo</td>' : "";
+
+					$iconsSmilesOutput[$i]['tipo_remetente'] == "D" ? print '<td>Diretoria</td>' : "";
+					
+				}
+			
+			}
+
+		}
+
+		print 
+
+			"</tr>".
+			"</table>".
+			"<div id='pageNav' align='center'></div>".
+			"</div>".
+			"<script>".
+			"var pager = new Pager('tb10', 5); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>".
+			"<br>".
+			"<br>".
+			"<br>";
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+	
+	# ------------------------------------------
+	# exiba o histórico de denúncia dessa turma.
+	# ------------------------------------------
+	
+	} else if ( $llaveX == 9 ) {
+	
+		if ( ( sizeof ( $notificationsOutput ) > 1 || $notificationsOutput[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+
+		print 
+		
+			"<table id='tb10' class='table' border=0 align='center'>".
+			"<tr>".
+			"<th>Remetente</th>".
+			"<th>Quantidade de Denúncias</th>".
+			"<th></th>".
+			"</tr>";
+			
+		foreach ( $notificationsOutput as $notificationsOutput ) {
+		
+			if ( !empty ( $notificationsOutput ) ) {
+				
+					print 
+
+						"<tr>".
+						"<td>".$notificationsOutput['nm_remetente']."</td>".
+						"<td>".$notificationsOutput['quant_registros']."</td>".
+						"<td>"."<a href='".$this->url( 'statisticsperschoolclass', array( 'action' => 'statisticsperschoolclass' , 'id' => $id , 'tpView' => 'qualitativo' , 'llaveX' => 9000 , 'llaveY' => $notificationsOutput['id_notificacao'] , 'llaveZ' => $llaveZ , 'llaveQ' => $llaveQ ) )."' target='_blank' class='btn btn-success btn-large'> Detalhar </a> "."</td>";
+			
+			}
+
+		}
+
+		print 
+
+			"</tr>".
+			"</table>".
+			"<div id='pageNav' align='center'></div>".
+			"</div>".
+			"<script>".
+			"var pager = new Pager('tb10', 4); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>".
+			"<br>".
+			"<br>".
+			"<br>";
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+	# detalhamento das estatísticas acima.
+	# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+
+	} else if ( $llaveX == 9000 ) {
+
+	if ( ( sizeof ( $notificationsOutput ) > 1 || $notificationsOutput[0]!=NULL ) && $someColumnsNotNull=='S' ) {
+
+		print 
+		
+			"<table id='tb10' class='table' border=0 align='center'>".
+			"<tr>".
+			"<th>Remetente</th>".
+			"<th>Data</th>".
+			"<th>Hora</th>".			
+			"</tr>";
+			
+		foreach ( $notificationsOutput as $notificationsOutput ) {
+		
+			if ( !empty ( $notificationsOutput ) ) {
+				
+					print 
+
+						"<tr>".
+						"<td>".$notificationsOutput['nm_remetente']."</td>".
+						"<td>".date("d/m/Y", strtotime($notificationsOutput['dt_envio']))."</td>".
+						"<td>".date("h:i:s A", strtotime($notificationsOutput['dt_envio']))."</td>";
+			
+			}
+
+		}
+
+		print 
+
+			"</tr>".
+			"</table>".
+			"<div id='pageNav' align='center'></div>".
+			"</div>".
+			"<script>".
+			"var pager = new Pager('tb10', 4); ".
+			"pager.init(); ".
+			"pager.showPageNav('pager', 'pageNav'); ".
+			"pager.showPage(1);".
+			"</script>".
+			"<br>".
+			"<br>".
+			"<br>";
+
+		} else {
+				
+			print
+			
+				"<br>".
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# ------------------------------------------------------------------
+	# exiba o boletim escolar individual, a cada integrante dessa turma.
+	# ------------------------------------------------------------------
+	
+	} else if ( $llaveX == 10 ) {
+
+		if ( ( sizeof ( $avgNotesStudents ) > 1 || $avgNotesStudents[0]!=NULL ) && $someColumnsNotNull=='S') {
+
+			echo 
+			
+				"<table id='tb10' align='center' class='table' border=0>".
+				"<tr>".
+				"<th rowspan=2> Dados de Aluno </th>".
+				"<th rowspan=2> Disciplinas </th>".
+				"<th colspan=4> Períodos </th>".
+				"</tr>".
+				"<tr>".
+				"<th> I </th>".
+				"<th> II </th>".
+				"<th> III </th>".
+				"<th> IV </th>".
+				"</tr>";
+
+
+			for ( $corr13 = 0 ; $corr13 < sizeof ( $avgNotesStudents ) ; $corr13++ ) {
+					
+				for ( $eorr14 = 0 ; $eorr14 < sizeof($avgNotesStudents[$corr13]) ; $eorr14++ ) {
+					
+					$eorr14 == 0 ?
+						
+					print 
+					
+						"<tr>".
+						"<td rowspan=4>".
+						"<br>NOME: ".$avgNotesStudents[$corr13][$eorr14]['nome_aluno'].
+						"<br>MATRÍCULA: ".$avgNotesStudents[$corr13][$eorr14]['matricula_aluno']."</td>" : "";
+						
+					print
+					
+						"<td>".mb_strtolower( $avgNotesStudents[$corr13][$eorr14]['materia_escolar'], 'UTF-8' )."</td>";
+					
+					print
+					
+						
+						"<td>".$avgNotesStudents[$corr13][$eorr14]['ntI']."</td>".
+						"<td>".$avgNotesStudents[$corr13][$eorr14]['ntII']."</td>".
+						"<td>".$avgNotesStudents[$corr13][$eorr14]['ntIII']."</td>".
+						"<td>".$avgNotesStudents[$corr13][$eorr14]['ntIV']."</td>".
+						"</tr>";
+				
+				}
+					
+			}
+					
+							
+					echo 
+					
+						"</table>";
+
+		} else {
+				
+			echo 
+			
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# --------------------------------------------------------------
+	# exiba a média escolar dessa turma, a cada disciplina ensinada.	
+	# --------------------------------------------------------------
+	
+	} else if ( $llaveX == 11 ) {
+	
+		if ( ( sizeof ( $avgNotesSchoolsClass ) > 1 || $avgNotesSchoolsClass[0]!=NULL ) && $someColumnsNotNull=='S') {
+		
+			echo 
+			
+				"<table id='tb10' align='center' class='table' border=0>".
+				"<tr>".
+				"<th>Disciplina cursada</td>".
+				"<th>Média Geral da Turma</td>".
+				"</tr>";
+
+			for ( $corr13 = 0 ; $corr13 < sizeof ( $avgNotesSchoolsClass ) ; $corr13++ ) {
+
+
+				print 
+				
+					"<tr>".
+					"<td>".$avgNotesSchoolsClass[$corr13]['materia_escolar']."</td>".
+					"<td>".$avgNotesSchoolsClass[$corr13]['media_geral']."</td>".
+					"</tr>";
+					
+			}
+						
+							
+					echo 
+					
+						"</table>";
+
+		} else {
+				
+			echo 
+			
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+
+	# ------------------------------------
+	# quais integrantes compõe essa turma?
+	# ------------------------------------
+
+	} else if ( $llaveX == 12 ) {
+
+		if ( sizeof ( $dataStudentsSchoolsClass ) > 1 || $dataStudentsSchoolsClass[0]!=NULL ) {
+
+			echo 
+			
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Turma ".$dataStudentsSchoolsClass[0]['turma']."</th>".
+				"</tr>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Matrícula</th>".
+				"<th>e-Mail</th>".
+				"<th>Data Nascimento</th>".
+				"</tr>";
+
+			for ( $corr13 = 0 ; $corr13 < sizeof ( $dataStudentsSchoolsClass ) ; $corr13++ ) {
+
+				print 
+				
+					"<tr>".
+					"<td>". $dataStudentsSchoolsClass[$corr13]['nome_aluno'] ."</td>".
+					"<td>". $dataStudentsSchoolsClass[$corr13]['matricula_aluno'] ." </td>";
+					
+				$dataStudentsSchoolsClass[$corr13]['email_aluno'] == '' ? print "<td> - </td>" : print "<td>". strtolower( $dataStudentsSchoolsClass[$corr13]['email_aluno'] ) ."</td>";
+					
+				print 
+				
+					"<td>". strtolower ( date ( "d/m/Y", strtotime($dataStudentsSchoolsClass[$corr13]['dt_nasc'] ) ) ) ."</td>".
+					"</tr>";
+					
+			}
+							
+			echo 
+			
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 25); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+
+		} else {
+				
+			echo 
+			
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+
+	# -----------------------------------
+	# listar quais integrantes são P.N.E.
+	# -----------------------------------
+
+	} else if ( $llaveX == 13 ) {
+	
+		if ( sizeof ( $typeStudentsPNE ) > 1 || $typeStudentsPNE[0]!=NULL ) {
+		
+			print
+			
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>Turma ".
+				$typeStudentsPNE[0]['turma'].
+				"</th>".
+				"</tr>".
+				"<tr>".
+				"<th>Nome</th>".
+				"<th>Matrícula</th>".
+				"<th>Possui alguma Deficiência ?</th>".
+				"<th>Se Sim, especifique</th>".
+				"</tr>";
+
+			for ( $corr13 = 0 ; $corr13 < sizeof ( $typeStudentsPNE ) ; $corr13++ ) {
+
+						print 
+						
+							"<tr>".
+							"<td>".$typeStudentsPNE[$corr13]['nome_aluno']."</td>".
+							"<td>".$typeStudentsPNE[$corr13]['matricula_aluno']."</td>";
+							
+							$typeStudentsPNE[$corr13]['PNE'] != "S" ? print "<td> <b>NÃO</b> </td>" : print "<td> <b>SIM</b> </td>";
+							
+						print 
+						
+							"<td> - </td>".
+							"</tr>";
+					
+			}
+
+							
+			print 
+			
+				"</table>".
+				"<div id='pageNav' align='center'></div>".
+				"</div>".
+				"<script>".
+				"var pager = new Pager('tb10', 25); ".
+				"pager.init(); ".
+				"pager.showPageNav('pager', 'pageNav'); ".
+				"pager.showPage(1);".
+				"</script>".
+				"<br>".
+				"<br>".
+				"<br>";
+
+		} else {
+				
+			print 
+			
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	# ----------------------------------------------------------------
+	# segmente os integrantes que compõem essa turma pelo tipo sexual.
+	# ----------------------------------------------------------------
+	
+	} else if ( $llaveX  == 14 ) {
+	
+		if ( sizeof ( $genderStudents ) > 1 || $genderStudents[0]!=NULL ) {
+
+			echo 
+			
+				"<table id='tb10' class='table' border=0 align='center'>".
+				"<tr>".
+				"<th>TURMA ".
+				$genderStudents[0]['turma'].
+				"</th>".
+				"</tr>".
+				"<tr>".
+				"<th>Nome</td>".
+				"<th>Matrícula</td>".
+				"<th>Feminino</td>".
+				"<th>Masculino</td>".
+				"</tr>";
+
+			for ( $corr13 = 0 ; $corr13 < sizeof ( $genderStudents ) ; $corr13++ ) {
+
+
+				print 
+
+					"<tr>".
+					"<td>". strtolower( $genderStudents[$corr13]['nome_aluno'] ) ."</td>".
+					"<td>".$genderStudents[$corr13]['matricula_aluno']."</td>";	
+
+				$genderStudents[$corr13]['sexo_aluno'] == "F" ? print "<td><b>X</b></td><td></td>" : print "<td></td><td><b>X</b></td>";
+
+				print 
+
+					"</tr>";
+
+			}
+			
+			echo 
+			
+				"</table>";
+
+		} else {
+				
+			echo 
+			
+				"<p align='center'>Não há Registros para a ocasião.</p>";
+				
+		}
+		
+	}
+
+	break;
+
+}
+
+?>
+
+<script language='javascript'>
+
+function show(id) {
+    document.getElementById(id).style.display = 'block';
+}
+
+function hide(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function myChangeHandler() {
+	window.open(this.options[this.selectedIndex].value, '_blank');
+}
+
+</script>

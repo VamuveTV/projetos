@@ -1,0 +1,97 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="aperto")
+ * @ORM\Entity */
+class Aperto {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $destinatario;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $remetente;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $data;
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $destinatario
+     */
+    public function setDestinatario($destinatario)
+    {
+        $this->destinatario = $destinatario;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDestinatario()
+    {
+        return $this->destinatario;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $remetente
+     */
+    public function setRemetente($remetente)
+    {
+        $this->remetente = $remetente;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRemetente()
+    {
+        return $this->remetente;
+    }
+
+
+}

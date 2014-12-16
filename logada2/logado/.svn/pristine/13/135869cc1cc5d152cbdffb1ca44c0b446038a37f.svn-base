@@ -1,0 +1,90 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/jquery.raty.js"></script>
+<script type="text/javascript" src="/public/js/labs.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    <?php
+    foreach($notas AS $avaliado => $nota){
+        //echo "$avaliado => $nota<br>";
+        $id = '#'.$avaliado;
+        echo "$('$id').raty({
+                score: $nota,
+                path: '/images',
+                readOnly: 1
+            });";
+    }
+    ?>
+
+    function enviaNota(avaliado, nota)
+    {
+        $.ajax({
+            type: "POST",
+            data: {'avaliador':<?php echo $logado->getId();?>,'avaliado': avaliado,'nota':nota},
+            url: '/opine/enviaNotaA',
+            success: function(dados) {
+                return true;
+            }
+        });
+    }
+})
+</script>
+<div>
+    <h3>OPINAR</h3>
+    <p style="width: 100px;float: left;">Dê sua opnião</p>
+    <div style="width: 600px; float: right" id="icones_opine">
+        <p><a href="/opine/alunos"><img src="/public/img/ico_alunos.png"> Alunos</a></p>
+        <p><a href="/opine/escolas"><img src="/public/img/ico_escola.png"> Escola</a></p>
+        <p><a href="/opine/funcionarios"><img src="/public/img/ico_funcionarios.png"> Funcionários</a></p>
+
+    </div>
+    <div class="limpa"></div>
+    <hr>
+    <form method="post">
+    <p>Filtrar</p>
+    Por:
+    <select name="busca_funcao" id="busca_funcao">
+        <option value="">Função</option>
+        <option value="P">Professor</option>
+        <option value="D">Diretor</option>
+        <option value="F">Funcionário</option>
+    </select>
+
+    <button type="submit" class="btn btn-normal">Buscar</button>
+    </form>
+    <hr>
+    <?php
+    if(isset($funcionarios)):
+        foreach($funcionarios as $funcionario):
+                $id_func = $funcionario->getId();
+                $foto_func = '/public/img/semfoto.jpg';
+                switch($funcionario->getFuncao()){
+                    case 'P': $cargo = 'Professor';break;
+                    case 'D': $cargo = 'Diretor';break;
+                    case 'F': $cargo = 'Funcionário';
+                }
+
+                echo "<div class=\"usuario_mini\">
+                            <a href='/opine/avalia/$id_func'><img src=\"$foto_func\" class=\"foto_mini\"><br class='limpa'>
+                            <p><b>".$funcionario->getNome()."</b></p></a>
+                            <p>$cargo</p>
+                            <div class='star' id='".$funcionario->getId()."'></div>
+                        </div>";
+        endforeach;
+    endif;
+    ?>
+
+
+</div>

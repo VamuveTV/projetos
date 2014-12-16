@@ -1,0 +1,47 @@
+<?php
+function converte_data($data){
+
+    $data1 = substr($data,0,10);
+    $data1 = explode('-',$data1);
+    $data1 = $data1[2].'/'.$data1[1].'/'.$data1[0];
+
+    return $data1.substr($data,10);
+}
+?>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<div>
+    <div>
+        <div>
+            <div>
+                <h2>DENÚNCIAS</h2>
+            </div>
+            <br class="limpa">
+            <div>
+                <?php
+                if (isset($denuncias)) : ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Remetente</th>
+                            <th>Destinatário</th>
+                            <th>Texto</th>
+                            <th>Data</th>
+                        </tr>
+                        </thead>
+                        <?php foreach($denuncias as $i => $denuncia): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $alunos[$denuncia->getRemetente()]; ?></td>
+                                <td><?php echo $alunos[$denuncia->getDestinatario()]; ?></td>
+                                <td><?php echo $denuncia->getTexto(); ?></td>
+                                <td><?php echo converte_data($denuncia->getData()); ?></td>
+                            </tr>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+<br class="limpa">

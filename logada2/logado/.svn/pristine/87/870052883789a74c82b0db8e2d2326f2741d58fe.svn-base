@@ -1,0 +1,5 @@
+<li><a href="/admin/alunos" style="background: #fff;margin-top:8px; color: #5e2954">ALUNOS</a></li>
+<li><a href="/admin/escolas" style="background: #fff;margin-top:8px; color: #5e2954">ESCOLAS</a></li>
+<li><a href="/admin/funcionarios" style="background: #fff;margin-top:8px; color: #5e2954">FUNCIONÁRIOS</a></li>
+<li><a href="/admin/turmas" style="background: #fff;margin-top:8px; color: #5e2954">TURMAS</a></li>
+<li><a href="/admin/atividades" style="background: #fff;margin-top:8px; color: #5e2954">ATIVIDADES</a></li>

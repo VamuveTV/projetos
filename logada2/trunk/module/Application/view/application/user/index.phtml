@@ -1,0 +1,21 @@
+<?php
+$title = 'Usuários';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>
+  <a href="<?php echo $this->url('user', array('action'=>'add'));?>">Adicionar</a>
+</p>
+<?php foreach ($users as $user) : ?>
+<article>
+    <?php echo $this->escapeHtml($user->getName());?>
+    
+    <a href="<?php echo $this->url('user', 
+        array('action'=>'edit','id'=>$user->getId()));?>">Editar</a>
+          
+    <a href="<?php echo $this->url('user', 
+        array('action'=>'delete','id'=>$user->getId()));?>">Apagar</a>
+</article>
+<?php endforeach; ?>

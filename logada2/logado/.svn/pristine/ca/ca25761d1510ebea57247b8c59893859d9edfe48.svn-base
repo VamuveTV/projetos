@@ -1,0 +1,78 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+<div>
+    <div>
+        <div>
+            <div style="margin-top: 20px">
+                <h2>POSTAGENS DE AMIGOS</h2>
+                <ul class="btsAlterarFontes">
+                    <li><img src="/public/imagens/bt-escolher-fonte.jpg" width="32" height="33" border="0" /></li>
+                    <li><a href="#" id="aumenta"><img src="/public/imagens/bt-aumentar-fonte.jpg" width="32" height="33" border="0" /></a></li>
+                    <li><a href="#" id="diminui"><img src="/public/imagens/bt-diminuir-fonte.jpg" width="32" height="33" border="0" /></a></li>
+
+                </ul>
+            </div>
+            <br class="limpa">
+            <div>
+                <?php if (isset($posts)) :
+                    echo '<ul class="postagensAlunos">';
+                    foreach($posts as $i=>$msg){
+                        echo '<li>
+                                <div class="imgPostagens">';
+                                if($fotos_remetentes[$i] != ''){
+                                    $foto = $fotos_remetentes[$i];
+                                    echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+                                }else
+                                    echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+                                echo '<span>'.$nomes_remetentes[$i].'</span>';
+                            echo '</div>
+                                    <div class="txtPostagens">';
+                                    echo nl2br($msg->getMensagem());
+                                    echo '<br><img src="/public/imagens/faces/'.$icones[$i].'.png" width="42" height="39" border="0" />
+                                    </div>
+                                </li>';
+
+
+
+
+
+
+                        /*
+                        if($fotos_remetentes[$i] != ''){
+                            $foto = $fotos_remetentes[$i];
+                            echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+                        }else
+                            echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+
+                        echo  '<br>'.$nomes_remetentes[$i];
+                        echo " > ".$nomes_destinatarios[$i];
+
+                        $timestamp = strtotime($msg->getData());
+                        $new_date = date('d/m/Y', $timestamp);
+                        echo " - ".$new_date;
+                        echo "</b><br>";
+
+                        echo $msg->getMensagem();
+                        echo "</p><hr>";
+                        */
+                    }
+                    echo '</ul>';
+                endif;
+                ?>
+            </div>
+        </div>
+    </div>
+</div>

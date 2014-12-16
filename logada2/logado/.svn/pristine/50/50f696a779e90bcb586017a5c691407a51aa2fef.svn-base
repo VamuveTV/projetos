@@ -1,0 +1,4 @@
+ALTER TABLE  `funcionario` ADD  `token_acesso` VARCHAR( 100 ) NULL ,
+ADD  `token_refresh` VARCHAR( 100 ) NULL ,
+ADD  `id_wikimapa` INT NULL ,
+ADD  `senha_wikimapa` VARCHAR( 100 ) NULL ;

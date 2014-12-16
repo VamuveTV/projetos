@@ -1,0 +1,79 @@
+<?php
+
+$title = 'Editar Aluno';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="nome">Nome</label>
+        <div class="controls">
+            <input type="text" id="nome" name="nome" value="<?php echo $aluno->getNome(); ?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="matricula">Matrícula</label>
+        <div class="controls">
+            <input type="text" id="matricula" name="matricula" value="<?php echo $aluno->getMatricula(); ?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="escola">Escola</label>
+        <div class="controls">
+            <select name="escola" id="escola">
+                <?php foreach($escolas AS $escola){
+                    echo "<option value='".$escola->getId()."'";
+                        echo $escola->getNome()==$aluno->getEscola()?' selected':'';
+                    echo ">".$escola->getNome()."</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="serie">Série</label>
+        <div class="controls">
+            <select name="serie" id="serie">
+                <option value="1"<?php echo $aluno->getSerie()==1?' selected':''?>>Primeiro ano</option>
+                <option value="2"<?php echo $aluno->getSerie()==2?' selected':''?>>Segundo ano</option>
+                <option value="3"<?php echo $aluno->getSerie()==3?' selected':''?>>Terceiro ano</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="turma">Turma</label>
+        <div class="controls">
+            <select name="turma" id="turma">
+                <?php foreach($turmas AS $turma){
+                    echo "<option value='".$turma->getId()."'";
+                        echo $turma->getTurma() == $aluno->getTurma()?' selected':'';
+                    echo ">".$turma->getTurma()."</option>";
+                }
+                ?>
+            </select>
+    </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="periodo">Período</label>
+        <div class="controls">
+            <select name="periodo" id="periodo">
+                <option value="M"<?php echo $aluno->getPeriodo()=='M'?' selected':''?>>Manhã</option>
+                <option value="T"<?php echo $aluno->getPeriodo()=='T'?' selected':''?>>Tarde</option>
+                <option value="N"<?php echo $aluno->getPeriodo()=='N'?' selected':''?>>Noite</option>
+            </select>
+    </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='/alunos'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,70 @@
+body{ font-family:Arial, Helvetica, sans-serif; margin-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; background-attachment:scroll;}
+#geral{  width:100%;}
+ul, menu, dir {display: block; list-style-type: none; -webkit-margin-before: 1em; -webkit-margin-after: 1em; -webkit-margin-start: 0px;- webkit-margin-end: 0px; -webkit-padding-start: 0px;
+}
+
+/*TELA DE LOGIN CLARO*/
+#geralLogin{position:absolute; width:500px; height:500px; margin:0 auto; left: 50%; top:50%; margin-left: -250px; margin-top: -250px;}
+#login{ width:470px; height:415px; float:left;}
+.titLogin{ color:#A1235E; font-weight:bold; font-size:15px; float:left;}
+#formLogin{ float:right; width:232px; margin-right: 15px; margin-top: 26px; line-height: 24px;}
+#formLogin span{ font-size:15px; color:#78613D;}
+#formLogin .camposLogin{ width:232px; height:24px; border:#909090 solid 1px; color:#A0265F; font-size:15px;}
+#formLogin a{ margin:0; font-size:9px; color:#78613D; text-align:right;}
+.termosUso{ color:#78613D; font-size:13px; font-weight:normal; margin-top:5px;}
+.termosUso a{ color:#78613D; font-size:13px; font-weight:normal; margin-top:5px;}
+.escolherTema{margin:0 auto; width:990px; text-align:right; color:#78613D; font-size:18px; padding-top:20px;}
+/*FIM TELA DE LOGIN CLARO*/
+
+/*TELA DE LOGIN ESCURO*/
+#geralLoginEsc{position:absolute; width:500px; height:500px; margin:0 auto; left: 50%; top:50%; margin-left: -250px; margin-top: -250px;}
+#loginEsc{ width:470px; height:415px; float:left;}
+.titLoginEsc{ color:#646464; font-weight:bold; font-size:15px; float:left;}
+#formLoginEsc{ float:right; width:232px; margin-right: 15px; margin-top: 26px; line-height: 24px;}
+#formLoginEsc span{ font-size:15px; color:#78613D;}
+#formLoginEsc .camposLoginEsc{ width:232px; height:24px; border:#909090 solid 1px; color:#A0265F; font-size:15px;}
+#formLoginEsc a{ margin:0; font-size:9px; color:#78613D; text-align:right;}
+.termosUsoEsc{ color:#78613D; font-size:13px; font-weight:normal; margin-top:5px;}
+.termosUsoEsc a{ color:#78613D; font-size:13px; font-weight:normal; margin-top:5px;}
+.escolherTemaEsc{margin:0 auto; width:990px; text-align:right; color:#78613D; font-size:18px; padding-top:20px;}
+/*FIM TELA DE LOGIN ESCURO*/
+
+/*TELAS INTERNAS TOPO*/
+#geralTopo{ background-image:url(../imagens/bg-topo.png); height:81px; }
+#topo{ width:990px; margin:0 auto;}
+#logo{ float:left; width:129px; height:45px; margin-top: 9px; margin-left: 3px;}
+#menu{ float:right; -webkit-padding-start: 0px; margin-right: 38px;}
+#menu li{ display:inline; padding-left: 22px; margin-top: 12px; float: left;}
+#menu li a{ color:#5E2954; font-size:13px; text-decoration:none; }
+#menu li a:hover{ color:#5E2954; font-size:13px; text-decoration:underline; }
+/*FIM TELAS TOPO*/
+
+/*CONTEÚDO*/
+#geralConteudo{ width:990px; margin:0 auto;}
+#conteudo{ float:left; margin-bottom: 115px;}
+#conteudo h2{ font-size:13px; color:#909090; font-weight:bold; float:left; margin-left: 3px; width:990px;}
+.faces{ float:left; width:990px; -webkit-padding-start: 0px;}
+.faces li{ display:inline; float: left; padding-right:25px;}
+.imgBtSaibaMaisSentindo{ float:left; margin-top:5px;}
+.btsAlterarFontes{ float:right; width:115px; height:33px; margin-top: -36px; margin-right:33px;}
+.btsAlterarFontes li{display:inline; float:right; padding-right:5px;}
+.btContinuarSentindo{ float:right; margin-right:30px;}
+#outrasfaces{ float: left; width: 980px; margin-top: 27px;}
+.comentar-sentindo{ width: 926px; height: 242px; border:#909090 solid 1px;}
+
+.postagensAlunos{ float:left;}
+.postagensAlunos li{ display:inline; border-top: solid 1px #C0C0C0; padding-top: 18px; float: left; padding-bottom: 45px;}
+.imgPostagens{ float:left; width: 152px; height: 141px;}
+.imagePostagens{ margin-bottom:5px;}
+.imgPostagens span{ font-weight:bold; color:#909090; font-size:16px; padding-top:3px;}
+.txtPostagens{ float:left; font-size:13px; color:#909090; width: 800px; margin-left: 10px; line-height: 20px;}
+
+/*FIM CONTEÚDO*/
+
+
+/*RODAPÉ*/
+#geralRodape{ background-image:url(../imagens/bg-rodape.jpg); height:236px; clear:both;}
+#rodape{ width:990px; margin:0 auto; text-align: center; padding-top: 70px;}
+#rodape p{ padding-top: 51px; font-size: 12px; color: #fff;}
+
+/*FIM RODAPÉ*/

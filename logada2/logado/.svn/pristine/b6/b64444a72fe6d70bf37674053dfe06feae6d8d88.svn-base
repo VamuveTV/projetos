@@ -1,0 +1,50 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/jquery.raty.js"></script>
+<script type="text/javascript" src="/public/js/labs.js"></script>
+<div>
+    <h2>INTERNET</h2>
+    <div style="width: 600px; float: right" id="icones_opine">
+        <p><a href="/loginternet/alunos"><img src="/public/img/ico_alunos.png"> Alunos</a></p>
+        <p><a href="/loginternet/funcionarios"><img src="/public/img/ico_funcionarios.png"> Funcionários</a></p>
+
+    </div>
+    <div class="limpa"></div>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Site</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach($acesso AS $a){
+            $data = explode('-',$a->getData());
+            $data = substr($data[2],0,2).'/'.$data[1].'/'.$data[0].' '.substr($data[2],2);
+
+            echo '<tr>
+                    <td>'.$data.'</td>
+                    <td>'.$a->getUrl().'</td>
+                  </tr>';
+        }
+        ?>
+        </tbody>
+    </table>
+
+
+
+</div>

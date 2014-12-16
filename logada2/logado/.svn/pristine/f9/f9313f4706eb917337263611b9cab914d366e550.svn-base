@@ -1,0 +1,260 @@
+<?php
+
+namespace Alunos\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Zend\Mail;
+use Zend\Authentication\AuthenticationService,
+    Zend\Authentication\Storage\Session as SessionStorage;
+
+use Alunos\Entity\Aluno;
+
+class IndexController extends AbstractActionController{
+
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $alunos = $this->getObjectManager()->getRepository('\Alunos\Entity\Aluno')->findAll();
+
+        return new ViewModel(array('alunos' => $alunos));
+    }
+
+    public function addAction()
+    {
+        if ($this->request->isPost()) {
+            $aluno = new Aluno();
+            $aluno->setNome($this->getRequest()->getPost('nome'));
+            $aluno->setMatricula($this->getRequest()->getPost('matricula'));
+            $aluno->setSerie($this->getRequest()->getPost('serie'));
+            $aluno->setPeriodo($this->getRequest()->getPost('periodo'));
+            $aluno->setSenha($this->getRequest()->getPost('matricula'));
+
+            $id_escola = $this->getRequest()->getPost('escola');
+            $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id_escola);
+            $aluno->setEscola($escola);
+
+            $id_turma = $this->getRequest()->getPost('turma');
+            $turma = $this->getObjectManager()->find('\Turmas\Entity\Turma', $id_turma);
+            $aluno->setTurma($turma);
+
+            $this->getObjectManager()->persist($aluno);
+            $this->getObjectManager()->flush();
+            $newId = $aluno->getId();
+
+            return $this->redirect()->toRoute('alunos');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+        $turmas = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+
+        return new ViewModel(array('escolas'=>$escolas,'turmas'=>$turmas));
+    }
+
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id);
+
+        if ($this->request->isPost()) {
+            $aluno->setNome($this->getRequest()->getPost('nome'));
+            $aluno->setMatricula($this->getRequest()->getPost('matricula'));
+            $aluno->setSerie($this->getRequest()->getPost('serie'));
+            $aluno->setPeriodo($this->getRequest()->getPost('periodo'));
+            $aluno->setSenha($aluno->getSenha());
+
+            $id_escola = $this->getRequest()->getPost('escola');
+            $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id_escola);
+            $aluno->setEscola($escola);
+
+            $id_turma = $this->getRequest()->getPost('turma');
+            $turma = $this->getObjectManager()->find('\Turmas\Entity\Turma', $id_turma);
+            $aluno->setTurma($turma);
+
+            $this->getObjectManager()->persist($aluno);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('alunos');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+        $turmas = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+
+        return new ViewModel(array('aluno' => $aluno,'escolas'=>$escolas,'turmas'=>$turmas));
+    }
+
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id);
+
+        if ($this->request->isPost()) {
+            $this->getObjectManager()->remove($aluno);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('alunos');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('aluno' => $aluno));
+    }
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+
+    public function loginAction()
+    {
+        $error = null;
+        $request = $this->getRequest();
+
+        if($request->isPost())
+        {
+            $data = $request->getPost()->toArray();
+
+            // Criando Storage para gravar sessão da authtenticação
+            $sessionStorage = new SessionStorage("Aluno");
+
+            $auth = new AuthenticationService;
+            $auth->setStorage($sessionStorage); // Definindo o SessionStorage para a auth
+
+            $authAdapter = $this->getServiceLocator()->get("Alunos\Auth\Adapter");
+            $authAdapter->setMatricula($data['matricula']);
+            $authAdapter->setSenha($data['senha']);
+            $authAdapter->setEscola($data['escola']);
+
+            $result = $auth->authenticate($authAdapter);
+
+            if($result->isValid())
+            {
+                $aluno = $auth->getIdentity();
+                $aluno = $aluno['aluno'];
+                $sessionStorage->write($aluno,null);
+                $error = false;
+
+                return $this->redirect()->toRoute('sentindo');
+            }
+            else
+                $error = true;
+        }
+
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+
+        return new ViewModel(array('error'=>$error,'escolas'=>$escolas));
+    }
+
+    public function logoutAction(){
+        $auth = new AuthenticationService();
+        $auth->setStorage(new SessionStorage('Aluno'));
+        $auth->clearIdentity();
+
+        return $this->redirect()->toRoute('login_alunos');
+    }
+
+    public function esqueciAction()
+    {
+        $resultado = null;
+        $request = $this->getRequest();
+
+        if($request->isPost())
+        {
+            $data = $request->getPost()->toArray();
+            $nova_senha = rand(100000,999999);
+
+            $aluno = $this->getObjectManager()->getRepository('\Alunos\Entity\Aluno')->findBy(array('email' => $data['email']));
+            if($aluno[0]){
+                $query  = $this->getObjectManager()->createQuery('UPDATE \Alunos\Entity\Aluno a SET a.senha=\''.$nova_senha.'\' WHERE a.email=\''.$data['email'].'\'');
+                $num = $query->execute();
+
+                /*
+                $mail = new Mail\Message();
+                $mail->setBody('Nova senha: '.$nova_senha);
+                $mail->setFrom('suporte@teste.com', 'Suporte');
+                $mail->addTo($data['email'], $aluno[0]->getNome());
+                $mail->setSubject('Nova senha');
+
+                $transport = new Mail\Transport\Sendmail();
+                $transport->send($mail);
+                */
+
+                $resultado = true;
+            }
+            else
+                $resultado = false;
+
+        }
+
+        return new ViewModel(array('resultado'=>$resultado));
+    }
+
+    public function cadastroAction()
+    {
+        $erro = null;
+        if ($this->request->isPost()) {
+
+            $materias_menos = '';
+            foreach($_POST['materia_menos'] AS $m){
+                $materias_menos.= $m.'#';
+            }
+            $_POST['materias_menos'] = $materias_menos;
+
+            $materias_mais = '';
+            foreach($_POST['materia_mais'] AS $m){
+                $materias_mais.= $m.'#';
+            }
+            $_POST['materias_mais'] = $materias_mais;
+
+            $habilidades = '';
+            foreach($_POST['habilidades'] AS $h){
+                $habilidades.= $h.'#';
+            }
+            $_POST['habilidades'] = $habilidades;
+            $_POST['habilidades'].= $_POST['outras_habilidades'];
+
+            $redes = '';
+            foreach($_POST['redes'] AS $r){
+                $redes.= $r.'#';
+            }
+            $_POST['redes'] = $r;
+            unset($_POST['outras_habilidades']);
+
+            $id_escola = $this->getRequest()->getPost('escola');
+            $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id_escola);
+            $_POST['escola'] = $escola;
+
+            $id_turma = $this->getRequest()->getPost('turma');
+            $turma = $this->getObjectManager()->find('\Turmas\Entity\Turma', $id_turma);
+            $_POST['turma'] = $turma;
+
+            $aluno = new Aluno($_POST);
+
+            $this->getObjectManager()->persist($aluno);
+            $this->getObjectManager()->flush();
+            $newId = $aluno->getId();
+
+            if($newId)
+                $erro = false;
+            else
+                $erro = true;
+        }
+
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+        $turmas = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+
+        return new ViewModel(array('escolas'=>$escolas,'turmas'=>$turmas,'erro'=>$erro));
+    }
+
+    public function termoAction()
+    {
+        return new ViewModel();
+    }
+
+}

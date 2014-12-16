@@ -1,0 +1,547 @@
+/* CSS Document */
+body{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-image: url('img/bg.png');
+  background-position: top;
+  background-repeat: repeat-x;
+  font-family: Tahoma, Verdana, Arial;
+  font-size: 10px;
+}
+
+#tudo{
+  width: 1010px;
+  margin: 0 auto;
+  text-align: left;
+  min-height: 100%;
+}
+
+#topo{
+  width: 100%;
+  height: 126px;
+  padding: 5px;
+  
+}
+
+#logo{
+  margin-top: 2px;
+  margin-left: 14px;
+}
+
+#menu{ 
+  background-image: url('img/fundo_menu.png'); 
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 50px; 
+}
+
+#conteudo_menu{
+	width: 100%;
+	padding-top: 16px;
+	padding-left: 30px;
+	color: #FFF;
+	font-size: 13px;
+}
+
+#conteudo_menu a {
+	color: #FFF;
+	font-size: 13px;
+	text-decoration: none;
+	padding: 5px 12px;
+}
+
+#conteudo_menu  .comum{
+  border-right: 1px #fff solid;
+}
+
+#rotator{
+  margin: 4px auto;
+  width: 958px;
+  height: 382px;
+}
+
+#meio{
+  margin-left: 23px;
+  margin-top: 6px;
+  width: 948px;
+  height: 100%;
+  padding:5px;
+  border-style:solid;
+  border-width:0px;
+  background-color:#FFF;
+}
+
+h3{
+  color: #444;
+  font-family: Trebuchet MS;
+}
+
+.sub_tit{
+  font-weight: bold;
+  color: #339999;
+}
+
+#meio p{
+	padding: 1px 3px;
+	text-indent: 10px;
+	font-size: 12px;	
+}
+
+#meio li{
+	padding: 1px 3px;
+	text-indent: 10px;
+	font-size: 12px;	
+}
+
+label{
+  font-family: Trebuchet MS, Verdana, Sans Serife;
+  font-size: 14px;
+  width: 250px;
+  color: #444;
+}
+
+#formesquerdo{
+  float: left;
+  width: 400px;
+}
+
+#formdireito{
+  float: left;
+  width: 400px;
+}
+
+.campo{
+  font-family: Trebuchet MS, Verdana, Sans Serife;
+  width: 250px;
+  height: 25px;
+  border: 1px solid #444;
+  padding: 4px;
+  color: #444;
+}
+
+.titformtrab{
+  font-family: Trebuchet MS;
+  font-size: 18px;
+  color: #336666;
+}
+
+.campoimg{
+  font-family: Trebuchet MS, Verdana, Sans Serife;
+  padding: 4px;
+  color: #444;
+}
+
+#trabalhe{
+  margin-left: 15px;
+}
+
+.texttrabalhe{
+  font-family: Trebuchet MS, Verdana, Sans Serife;
+  width: 350px;
+  height: 100px;
+  border: 1px solid #444;
+  padding: 4px;
+  color: #444;
+}
+
+.fone{
+  font-family: Trebuchet MS, Verdana, Sans Serife;
+  width: 110px;
+  height: 25px;
+  border: 1px solid #444;
+  padding: 4px;
+  color: #444;
+}
+
+.data{
+  font-family: Trebuchet MS, Verdana, Sans Serife;
+  width: 90px;
+  height: 25px;
+  border: 1px solid #444;
+  padding: 4px;
+  color: #444;
+}
+
+.camporadio{
+  font-family: Trebuchet MS, Verdana, Sans Serife;
+  padding: 4px;
+  color: #444;
+}
+
+.btn{
+  font-family: Trebuchet MS;
+  width: 100px;
+  background-color: #336666;
+  height: 28px;
+  border: none;
+  color: #FFF;
+}
+
+#box1{
+  height: 300px;
+  width: 230px;
+  float: left;
+  margin-left: 25px;
+  color: #1a81e9;
+}
+
+#box2{
+  height: 300px;
+  width: 230px;
+  float: left;
+  margin: 0 6px;
+  color: #1ea70c;
+  font-size: 11px;
+}
+
+#box3{
+  height: 300px;
+  width: 230px;
+  float: left;
+  color: #980e0e;
+  margin: 0 6px;
+}
+
+.separa{
+  border-bottom: 1px #AAA dashed;
+  display: block;
+}
+
+#box4{
+  height: 300px;
+  width: 230px;
+  float: left;
+  margin: 0 6px;
+  text-align: center;
+}
+.titulo_azul{
+  font-size: 26px;
+  color: #1a81e9;
+  padding: 14px 0 0 10px;
+}
+
+.titulo_azul_clar{
+  font-size: 26px;
+  color: #339999;
+  padding: 14px 0 0 10px;
+}
+
+
+.titulo_verde{
+  font-size: 26px;
+  color: #336666;
+  padding: 14px 0 0 10px;
+}
+
+.titulo_vinho{
+  font-size: 26px;
+  color: #980e0e;
+  padding: 14px 0 0 10px;
+}
+
+.titulo1{
+  width: 229px;
+  height: 33px;
+  background-image: url('img/bg_titulo.png');
+  background-repeat: no-repeat;
+  font-size: 14px;
+  color: #1a81e9;
+  padding: 14px 0 0 10px;
+}
+
+.titulo2{
+  width: 229px;
+  height: 33px;
+  background-image: url('img/bg_titulo.png');
+  background-repeat: no-repeat;
+  font-size: 14px;
+  color: #1ea70c;
+  padding: 14px 0 0 10px;
+}
+
+.titulo3{
+  width: 229px;
+  height: 33px;
+  background-image: url('img/bg_titulo.png');
+  background-repeat: no-repeat;
+  font-size: 14px;
+  color: #980e0e;
+  padding: 14px 0 0 10px;
+}
+
+.titulo4{
+  width: 229px;
+  height: 33px;
+  background-image: url('img/bg_titulo.png');
+  background-repeat: no-repeat;
+  font-size: 14px;
+  color: #fba809;
+  padding: 14px 0 0 10px;
+  text-align: left;
+}
+
+.icones{
+  margin: 0 auto 3px auto;
+  display: block;
+}
+
+h2{
+  font-size: 12px;
+}
+
+#baixo1 small{
+  font-size: 10px;
+}
+
+.destaques{
+  height: 50px;
+  border-bottom: 1px #CCC solid;
+}
+
+#noticias{
+  height: 120px;
+  border-bottom: 1px #CCC solid;
+  color: #1a81e9;
+}
+
+#noticias2{
+  color: #1a81e9;
+}
+
+.btnpesquisa{
+	background: #1a81e9;
+	color: #FFF;
+	font-size: 11px;
+	padding: 5px;
+	border: 1px #AAA solid;
+}
+
+
+#pesquisarnot{
+  color: #1a81e9;
+}
+
+.camponot{
+  border: 1px solid #444;
+  height: 28px;
+  width: 300px;
+}
+
+.textpesquisa{
+  font-family: Tahoma, Verdana, Arial;
+  font-size: 14px;
+  color: #1a81e9;
+}
+
+
+.textnoticia{
+  font-size: 12px;
+  width: 700px;
+  color: #1a81e9;
+  margin-left: 15px;
+}
+
+
+.portfolio{
+  margin-left: 15px;
+  height: 170px;
+  border-bottom: 1px #CCC solid ;
+}
+
+.portfolio a{
+  color: #980e0e;
+}
+
+.txtport{
+  font-family: Verdana;
+  font-size: 12px;
+  color: #444;
+  margin-left: 15px;
+}
+
+#esquerda{
+  width: 460px;
+  float: left;
+}
+
+#direita{
+  width: 460px;
+  float: left;
+  margin-left: 10px;
+}
+
+#box3 a{
+  color: #980e0e;
+}
+
+td{
+	font-size: 11px;
+	font-weight: normal;	
+}
+
+.botao{
+	background: #1ea70c;
+	color: #FFF;
+	font-size: 11px;
+	padding: 5px;
+	border: 1px #AAA solid;
+}
+
+
+#rodape{
+  margin-top: 15px;
+  height: 250px;
+  background-image: url('img/bg_rodape.png');
+  background-repeat: repeat-x;
+}
+
+#conteudo_rodape{
+  margin: 0px auto;
+  font-family: Trebuchet MS, verdana;
+  font-size: 11px;
+  color: #FFF;
+  padding: 5px;
+  width: 900px;
+  text-align: center;
+}
+
+#conteudo_rodape a{
+  text-decoration: none;
+  text-align: left;
+  color: #FFF;
+  margin: 0 10px;
+}
+
+a{
+  text-decoration: none;
+}
+
+
+#rodape1{
+  margin-top: 15px;
+  float: left;
+  width: 350px;
+  text-align: left;
+  border-right: 1px #FFF dotted;
+  padding: 5px;
+}
+
+#rodape2{
+  margin-top: 15px;
+  width: 220px;
+  float: left;
+  text-align: left;
+  border-right: 1px #FFF dotted;
+  padding: 5px;
+}
+
+#rodape3{
+  margin-top: 15px;
+  width: 150px;
+  float: left;
+  text-align: left;
+  padding: 5px;
+}
+
+.limpa{
+  clear: both;
+}
+
+#rodape h2{
+  padding: 5px;
+}
+
+label.error {
+  float: none;
+  color: red;
+  margin: 0 .5em 0 0;
+  vertical-align: top;
+  font-size: 10px;
+}
+
+/*  Table da páginda de cursos */
+
+#curs {
+  width: 700px;
+  float: left;
+}    
+
+#curs2 {
+  padding-top: 60px;
+  float: right;
+  width: 245px;
+  text-align: center;
+}
+
+#curs2 img{
+  margin-bottom: 4px;
+}
+
+
+.tbltit{
+ background-image: url('img/bg1.png');
+ height: 20px;
+ padding: 5px;
+ border: 1px #444 solid;
+ margin-bottom: 3px; 
+}
+.tbltit a{
+  color: #444;
+  font-weight: bold;
+}
+
+.detalhes{
+  display: none;
+  height: 400px;
+  overflow: auto;
+  border:  1px #444 solid;
+  border-top: 0;
+  padding: 7px;
+}
+
+.detalhes p{
+  text-indent: 70px;
+  margin: 0;
+  padding: 0;
+}
+
+.detalhes li{
+  text-indent: 35px;
+  margin: 0;
+  padding: 0;
+}
+
+.tbltit td{
+  font-weight: bold;
+  padding: 5px;
+} 
+
+.destaque{
+  background: #BBB;
+  color: #FFF;
+}
+
+.par{
+  background: #DDD;
+}
+.impar{
+  background: #f1f1f1;
+}
+
+#curs td a{
+  padding: 5px;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  float: left;
+}
+
+#curs tbody td{
+  cursor: hand;  
+}
+
+small{
+  color: #000066;
+  font-size: 11px;
+}

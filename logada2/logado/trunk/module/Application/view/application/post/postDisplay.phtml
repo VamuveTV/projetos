@@ -1,0 +1,36 @@
+<?php use Application\Constants\Constants;
+    foreach($this->feed as $post) : 
+?>
+
+<?php $postMood = $post->getMood(); ?>
+
+<div class="media">
+	<div class="pull-left">
+		<a hred=""> <img class="media-object" width="64" height="64"
+			src="http://www.chic-and-ethic.com/useruploads/profilepics/profile_img.jpg"
+			alt="foto">
+		</a> <span>
+            <?php
+                if ($postMood !== null)
+                {                       
+                    echo Constants::moodsToArray()[$postMood];
+                }
+            ?>
+        </span>
+	</div>
+	<div class="media-body">
+		<h4 class="media-heading"> 
+            <a href="<?php echo 'profile/view/' . $post->getSender()->getId(); ?>">
+                <?php echo $post->getSender()->getDisplayName(); ?> 
+            </a>
+        </h4>
+		<p>
+            <?php echo $post->getBody(); ?>
+        </p>
+
+		<p>
+			<i><?php echo $post->getCreationTime()->format('@ d-m-Y H:i'); ?></i>
+		</p>
+	</div>
+</div>
+<?php endforeach; ?>

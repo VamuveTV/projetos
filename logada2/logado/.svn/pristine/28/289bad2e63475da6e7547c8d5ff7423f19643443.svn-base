@@ -1,0 +1,130 @@
+<?php
+
+namespace Turmas\Entity;
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * @ORM\Table(name="turma")
+ * @ORM\Entity */
+class Turma {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string") */
+    protected $turma;
+
+    /** @ORM\Column(type="string") */
+    protected $numero;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Escolas\Entity\Escola",cascade={"persist"})
+     */
+    protected $escola;
+
+    /** @ORM\Column(type="string") */
+    protected $bairro;
+
+    /** @ORM\Column(type="string") */
+    protected $regiao;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $bairro
+     */
+    public function setBairro($bairro)
+    {
+        $this->bairro = $bairro;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBairro()
+    {
+        return $this->bairro;
+    }
+
+    /**
+     * @param mixed $escola
+     */
+    public function setEscola(\Escolas\Entity\Escola $escola = null)
+    {
+        $this->escola = $escola;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEscola()
+    {
+        return $this->escola->getNome();
+    }
+
+    /**
+     * @param mixed $numero
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumero()
+    {
+        return $this->numero;
+    }
+
+    /**
+     * @param mixed $regiao
+     */
+    public function setRegiao($regiao)
+    {
+        $this->regiao = $regiao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegiao()
+    {
+        return $this->regiao;
+    }
+
+    /**
+     * @param mixed $turma
+     */
+    public function setTurma($turma)
+    {
+        $this->turma = $turma;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTurma()
+    {
+        return $this->turma;
+    }
+}
+
+

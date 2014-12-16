@@ -1,0 +1,27 @@
+
+
+/*TELAS INTERNAS TOPO*/
+#topo, #menu{ background: #353535}
+#menu li a{ color:#ffffff; text-decoration:none; }
+#menu li a:hover{ background: #353535; color:#ffffff; text-decoration:underline; }
+
+#rodape{
+    background:#fff;
+}
+
+body, #conteudo, #calendar{
+    background: #6F294E;
+}
+
+
+#calendar table{
+    background: #6F294E;
+}
+
+#calendar thead{
+    background: #fff;
+}
+
+#calendar tbody{
+    color: #fff;
+}

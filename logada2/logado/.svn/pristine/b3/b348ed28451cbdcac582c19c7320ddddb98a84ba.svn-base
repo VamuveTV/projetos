@@ -1,0 +1,1018 @@
+<?php
+
+namespace Alunos\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use Zend\Stdlib\Hydrator;
+
+/**
+ * @ORM\Table(name="Aluno")
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="Alunos\Entity\AlunoRepository")
+ */
+class Aluno {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Escolas\Entity\Escola",cascade={"persist"})
+     */
+    protected $escola;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Turmas\Entity\Turma",cascade={"persist"})
+     */
+    protected $turma;
+
+    /** @ORM\Column(type="string") */
+    protected $nome;
+
+    /** @ORM\Column(type="string") */
+    protected $matricula;
+
+    /** @ORM\Column(type="string") */
+    protected $serie;
+
+    /** @ORM\Column(type="string") */
+    protected $periodo;
+
+    /** @ORM\Column(type="string") */
+    protected $senha;
+
+    /** @ORM\Column(type="string") */
+    protected $foto;
+
+    /** @ORM\Column(type="string") */
+    protected $email;
+
+    /** @ORM\Column(type="string") */
+    protected $sexo;
+
+    /** @ORM\Column(type="string") */
+    protected $data_nasc;
+
+    /** @ORM\Column(type="string") */
+    protected $endereco;
+
+    /** @ORM\Column(type="string") */
+    protected $complemento;
+
+    /** @ORM\Column(type="string") */
+    protected $bairro;
+
+    /** @ORM\Column(type="string") */
+    protected $cidade;
+
+    /** @ORM\Column(type="string") */
+    protected $estado;
+
+    /** @ORM\Column(type="string") */
+    protected $cep;
+
+    /** @ORM\Column(type="string") */
+    protected $atendimento;
+
+    /** @ORM\Column(type="string") */
+    protected $deficiencia;
+
+    /** @ORM\Column(type="string") */
+    protected $npessoas;
+
+    /** @ORM\Column(type="string") */
+    protected $doenca;
+
+    /** @ORM\Column(type="string") */
+    protected $nome_doenca;
+
+    /** @ORM\Column(type="string") */
+    protected $materias_mais;
+
+    /** @ORM\Column(type="string") */
+    protected $materias_menos;
+
+    /** @ORM\Column(type="string") */
+    protected $vestibular;
+
+    /** @ORM\Column(type="string") */
+    protected $tipo_vestibular;
+
+    /** @ORM\Column(type="string") */
+    protected $habilidades;
+
+    /** @ORM\Column(type="string") */
+    protected $outras_habilidades;
+
+    /** @ORM\Column(type="string") */
+    protected $profissao;
+
+    /** @ORM\Column(type="string") */
+    protected $computador;
+
+    /** @ORM\Column(type="string") */
+    protected $compras_net;
+
+    /** @ORM\Column(type="string") */
+    protected $frequencia_net;
+
+    /** @ORM\Column(type="string") */
+    protected $celular_net;
+
+    /** @ORM\Column(type="string") */
+    protected $redes;
+
+    /** @ORM\Column(type="string") */
+    protected $renda;
+
+    /** @ORM\Column(type="string") */
+    protected $tv;
+
+    /** @ORM\Column(type="string") */
+    protected $celular;
+
+    /** @ORM\Column(type="string") */
+    protected $maquina;
+
+    /** @ORM\Column(type="string") */
+    protected $geladeira;
+
+    /** @ORM\Column(type="string") */
+    protected $app_celular;
+
+    /** @ORM\Column(type="string") */
+    protected $app_preferidos;
+
+    /** @ORM\Column(type="string") */
+    protected $bolsa;
+
+    /** @ORM\Column(type="string") */
+    protected $bolsa_quem;
+
+    /** @ORM\Column(type="string") */
+    protected $incentivo;
+
+    /** @ORM\Column(type="string") */
+    protected $incentivo_quem;
+
+    /** @ORM\Column(type="string") */
+    protected $idiomas;
+
+    /** @ORM\Column(type="string") */
+    protected $livros;
+
+    /** @ORM\Column(type="string") */
+    protected $lugares;
+
+    /** @ORM\Column(type="string") */
+    protected $esportes;
+
+    /** @ORM\Column(type="string") */
+    protected $filmes;
+
+    /** @ORM\Column(type="string") */
+    protected $musicas;
+
+    public function __construct(array $dados = array()){
+        $hydrator = new Hydrator\ClassMethods();
+        $hydrator->hydrate($dados,$this);
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $matricula
+     */
+    public function setMatricula($matricula)
+    {
+        $this->matricula = $matricula;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMatricula()
+    {
+        return $this->matricula;
+    }
+
+    /**
+     * @param mixed $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @param mixed $periodo
+     */
+    public function setPeriodo($periodo)
+    {
+        $this->periodo = $periodo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPeriodo()
+    {
+        return $this->periodo;
+    }
+
+    /**
+     * @param mixed $serie
+     */
+    public function setSerie($serie)
+    {
+        $this->serie = $serie;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSerie()
+    {
+        return $this->serie;
+    }
+
+    /**
+     * @param mixed $escola
+     */
+    public function setEscola(\Escolas\Entity\Escola $escola = null)
+    {
+        $this->escola = $escola;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEscola()
+    {
+        return $this->escola->getNome();
+    }
+
+    /**
+     * @param mixed $turma
+     */
+    public function setTurma(\Turmas\Entity\Turma $turma = null)
+    {
+        $this->turma = $turma;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTurma()
+    {
+        return $this->turma->getTurma();
+    }
+
+    /**
+     * @param mixed $senha
+     */
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * @param mixed $foto
+     */
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $app_celular
+     */
+    public function setAppCelular($app_celular)
+    {
+        $this->app_celular = $app_celular;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppCelular()
+    {
+        return $this->app_celular;
+    }
+
+    /**
+     * @param mixed $app_preferidos
+     */
+    public function setAppPreferidos($app_preferidos)
+    {
+        $this->app_preferidos = $app_preferidos;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppPreferidos()
+    {
+        return $this->app_preferidos;
+    }
+
+    /**
+     * @param mixed $atendimento
+     */
+    public function setAtendimento($atendimento)
+    {
+        $this->atendimento = $atendimento;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAtendimento()
+    {
+        return $this->atendimento;
+    }
+
+    /**
+     * @param mixed $bairro
+     */
+    public function setBairro($bairro)
+    {
+        $this->bairro = $bairro;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBairro()
+    {
+        return $this->bairro;
+    }
+
+    /**
+     * @param mixed $bolsa
+     */
+    public function setBolsa($bolsa)
+    {
+        $this->bolsa = $bolsa;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBolsa()
+    {
+        return $this->bolsa;
+    }
+
+    /**
+     * @param mixed $bolsa_quem
+     */
+    public function setBolsaQuem($bolsa_quem)
+    {
+        $this->bolsa_quem = $bolsa_quem;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBolsaQuem()
+    {
+        return $this->bolsa_quem;
+    }
+
+    /**
+     * @param mixed $celular
+     */
+    public function setCelular($celular)
+    {
+        $this->celular = $celular;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCelular()
+    {
+        return $this->celular;
+    }
+
+    /**
+     * @param mixed $celular_net
+     */
+    public function setCelularNet($celular_net)
+    {
+        $this->celular_net = $celular_net;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCelularNet()
+    {
+        return $this->celular_net;
+    }
+
+    /**
+     * @param mixed $cep
+     */
+    public function setCep($cep)
+    {
+        $this->cep = $cep;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCep()
+    {
+        return $this->cep;
+    }
+
+    /**
+     * @param mixed $cidade
+     */
+    public function setCidade($cidade)
+    {
+        $this->cidade = $cidade;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCidade()
+    {
+        return $this->cidade;
+    }
+
+    /**
+     * @param mixed $complemento
+     */
+    public function setComplemento($complemento)
+    {
+        $this->complemento = $complemento;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComplemento()
+    {
+        return $this->complemento;
+    }
+
+    /**
+     * @param mixed $compras_net
+     */
+    public function setComprasNet($compras_net)
+    {
+        $this->compras_net = $compras_net;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComprasNet()
+    {
+        return $this->compras_net;
+    }
+
+    /**
+     * @param mixed $computador
+     */
+    public function setComputador($computador)
+    {
+        $this->computador = $computador;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComputador()
+    {
+        return $this->computador;
+    }
+
+    /**
+     * @param mixed $data_nasc
+     */
+    public function setDataNasc($data_nasc)
+    {
+        $this->data_nasc = $data_nasc;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDataNasc()
+    {
+        return $this->data_nasc;
+    }
+
+    /**
+     * @param mixed $deficiencia
+     */
+    public function setDeficiencia($deficiencia)
+    {
+        $this->deficiencia = $deficiencia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeficiencia()
+    {
+        return $this->deficiencia;
+    }
+
+    /**
+     * @param mixed $doenca
+     */
+    public function setDoenca($doenca)
+    {
+        $this->doenca = $doenca;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDoenca()
+    {
+        return $this->doenca;
+    }
+
+    /**
+     * @param mixed $nome_doenca
+     */
+    public function setNomeDoenca($nome_doenca)
+    {
+        $this->nome_doenca = $nome_doenca;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNomeDoenca()
+    {
+        return $this->nome_doenca;
+    }
+
+    /**
+     * @param mixed $endereco
+     */
+    public function setEndereco($endereco)
+    {
+        $this->endereco = $endereco;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndereco()
+    {
+        return $this->endereco;
+    }
+
+    /**
+     * @param mixed $esportes
+     */
+    public function setEsportes($esportes)
+    {
+        $this->esportes = $esportes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEsportes()
+    {
+        return $this->esportes;
+    }
+
+    /**
+     * @param mixed $estado
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * @param mixed $filmes
+     */
+    public function setFilmes($filmes)
+    {
+        $this->filmes = $filmes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilmes()
+    {
+        return $this->filmes;
+    }
+
+    /**
+     * @param mixed $frequencia_net
+     */
+    public function setFrequenciaNet($frequencia_net)
+    {
+        $this->frequencia_net = $frequencia_net;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFrequenciaNet()
+    {
+        return $this->frequencia_net;
+    }
+
+    /**
+     * @param mixed $geladeira
+     */
+    public function setGeladeira($geladeira)
+    {
+        $this->geladeira = $geladeira;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGeladeira()
+    {
+        return $this->geladeira;
+    }
+
+    /**
+     * @param mixed $habilidades
+     */
+    public function setHabilidades($habilidades)
+    {
+        $this->habilidades = $habilidades;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHabilidades()
+    {
+        return $this->habilidades;
+    }
+
+    /**
+     * @param mixed $outras_habilidades
+     */
+    public function setOutrasHabilidades($outras_habilidades)
+    {
+        $this->outras_habilidades = $outras_habilidades;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOutrasHabilidades()
+    {
+        return $this->outras_habilidades;
+    }
+
+    /**
+     * @param mixed $idiomas
+     */
+    public function setIdiomas($idiomas)
+    {
+        $this->idiomas = $idiomas;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdiomas()
+    {
+        return $this->idiomas;
+    }
+
+    /**
+     * @param mixed $incentivo
+     */
+    public function setIncentivo($incentivo)
+    {
+        $this->incentivo = $incentivo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIncentivo()
+    {
+        return $this->incentivo;
+    }
+
+    /**
+     * @param mixed $incentivo_quem
+     */
+    public function setIncentivoQuem($incentivo_quem)
+    {
+        $this->incentivo_quem = $incentivo_quem;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIncentivoQuem()
+    {
+        return $this->incentivo_quem;
+    }
+
+    /**
+     * @param mixed $livros
+     */
+    public function setLivros($livros)
+    {
+        $this->livros = $livros;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLivros()
+    {
+        return $this->livros;
+    }
+
+    /**
+     * @param mixed $lugares
+     */
+    public function setLugares($lugares)
+    {
+        $this->lugares = $lugares;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLugares()
+    {
+        return $this->lugares;
+    }
+
+    /**
+     * @param mixed $maquina
+     */
+    public function setMaquina($maquina)
+    {
+        $this->maquina = $maquina;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaquina()
+    {
+        return $this->maquina;
+    }
+
+    /**
+     * @param mixed $materias_mais
+     */
+    public function setMateriasMais($materias_mais)
+    {
+        $this->materias_mais = $materias_mais;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMateriasMais()
+    {
+        return $this->materias_mais;
+    }
+
+    /**
+     * @param mixed $materias_menos
+     */
+    public function setMateriasMenos($materias_menos)
+    {
+        $this->materias_menos = $materias_menos;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMateriasMenos()
+    {
+        return $this->materias_menos;
+    }
+
+    /**
+     * @param mixed $musicas
+     */
+    public function setMusicas($musicas)
+    {
+        $this->musicas = $musicas;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMusicas()
+    {
+        return $this->musicas;
+    }
+
+    /**
+     * @param mixed $npessoas
+     */
+    public function setNpessoas($npessoas)
+    {
+        $this->npessoas = $npessoas;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNpessoas()
+    {
+        return $this->npessoas;
+    }
+
+    /**
+     * @param mixed $redes
+     */
+    public function setRedes($redes)
+    {
+        $this->redes = $redes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRedes()
+    {
+        return $this->redes;
+    }
+
+    /**
+     * @param mixed $renda
+     */
+    public function setRenda($renda)
+    {
+        $this->renda = $renda;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRenda()
+    {
+        return $this->renda;
+    }
+
+    /**
+     * @param mixed $sexo
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
+    }
+
+    /**
+     * @param mixed $tipo_vestibular
+     */
+    public function setTipoVestibular($tipo_vestibular)
+    {
+        $this->tipo_vestibular = $tipo_vestibular;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTipoVestibular()
+    {
+        return $this->tipo_vestibular;
+    }
+
+    /**
+     * @param mixed $tv
+     */
+    public function setTv($tv)
+    {
+        $this->tv = $tv;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTv()
+    {
+        return $this->tv;
+    }
+
+    /**
+     * @param mixed $vestibular
+     */
+    public function setVestibular($vestibular)
+    {
+        $this->vestibular = $vestibular;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVestibular()
+    {
+        return $this->vestibular;
+    }
+
+    /**
+     * @param mixed $profissao
+     */
+    public function setProfissao($profissao)
+    {
+        $this->profissao = $profissao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfissao()
+    {
+        return $this->profissao;
+    }
+
+
+}
+
+

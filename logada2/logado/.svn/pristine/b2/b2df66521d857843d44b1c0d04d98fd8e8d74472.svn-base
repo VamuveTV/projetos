@@ -1,0 +1,229 @@
+<?php
+namespace Acesso\Utils;
+//namespace Utils;
+
+require_once('ServiceClient.php');
+
+class Location extends ServiceClient
+{
+	/**
+	 * Obter usuário 
+	 */
+	public function getUser($user_id)
+	{
+		$url = "http://50.116.52.84/api/users/".$user_id;
+		var_dump($url);
+		return $this->doGetRequest($url);
+	}
+	
+	/**
+	 * Obter localizações
+	 */
+	public function getLocations($user_id)
+	{
+		$url = "http://50.116.52.84/api/users/".$user_id."/locations";
+		return $this->doGetRequest($url);
+	}
+	
+	/**
+	 * Recupera número de localizações do usuário
+	 */
+	public function getNumberOfLocations($user_id)
+	{
+		$url = "http://50.116.52.84/api/users/".$user_id."/locations";
+		return count($this->doGetRequest($url));
+	}
+	
+	/**
+	 * Criar usuário
+	 */
+	public function createUser($name, $email, $password, $gender, $city, $address)
+	{
+		$url = "http://50.116.52.84/api/users";
+		
+		$fields = array(
+			'user' => array(
+				'name' => $name,
+				'email' => $email,
+				'password' => $password,
+				'gender' => $gender,
+				'city' => $city,
+				'address' => $address
+			)
+		);
+
+		$fields_string = http_build_query($fields);
+		return $this->doPostRequest($url, $fields_string);
+	}
+	
+	/**
+	 * Atualizar usuário
+	 */
+	public function updateUser($token, $id, $name, $email, $curr_password)
+	{
+		$url = "http://50.116.52.84/api/users/".$id;
+		
+		$fields = array(
+			"access_token" => $token,
+			"user" => array(
+				"name" => $name,
+				"email" => $email,
+				"password" => $curr_password,
+				"current_password" => $curr_password
+			)
+		);
+		
+		$fields_string = http_build_query($fields);
+		return $this->doPutRequest($url, $fields_string);
+	}
+	
+	/**
+	 * Gerar access token
+	 */
+	public function generateToken($email, $password)
+	{
+		$url = "http://50.116.52.84/api/oauth/token";
+		
+		$fields = array(
+			'grant_type' => "password",
+			'username' => $email,
+			'password' => $password,
+			'client_id' => "4957919f380dbe01b12ef1ed8ec08f27a5a72db2851903dd77dffeabe64a88e7",
+			'client_secret' => "c11e0fdaeab6c494384200721dc7e419af994c3081529ec659f086d46ed94283"
+		);
+		
+		$fields_string = http_build_query($fields);
+		return $this->doPostRequest($url, $fields_string);
+		
+		//{"access_token":"bc34a16795d57362469d31c66e00243138e9413019422f6493af6792d789d93b","token_type":"bearer","expires_in":86400,"refresh_token":"4f2d7621d763c09db4e3e45038c626f5e462e34cbcb4452f9dba6942185f399f","scope":""}
+	}
+	
+	/**
+	 * Gerar access token
+	 */
+	public function refreshToken($refresh_token)
+	{
+		$url = "http://50.116.52.84/api/oauth/token";
+		
+		$fields = array(
+			'grant_type' => "refresh_token",
+			'refresh_token'=> $refresh_token,
+			'client_id' => "4957919f380dbe01b12ef1ed8ec08f27a5a72db2851903dd77dffeabe64a88e7",
+			'client_secret' => "c11e0fdaeab6c494384200721dc7e419af994c3081529ec659f086d46ed94283"
+		);
+		
+		$fields_string = http_build_query($fields);
+		return $this->doPostRequest($url, $fields_string);
+		
+		//{"access_token":"bc34a16795d57362469d31c66e00243138e9413019422f6493af6792d789d93b","token_type":"bearer","expires_in":86400,"refresh_token":"4f2d7621d763c09db4e3e45038c626f5e462e34cbcb4452f9dba6942185f399f","scope":""}
+	}
+	
+	/**
+	 * Cadastra um novo local
+	 */
+	public function createLocation($access_token, $name, $description, $address, $latitude, $longitude)
+	{
+		$url = "http://50.116.52.84/api/locations";
+		
+		$fields = array(
+			'access_token' => $access_token,
+			'location' => array(
+				'name' => $name,
+				'description' => $description,
+				'site_url' => "",
+				'directions' => "",
+				'address' => $address,
+				'latitude' => $latitude,
+				'longitude' => $longitude,
+				'category_id' => "1",
+				'sub_category_name' => "subcategory",
+				'facebook_url' => "",
+				'email' => "",
+				'phone_number' => "",
+				'business_hours' => ""
+			)
+		);
+		$fields_string = http_build_query($fields);
+		return $this->doPostRequest($url, $fields_string);
+	}
+	
+	/**
+	 * Retorna locais mais próximos de um local
+	 */
+	public function getNearbys($id, $access_token)
+	{
+		$url = "http://50.116.52.84/api/locations/".$id."/nearbys".'?access_token='.$access_token;
+		return $this->doGetRequest($url);
+	}
+	
+	/**
+	 * Retorna locais a 1 km de uma posição definida
+	 */
+	public function getAllLocationsInRange($lat, $lng, $access_token)
+	{
+		$url = 'http://50.116.52.84/api/locations?latitude='.$lat.'&longitude='.$lng.'&access_token='.$access_token;
+		return $this->doGetRequest($url);
+	}
+	
+	/**
+	 * Salvar foto
+	 */
+	public function createPhoto($loc_id, $access_token, $im_path)
+	{
+		$url = "http://50.116.52.84/api/locations/".$loc_id."/photos";
+		
+		$im = file_get_contents($im_path);
+		$imdata = base64_encode($im); 
+		
+		$fields = array(
+			'access_token' => $access_token,
+			'photo' => array(
+				'file' => array(
+					'content' => $imdata
+				)
+			)
+		);
+
+		$fields_string = http_build_query($fields);
+		return $this->doPostRequest($url, $fields_string);
+	}
+	
+	/**
+	 * Obter fotos
+	 */
+	public function getPhotos($user_id, $access_token)
+	{
+		$url = "http://50.116.52.84/api/users/".$user_id."/photos".'?access_token='.$access_token;
+		
+		return $this->doGetRequest($url);
+	}
+	
+	/**
+	 * Obter Usuário baseado no token
+	 */
+	public function getUserByToken($access_token) 
+	{
+		$url = "http://50.116.52.84/api/users/me?access_token=".$access_token;
+		
+		return $this->doGetRequest($url);
+	}
+	
+	/**
+	 * Remover localizacao
+	 */
+	public function removeLocation($loc_id, $access_token)
+	{
+		$url = "http://50.116.52.84/api/locations/".$loc_id;
+		
+		$fields = array(
+			'access_token' => $access_token
+		);
+		$fields_string = http_build_query($fields);
+		
+		return $this->doDeleteRequest($url, $fields_string);
+	}
+}
+
+
+$obj = new Location();
+?>

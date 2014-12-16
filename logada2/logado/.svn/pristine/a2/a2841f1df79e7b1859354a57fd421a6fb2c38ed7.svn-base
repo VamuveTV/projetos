@@ -1,0 +1,30 @@
+<?php
+
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'mysql.finxi.com.br',
+                    'port'     => '3306',
+                    'user'     => 'finxi08',
+                    'password' => 'q7w6b3',
+                    'dbname'   => 'finxi08',
+                )))));
+
+
+/*
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' =>'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'zarbsolution.com.br',
+                    'port'     => '3306',
+                    'user'     => 'zarbsolu_escola',
+                    'password' => 'admin123',
+                    'dbname'   => 'zarbsolu_escola',
+                )))));
+*/

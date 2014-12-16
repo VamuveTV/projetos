@@ -1,0 +1,261 @@
+<?php
+
+namespace Funcionarios\Entity;
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * @ORM\Table(name="funcionario")
+ * @ORM\Entity */
+class Funcionario {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string") */
+    protected $nome;
+
+    /** @ORM\Column(type="string") */
+    protected $escola;
+
+    /** @ORM\Column(type="string") */
+    protected $turmas;
+
+    /** @ORM\Column(type="string") */
+    protected $materia;
+
+    /** @ORM\Column(type="string") */
+    protected $funcao;
+
+    /** @ORM\Column(type="string") */
+    protected $login;
+
+    /** @ORM\Column(type="string") */
+    protected $senha;
+
+    /** @ORM\Column(type="string") */
+    protected $foto;
+
+    /** @ORM\Column(type="string") */
+	protected $token_acesso;
+
+    /** @ORM\Column(type="string") */
+	protected $token_refresh;
+
+    /** @ORM\Column(type="integer") */
+	protected $id_wikimapa;
+	
+    /** @ORM\Column(type="string") */
+	protected $senha_wikimapa;
+	
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $escola
+     */
+    public function setEscola($escola)
+    {
+        $this->escola = $escola;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEscola()
+    {
+        return $this->escola;
+    }
+
+    /**
+     * @param mixed $funcao
+     */
+    public function setFuncao($funcao)
+    {
+        $this->funcao = $funcao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFuncao()
+    {
+        return $this->funcao;
+    }
+
+    /**
+     * @param mixed $materia
+     */
+    public function setMateria($materia)
+    {
+        $this->materia = $materia;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMateria()
+    {
+        return $this->materia;
+    }
+
+    /**
+     * @param mixed $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @param mixed $turmas
+     */
+    public function setTurmas($turmas)
+    {
+        $this->turmas = $turmas;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTurmas()
+    {
+        return $this->turmas;
+    }
+
+    /**
+     * @param mixed $login
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param mixed $senha
+     */
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * @param mixed $foto
+     */
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
+     * @param mixed $token_acesso
+     */
+    public function setTokenAcesso($token_acesso)
+    {
+        $this->token_acesso = $token_acesso;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTokenAcesso()
+    {
+        return $this->token_acesso;
+    }
+
+    /**
+     * @param mixed $token_refresh
+     */
+    public function setTokenRefresh($token_refresh)
+    {
+        $this->token_refresh = $token_refresh;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTokenRefresh()
+    {
+        return $this->token_refresh;
+    }
+
+    /**
+     * @param mixed $id_wikimapa
+     */
+    public function setIdWikimapa($id_wikimapa)
+    {
+        $this->id_wikimapa = $id_wikimapa;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdWikimapa()
+    {
+        return $this->id_wikimapa;
+    }
+
+    /**
+     * @param mixed $senha_wikimapa
+     */
+    public function setSenhaWikimapa($senha_wikimapa)
+    {
+        $this->senha_wikimapa = $senha_wikimapa;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSenhaWikimapa()
+    {
+        return $this->senha_wikimapa;
+    }
+}
+
+

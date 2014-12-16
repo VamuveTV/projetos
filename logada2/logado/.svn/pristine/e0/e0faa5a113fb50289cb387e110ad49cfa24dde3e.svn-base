@@ -1,0 +1,45 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //definindo o tema
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+
+        if($.cookie('fonte')!=null){
+            $('div, p, span, td, th, li').children().each(function(i,element){
+                var fonte = $.cookie('fonte');
+                $(this).css('font-family',fonte);
+            })
+        }
+
+        $('#estilo').change(function(){
+            $.cookie('estilo', $(this).val());
+            document.location='';
+        })
+
+        $('#fonte').change(function(){
+            $.cookie('fonte', $(this).val());
+            document.location='';
+        })
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<?php
+
+$title = 'EXCLUIR ALUNO';
+$this->headTitle($title);
+?>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<h2><?php echo $this->escapeHtml($title); ?></h2>
+<br class="limpa"><br class="limpa">
+<br class="limpa"><br class="limpa">
+Tem certeza que quer deletar: <b><?php echo $aluno->getNome(); ?></b>? <br/>
+<br><form method="post">
+    <input type="submit" value="Excluir" class="btn btn-admin">
+</form>

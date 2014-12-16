@@ -1,0 +1,115 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //definindo o tema
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+
+        if($.cookie('fonte')!=null){
+            $('div, p, span, td, th, li').children().each(function(i,element){
+                var fonte = $.cookie('fonte');
+                $(this).css('font-family',fonte);
+            })
+        }
+
+        $('#estilo').change(function(){
+            $.cookie('estilo', $(this).val());
+            document.location='';
+        })
+
+        $('#fonte').change(function(){
+            $.cookie('fonte', $(this).val());
+            document.location='';
+        })
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<style>
+    th, td{
+        padding: 5px;
+    }
+</style>
+<div>
+    <h2>HISTÓRICO ESCOLAR</h2>
+    <table border='1' class="table">
+    <?php
+    foreach($notas AS $nota){
+        if(!$ano_old || $ano_old != $nota->getAno()){ //verificando se e necessario fazer o cabecalho da tabela
+            echo "<tr><th colspan='7'>Ano letivo: ".$nota->getAno()."</th></tr>";
+            if($tipo_nota == 'B'){ //bimestre
+                echo '<tr>
+                    <th></th>
+                    <th>1º Bimestre</th>
+                    <th>2º Bimestre</th>
+                    <th>3º Bimestre</th>
+                    <th>4º Bimestre</th>
+                    <th>Nota Final</th>
+                    <th>Média</th>
+                </tr>';
+            }else if($tipo_nota == 'T'){ //trimestre
+                echo '<tr>
+                <th></th>
+                <th>1º Trimestre</th>
+                <th>2º Trimestre</th>
+                <th>3º Trimestre</th>
+                <th>Nota Final</th>
+                <th>Média</th>
+            </tr>';
+            }else{ //semestre
+                echo '<tr>
+                        <th></th>
+                        <th>1º Semestre</th>
+                        <th>2º Semestre</th>
+                        <th>Nota Final</th>
+                        <th>Média</th>
+                    </tr>';
+            }
+        }//fim do cabecalho da tabela quando necessario
+
+        $ano_old = $nota->getAno();
+
+        //NOTAS
+        if($tipo_nota == 'B'){ //bimestre
+            $nota_final = $nota->getNota1() + $nota->getNota2() + $nota->getNota3() + $nota->getNota4();
+            $media = $nota_final / 4;
+            echo '<tr>
+                    <td align="center">'.$nomes_materias[$nota->getMateria()].'</td>
+                    <td align="center">'.$nota->getNota1().'</td>
+                    <td align="center">'.$nota->getNota2().'</td>
+                    <td align="center">'.$nota->getNota3().'</td>
+                    <td align="center">'.$nota->getNota4().'</td>
+                    <td align="center">'.$nota_final.'</td>
+                    <td align="center">'.$media.'</td>
+                </tr>';
+        }else if($tipo_nota == 'T'){ //trimestre
+            $nota_final = $nota->getNota1() + $nota->getNota2() + $nota->getNota3();
+            $media = $nota_final / 3;
+            echo '<tr>
+                <td align="center">'.$nomes_materias[$nota->getMateria()].'</td>
+                <td align="center">'.$nota->getNota1().'</td>
+                <td align="center">'.$nota->getNota2().'</td>
+                <td align="center">'.$nota->getNota3().'</td>
+                <td align="center">'.$nota_final.'</td>
+                <td align="center">'.$media.'</td>
+            </tr>';
+        }else{ //semestre
+            $nota_final = $nota->getNota1() + $nota->getNota2();
+            $media = $nota_final / 2;
+            echo '<tr>
+                <td align="center">'.$nomes_materias[$nota->getMateria()].'</td>
+                <td align="center">'.$nota->getNota1().'</td>
+                <td align="center">'.$nota->getNota2().'</td>
+                <td align="center">'.$nota_final.'</td>
+                <td align="center">'.$media.'</td>
+            </tr>';
+        }
+    }
+    ?>
+    </table>
+</div>

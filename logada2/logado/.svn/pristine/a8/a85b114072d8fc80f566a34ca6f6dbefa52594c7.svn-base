@@ -1,0 +1,98 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="preferidof")
+ * @ORM\Entity */
+class Preferidof {
+    /**
+
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $funcionario;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $aluno;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $data;
+
+    /**
+     * @param mixed $aluno
+     */
+    public function setAluno($aluno)
+    {
+        $this->aluno = $aluno;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAluno()
+    {
+        return $this->aluno;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $funcionario
+     */
+    public function setFuncionario($funcionario)
+    {
+        $this->funcionario = $funcionario;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFuncionario()
+    {
+        return $this->funcionario;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+}

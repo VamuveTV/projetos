@@ -1,0 +1,42 @@
+//TAMANHO DA FONTE
+
+var tagAlvo = new Array('p','h2', 'div', 'ul', 'li', 'a');
+ 
+var tamanhos = new Array( '9px','10px','11px','12px','13px','14px' );
+var tamanhoInicial = 4;
+ 
+function mudaTamanho( idAlvo,acao ){
+if (!document.getElementById) return
+var selecionados = null,tamanho = tamanhoInicial,i,j,tagsAlvo;
+tamanho += acao;
+if ( tamanho < 0 ) tamanho = 0;
+if ( tamanho > 6 ) tamanho = 6;
+tamanhoInicial = tamanho;
+if ( !( selecionados = document.getElementById( idAlvo ) ) ) selecionados = document.getElementsByTagName( idAlvo )[ 0 ];
+ 
+selecionados.style.fontSize = tamanhos[ tamanho ];
+ 
+for ( i = 0; i < tagAlvo.length; i++ ){
+tagsAlvo = selecionados.getElementsByTagName( tagAlvo[ i ] );
+for ( j = 0; j < tagsAlvo.length; j++ ) tagsAlvo[ j ].style.fontSize = tamanhos[ tamanho ];
+}
+}
+
+//FIM TAMANHO DA FONTE
+
+//EXIBIR E OCULTAR DIV
+function exibe(id) {
+	if(document.getElementById(id).style.display=="none") {
+		document.getElementById(id).style.display = "inline";
+		document.getElementById('btSaibaMaisSentindo').style.display = "none";
+		document.getElementById('btOcultarFace').style.display = "inline";
+		
+	}
+	else {
+		document.getElementById(id).style.display = "none";
+		document.getElementById('btSaibaMaisSentindo').style.display = "inline";
+		document.getElementById('btOcultarFace').style.display = "none";
+		
+	}
+	
+}

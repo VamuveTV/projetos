@@ -1,0 +1,43 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h3>Atividades</h3>
+            </div>
+            <div>
+                <a href="<?php echo $this->url('atividades', array('action'=>'add'));?>"class="btn btn-success">Adicionar Atividade</a>
+                <a href="<?php echo $this->url('atividades', array('action'=>'calendario'));?>"class="btn btn-primary">Calendário</a><br>
+                <?php
+                if (isset($atividades)) : ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Local</th>
+                            <th>Horário</th>
+                            <th>Descrição</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <?php foreach($atividades as $atividade): ?>
+                            <tbody>
+                            <tr>
+                                <td><?php echo $atividade->getId(); ?></td>
+                                <td><?php echo $atividade->getNome(); ?></td>
+                                <td><?php echo $atividade->getLocal(); ?></td>
+                                <td><?php echo $atividade->getHoraInicio(); ?></td>
+                                <td><?php echo $atividade->getDescricao(); ?></td>
+                                <td>
+                                    <a href="<?php echo $this->url('atividades', array('action'=>'edit', 'id' => $atividade->getId()));?>" class="btn btn-warning">Editar</a>
+                                    <a href="<?php echo $this->url('atividades', array('action'=>'delete', 'id' => $atividade->getId()));?>" class="btn btn-danger">Excluir</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/jquery.raty.js"></script>
+<script type="text/javascript" src="/public/js/labs.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    <?php
+    $escola_id = $escola->getId();
+    $id = '#'.$escola_id;
+    echo "$('$id').raty({
+            score: $nota,
+            path: '/images',
+            readOnly: 1
+        });";
+    ?>
+
+    function enviaNota(escola, nota)
+    {
+        $.ajax({
+            type: "POST",
+            data: {'avaliador':<?php echo $logado->getId();?>,'escola': escola,'nota':nota},
+            url: '/opine/enviaNotaE',
+            success: function(dados) {
+                return true;
+            }
+        });
+    }
+})
+</script>
+<div>
+    <h3>OPINAR</h3>
+    <p style="width: 100px;float: left;">Dê sua opnião</p>
+    <div style="width: 600px; float: right" id="icones_opine">
+        <p><a href="/opine/alunos"><img src="/public/img/ico_alunos.png"> Alunos</a></p>
+        <p><a href="/opine/escolas"><img src="/public/img/ico_escola.png"> Escola</a></p>
+        <p><a href="/opine/funcionarios"><img src="/public/img/ico_funcionarios.png"> Funcionários</a></p>
+
+    </div>
+    <div class="limpa"></div>
+    <hr>
+    <?php
+    if(isset($escola)):
+        echo "<div class=\"usuario_mini\">
+                    <a href='/opine/avaliae/$escola_id'><img src=\"/public/img/ico_escola2.png\" class=\"foto_mini\">
+                    <br class='limpa'>
+                    <p><b>".$escola->getNome()."</b></p></a>
+
+                    <div class='star' id='".$escola->getId()."'></div>
+                </div>";
+    endif;
+    ?>
+
+
+</div>

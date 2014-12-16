@@ -1,0 +1,67 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Logado '. $this->translate('Home'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))                        
+            ->prependStylesheet($this->basePath() . '/css/style.css')
+            //->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+            ->prependStylesheet($this->basePath() . '/css/bootstrap.css')
+        ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js') 
+        ?>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Logado</a>
+          </div>
+        
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="<?php echo $this->url('feed') ?>">Início</a></li>
+              <li><a href="<?php echo $this->url('user') ?>">Alunos</a></li>
+              <li><a href="<?php echo $this->url('home') ?>">Denúncias</a></li>
+              <li><a href="<?php echo $this->url('home') ?>">Funcionários</a></li>
+              <li><a href="<?php echo $this->url('school-class') ?>">Turmas</a></li>
+              <li><a href="<?php echo $this->url('profile') ?>">Escolas</a></li>
+              <li><a href="<?php echo $this->url('activity') ?>">Atividades</a></li>
+              <li><a href="<?php echo $this->url('opinion') ?>">Opiniões</a></li>
+              <li><a href="<?php echo $this->url('home') ?>">Avisos</a></li>
+              <li><a href="<?php echo $this->url('home') ?>">Estatísticas</a></li>
+              <li><a href="<?php echo $this->url('home') ?>">OPECs</a></li>
+            </ul>
+             <ul class="nav navbar-nav navbar-right">
+                <li><a href="<?php echo $this->url('login') ?>">Sair</a></li>
+             </ul>
+          </div><!-- /.navbar-collapse -->
+        </nav>
+            
+        <div class="container">
+            <?php echo $this->content; ?>
+            <hr>
+            <!--<footer>
+                <p>Finxi S/A. <?php //echo $this->translate('All rights reserved.') ?></p>
+            </footer>-->
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

@@ -1,0 +1,94 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Internet\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+
+use Internet\Entity\Acesso;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+
+        return new ViewModel();
+    }
+
+    public function internetAlunosAction(){
+
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+
+        if ($this->request->isPost()) {
+            $parametros = '';
+            if($this->getRequest()->getPost('busca_escola')!='')
+                $parametros.= " AND a.escola=".$this->getRequest()->getPost('busca_escola');
+            if($this->getRequest()->getPost('busca_serie')!='')
+                $parametros.= " AND a.serie=".$this->getRequest()->getPost('busca_serie');
+            if($this->getRequest()->getPost('busca_nome')!='Nome')
+                $parametros.= " AND a.nome LIKE '%".$this->getRequest()->getPost('busca_nome')."%'";
+
+            $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Alunos\Entity\Aluno a WHERE a.id > 0 '.$parametros);
+            $alunos = $query->getResult();
+
+            return new ViewModel(array('alunos'=>$alunos,'escolas'=>$escolas));
+        }
+
+        return new ViewModel(array('escolas'=>$escolas));
+
+    }
+
+    public function internetAlunoAction()
+    {
+        $id_aluno = $this->params()->fromRoute('id', 0);
+
+        $acesso = $this->getObjectManager()->getRepository('\Internet\Entity\Acesso')->findBy(array('usuario'=>$id_aluno,'tipo_usuario'=>'A'));
+
+        return new ViewModel(array('acesso'=>$acesso));
+    }
+
+    public function internetFuncionariosAction(){
+
+        $funcionarios = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findAll();
+
+        if ($this->request->isPost()) {
+            $parametros = array();
+            if($this->getRequest()->getPost('busca_funcao')!='')
+                $parametros['funcao']=$this->getRequest()->getPost('busca_funcao');
+
+            $funcionarios = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findBy($parametros);
+        }
+
+        return new ViewModel(array('funcionarios'=>$funcionarios));
+
+    }
+
+    public function internetFuncionarioAction()
+    {
+        $id_func = $this->params()->fromRoute('id', 0);
+
+        $acesso = $this->getObjectManager()->getRepository('\Internet\Entity\Acesso')->findBy(array('usuario'=>$id_func,'tipo_usuario'=>'F'));
+
+        return new ViewModel(array('acesso'=>$acesso));
+    }
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+
+
+}

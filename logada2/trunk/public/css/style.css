@@ -1,0 +1,19 @@
+body { padding-top: 70px; }
+
+.friendsContainer {
+	width: 50px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#btnBomb {
+	width: 20px;
+	height: 20px;
+    background-image: url('../img/bomb1.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    text-indent: -1000px;
+    padding: 0;
+    outline: none;
+}

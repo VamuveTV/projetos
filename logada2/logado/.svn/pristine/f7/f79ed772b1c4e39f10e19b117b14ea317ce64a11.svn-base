@@ -1,0 +1,1411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a923652d-af6f-4c6b-b24b-44273fc84f2f" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ar_JO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ar_JO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ar_JO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ar_JO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ar_JO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ar_SY.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ar_SY.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ar_SY.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ar_SY.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ar_SY.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/imagens/bg-topo-escuro.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/cs_CZ.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/cs_CZ.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/cs_CZ.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/cs_CZ.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/cs_CZ.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/de_DE.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/de_DE.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/de_DE.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/de_DE.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/de_DE.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/en_US.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/en_US.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/en_US.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/en_US.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/en_US.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/es_ES.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/es_ES.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/es_ES.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/es_ES.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/es_ES.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/fr_CA.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/fr_CA.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/fr_CA.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/fr_CA.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/fr_CA.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/fr_FR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/fr_FR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/fr_FR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/fr_FR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/fr_FR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/it_IT.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/it_IT.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/it_IT.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/it_IT.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/it_IT.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ja_JP.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ja_JP.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ja_JP.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ja_JP.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ja_JP.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/imagens/logo-logada-branco.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/nb_NO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/nb_NO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/nb_NO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/nb_NO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/nb_NO.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/nl_NL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/nl_NL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/nl_NL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/nl_NL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/nl_NL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/pl_PL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/pl_PL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/pl_PL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/pl_PL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/pl_PL.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/pt_BR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/pt_BR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/pt_BR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/pt_BR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/pt_BR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ru_RU.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ru_RU.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ru_RU.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ru_RU.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ru_RU.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/sl_SI.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/sl_SI.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/sl_SI.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/sl_SI.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/sl_SI.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/tr_TR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/tr_TR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/tr_TR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/tr_TR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/tr_TR.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/zh_CN.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/zh_CN.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/zh_CN.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/zh_CN.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/zh_CN.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/zh_TW.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/zh_TW.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/zh_TW.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/zh_TW.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/zh_TW.mo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/error/404.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/error/404.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/view/error/404.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/view/error/404.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/view/error/404.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Acesso.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/src/Alunos/Auth/Adapter.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Application/src/Application/Auth/Adapter.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Application/src/Application/Entity/Admin.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Application/src/Application/Entity/AdminRepository.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/src/Alunos/Entity/Aluno.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/src/Alunos/Entity/AlunoRepository.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Amigoa.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Aperto.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/src/Atividades/Entity/Atividade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Coracao.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/src/Funcionarios/Entity/Funcionario.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Controller/IndexController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/src/Alunos/Controller/IndexController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/src/Atividades/Controller/IndexController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/src/Funcionarios/Controller/IndexController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/src/Turmas/Controller/IndexController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Materia.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/Module.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/Module.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/Module.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/Module.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/Module.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/src/Alunos/Entity/Nota.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Notificacao.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Opinea.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Opinee.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Opinef.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Post.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Preferido.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/src/Turmas/Entity/Turma.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/layout/acesso.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/add-atividade.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/add.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Application/view/application/index/add.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/view/atividades/index/add.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/view/funcionarios/index/add.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/view/turmas/index/add.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/layout/alunos.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/amigos.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ar_JO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ar_JO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ar_JO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ar_JO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ar_JO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ar_SY.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ar_SY.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ar_SY.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ar_SY.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ar_SY.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/atividades.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/avalia-alunos.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/avalia-escolas.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/avalia-funcionarios.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/busca-campos.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/cadastro.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/calendario.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/cs_CZ.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/cs_CZ.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/cs_CZ.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/cs_CZ.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/cs_CZ.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/de_DE.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/de_DE.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/de_DE.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/de_DE.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/de_DE.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/delete.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Application/view/application/index/delete.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/view/atividades/index/delete.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/view/funcionarios/index/delete.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/view/turmas/index/delete.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/edit-atividade.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/edit-perfil.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/edit.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Application/view/application/index/edit.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/view/atividades/index/edit.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/view/funcionarios/index/edit.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/view/turmas/index/edit.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/en_US.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/en_US.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/en_US.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/en_US.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/en_US.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/es_ES.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/es_ES.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/es_ES.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/es_ES.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/es_ES.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/esqueci.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/estilo_interno.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/estilo_internoCalendario.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/estilo_internoCalendarioE.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/estilo_internoE.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/estiloalunoEscuro.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/estiloalunosE.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/foto.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/fr_CA.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/fr_CA.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/fr_CA.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/fr_CA.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/fr_CA.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/fr_FR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/fr_FR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/fr_FR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/fr_FR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/fr_FR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/error/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/error/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/view/atividades/index/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/view/error/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/view/error/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/view/funcionarios/index/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/view/error/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/view/turmas/index/index.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/internet.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/it_IT.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/it_IT.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/it_IT.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/it_IT.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/it_IT.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ja_JP.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ja_JP.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ja_JP.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ja_JP.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ja_JP.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/jquery.cookie.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/lanca-notas.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/view/layout/layout.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/view/layout/layout.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/login.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/menu_admin.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/config/module.config.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/config/module.config.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/config/module.config.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/config/module.config.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/config/module.config.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/nb_NO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/nb_NO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/nb_NO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/nb_NO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/nb_NO.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/nl_NL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/nl_NL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/nl_NL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/nl_NL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/nl_NL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/notificacao.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/opine-alunos.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/opine-escolas.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/opine-funcionarios.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/opine.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/phpinfo.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/pl_PL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/pl_PL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/pl_PL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/pl_PL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/pl_PL.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/pt_BR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/pt_BR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/pt_BR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/pt_BR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/pt_BR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/ru_RU.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/ru_RU.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/ru_RU.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/ru_RU.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/ru_RU.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/sentindo.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/view/acesso/index/sentindo2.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/sl_SI.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/sl_SI.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/sl_SI.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/sl_SI.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/sl_SI.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/tamanhoTextos.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/view/alunos/index/termo.phtml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/tr_TR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/tr_TR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/tr_TR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/tr_TR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/tr_TR.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/zh_CN.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/zh_CN.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/zh_CN.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/zh_CN.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/zh_CN.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Acesso/language/zh_TW.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Alunos/language/zh_TW.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Atividades/language/zh_TW.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Funcionarios/language/zh_TW.po" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/module/Turmas/language/zh_TW.po" />
+      <change type="DELETED" beforePath="C:\www\logada\module\Application\view\layout\layout.phtml" afterPath="" />
+      <change type="MOVED" beforePath="C:\www\logada\public\.htaccess" afterPath="$PROJECT_DIR$/public/old_.htaccess" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.phar" afterPath="$PROJECT_DIR$/composer.phar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/src/Application/Controller/IndexController.php" afterPath="$PROJECT_DIR$/module/Application/src/Application/Controller/IndexController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/application.config.php" afterPath="$PROJECT_DIR$/config/application.config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/view/application/index/index.phtml" afterPath="$PROJECT_DIR$/module/Application/view/application/index/index.phtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module/Application/config/module.config.php" afterPath="$PROJECT_DIR$/module/Application/config/module.config.php" />
+    </list>
+    <ignored path="logada.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="logada" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="IndexController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/module/Alunos/src/Alunos/Controller/IndexController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="0" selection-start="1696" selection-end="1696" vertical-scroll-proportion="0.6240458" vertical-offset="506" max-vertical-offset="5066">
+              <folding>
+                <element signature="e#37#86#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Materia.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Materia.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="0" selection-start="484" selection-end="484" vertical-scroll-proportion="-20.26923" vertical-offset="0" max-vertical-offset="1343">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Aluno.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Alunos/src/Alunos/Entity/Aluno.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="3.9230769" vertical-offset="102" max-vertical-offset="17391">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.phtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Alunos/view/alunos/index/index.phtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="58" selection-start="2042" selection-end="2042" vertical-scroll-proportion="-14.384615" vertical-offset="255" max-vertical-offset="901">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Acesso/src/Acesso/Controller/IndexController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="674" column="12" selection-start="27941" selection-end="28125" vertical-scroll-proportion="-7.3461537" vertical-offset="11267" max-vertical-offset="16626">
+              <folding>
+                <element signature="e#6#328#0" expanded="true" />
+                <element signature="e#360#409#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="module.config.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Alunos/config/module.config.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="14" selection-start="1639" selection-end="1639" vertical-scroll-proportion="15.807693" vertical-offset="1193" max-vertical-offset="2720">
+              <folding>
+                <element signature="e#6#328#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="module.config.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Acesso/config/module.config.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="49" selection-start="215" selection-end="215" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="7021">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lanca-notas.phtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Alunos/view/alunos/index/lanca-notas.phtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="85" selection-start="402" selection-end="402" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="816">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="busca-campos.phtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Alunos/view/alunos/index/busca-campos.phtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="43" selection-start="770" selection-end="770" vertical-scroll-proportion="-11.115385" vertical-offset="0" max-vertical-offset="425">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="perfil.phtml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/module/Acesso/view/acesso/index/perfil.phtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="64" column="0" selection-start="2107" selection-end="2482" vertical-scroll-proportion="-2.6153846" vertical-offset="1020" max-vertical-offset="2652">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/module/Escolas/view/escolas/index/edit.phtml" />
+        <option value="$PROJECT_DIR$/module/Escolas/src/Escolas/Controller/IndexController.php" />
+        <option value="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Coracao.php" />
+        <option value="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Aperto.php" />
+        <option value="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Preferido.php" />
+        <option value="$PROJECT_DIR$/module/Acesso/view/acesso/index/perfil.phtml" />
+        <option value="$PROJECT_DIR$/module/Acesso/view/acesso/index/amigos.phtml" />
+        <option value="$PROJECT_DIR$/module/Acesso/view/acesso/index/lanca-notas.phtml" />
+        <option value="$PROJECT_DIR$/module/Acesso/src/Acesso/Controller/IndexController.php" />
+        <option value="$PROJECT_DIR$/module/Alunos/config/module.config.php" />
+        <option value="$PROJECT_DIR$/module/Alunos/view/alunos/index/index.phtml" />
+        <option value="$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Materia.php" />
+        <option value="$PROJECT_DIR$/module/Alunos/src/Alunos/Entity/Nota.php" />
+        <option value="$PROJECT_DIR$/module/Alunos/view/alunos/index/busca-campos.phtml" />
+        <option value="$PROJECT_DIR$/module/Alunos/view/alunos/index/lanca-notas.phtml" />
+        <option value="$PROJECT_DIR$/module/Alunos/src/Alunos/Controller/IndexController.php" />
+      </list>
+    </option>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stdlib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zendframework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Stdlib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hydrator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Escolas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Escolas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Escolas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Escolas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Escolas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Application" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="index" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Alunos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="index" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Acesso" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="editor.preferences.appearance" />
+    <property name="FullScreen" value="false" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\www\logada\module\Alunos\view\alunos\index" />
+      <recent name="C:\www\logada\module\Alunos\src\Alunos\Entity" />
+      <recent name="C:\www\logada\module\Acesso\src\Acesso\Entity" />
+      <recent name="C:\www\logada\module\Application\src\Application\Entity" />
+      <recent name="C:\www\logada\module\Application\src\Application" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\www\logada\module\Alunos\view\alunos\index" />
+      <recent name="C:\www\logada\public" />
+      <recent name="alunos" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <list size="0" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a923652d-af6f-4c6b-b24b-44273fc84f2f" name="Default" comment="" />
+      <created>1386681970763</created>
+      <updated>1386681970763</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295082" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1852123" sideWeight="0.6704918" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295082" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22620791" sideWeight="0.6704918" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Preferido.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="15" selection-start="100" selection-end="100" vertical-scroll-proportion="-1.4623656" vertical-offset="918" max-vertical-offset="1700">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Acesso/view/acesso/index/amigos.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="64" selection-start="845" selection-end="845" vertical-scroll-proportion="-11.153846" vertical-offset="67" max-vertical-offset="1802">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/view/alunos/index/add.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="114" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1377">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Acesso/config/module.config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="49" selection-start="215" selection-end="215" vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="7021">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Application/config/module.config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="18" selection-start="1282" selection-end="1287" vertical-scroll-proportion="-0.96153843" vertical-offset="502" max-vertical-offset="1734">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Escolas/src/Escolas/Entity/Escola.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="20" selection-start="2232" selection-end="2245" vertical-scroll-proportion="0.6201117" vertical-offset="2030" max-vertical-offset="2567">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/view/alunos/index/index.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="58" selection-start="2042" selection-end="2042" vertical-scroll-proportion="-14.384615" vertical-offset="255" max-vertical-offset="901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/src/Alunos/Entity/Aluno.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="3.9230769" vertical-offset="102" max-vertical-offset="17391">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Acesso/src/Acesso/Entity/Materia.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="484" selection-end="484" vertical-scroll-proportion="-20.26923" vertical-offset="0" max-vertical-offset="1343">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/src/Alunos/Entity/Nota.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3043">
+          <folding>
+            <element signature="e#32#64#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/config/module.config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="14" selection-start="1639" selection-end="1639" vertical-scroll-proportion="15.807693" vertical-offset="1193" max-vertical-offset="2720">
+          <folding>
+            <element signature="e#6#328#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Acesso/view/acesso/index/perfil.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="0" selection-start="2107" selection-end="2482" vertical-scroll-proportion="-2.6153846" vertical-offset="1020" max-vertical-offset="2652">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/view/alunos/index/busca-campos.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="43" selection-start="770" selection-end="770" vertical-scroll-proportion="-11.115385" vertical-offset="0" max-vertical-offset="425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Acesso/src/Acesso/Controller/IndexController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="674" column="12" selection-start="27941" selection-end="28125" vertical-scroll-proportion="-7.3461537" vertical-offset="11267" max-vertical-offset="16626">
+          <folding>
+            <element signature="e#6#328#0" expanded="true" />
+            <element signature="e#360#409#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/view/alunos/index/lanca-notas.phtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="85" selection-start="402" selection-end="402" vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="816">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/module/Alunos/src/Alunos/Controller/IndexController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="1696" selection-end="1696" vertical-scroll-proportion="0.6240458" vertical-offset="506" max-vertical-offset="5066">
+          <folding>
+            <element signature="e#37#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
+

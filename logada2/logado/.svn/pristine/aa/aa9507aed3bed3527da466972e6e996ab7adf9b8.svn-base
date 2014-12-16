@@ -1,0 +1,68 @@
+<?php
+$title = 'Autenticação';
+$this->headTitle($title);
+?>
+<link rel="stylesheet" type="text/css" href="/public/css/estiloalunos.css" media="all" />
+    <div id="geralLogin">
+    <div id="login">
+        <form method="post">
+            <div class="titLogin"style="text-align: center;width: 600px;">
+                <img src="/public/img/logo--logada-login.png" width="189" height="237" border="0" style="margin-top:11px; margin-bottom:10px;" /><br />
+                <button type="button" class="btn btn-success" onclick="document.location='/login'">Voltar</button>
+                <p>Esqueceu a senha?</p>
+                <p style="font-weight: normal; color: #666">Digite seu e-mail que enviaremos uma nova!</p>
+                <span style="font-weight: normal; color: #666">E-mail:</span><br />
+                <input class="camposLogin" name="email" id="email" placeholder="Seu e-mail" /><br />
+                <input type="submit" value="Enviar">
+                <?php
+                if(isset($resultado)){
+                    if($resultado)
+                        echo "<p>Senha enviada para seu e-mail</p>";
+                    else
+                        echo "<p>Usu&aacute;rio n&atilde;o encontrado</p>";
+                }
+
+                ?>
+            </div>
+        </form>
+    </div>
+</div>
+<?php
+die();
+$title = 'Autenticação';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+
+    <div class="control-group">
+        <label class="control-label" for="matricula">Matrícula</label>
+        <div class="controls">
+            <input type="text" id="matricula" name="matricula">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="senha">Senha</label>
+        <div class="controls">
+            <input type="password" id="senha" name="senha">
+        </div>
+    </div>
+
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='/alunos'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>
+<?php
+if(isset($error)){
+    if($error == true)
+        echo "<h4>Falha na autenticação</h4>";
+    else
+        echo "<h4>Ok</h4>";
+}
+?>

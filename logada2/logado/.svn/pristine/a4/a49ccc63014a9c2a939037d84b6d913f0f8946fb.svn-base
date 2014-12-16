@@ -1,0 +1,2917 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Application\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Application\Entity\Admin;
+use Zend\Authentication\AuthenticationService,
+    Zend\Authentication\Storage\Session as SessionStorage;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $admins = $this->getObjectManager()->getRepository('\Application\Entity\Admin')->findAll();
+
+        return new ViewModel(array('admins' => $admins));
+    }
+
+    public function loginAction()
+    {
+        $error = null;
+        $request = $this->getRequest();
+
+        if($request->isPost())
+        {
+            $data = $request->getPost()->toArray();
+
+            // Criando Storage para gravar sessão da authtenticação
+            $sessionStorage = new SessionStorage("Admin");
+
+            $admin = $this->getObjectManager()->getRepository('\Application\Entity\Admin')->findBy(array('login'=>$data['login'],'senha'=>$data['senha']));
+            if($admin){
+                $admin = $admin[0];
+                $sessionStorage->write($admin,null);
+                $error = false;
+                return $this->redirect()->toRoute('home_admin');
+            }
+            else
+                $error = true;
+
+        }
+
+        return new ViewModel(array('error'=>$error));
+    }
+
+    public function logoutAction(){
+        $auth = new AuthenticationService();
+        $auth->setStorage(new SessionStorage('Admin'));
+        $auth->clearIdentity();
+
+        return $this->redirect()->toRoute('login_alunos');
+    }
+
+    public function addAction()
+    {
+        if ($this->request->isPost()) {
+            $admin = new Admin();
+            $admin->setNome($this->getRequest()->getPost('nome'));
+            $admin->setLogin($this->getRequest()->getPost('login'));
+            $admin->setSenha($this->getRequest()->getPost('senha'));
+
+            $this->getObjectManager()->persist($admin);
+            $this->getObjectManager()->flush();
+            $newId = $admin->getId();
+
+            return $this->redirect()->toRoute('admin');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/admin/';</script>";
+        }
+        return new ViewModel();
+    }
+
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $admin = $this->getObjectManager()->find('\Application\Entity\Admin', $id);
+
+        if ($this->request->isPost()) {
+            $admin->setNome($this->getRequest()->getPost('nome'));
+            $admin->setLogin($this->getRequest()->getPost('login'));
+            $admin->setSenha($this->getRequest()->getPost('senha'));
+
+            $this->getObjectManager()->persist($admin);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('admin');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/admin/';</script>";
+        }
+
+        return new ViewModel(array('admin' => $admin));
+    }
+
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $admin = $this->getObjectManager()->find('\Application\Entity\Admin', $id);
+
+        if ($this->request->isPost()) {
+            $this->getObjectManager()->remove($admin);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('admin');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/admin/';</script>";
+        }
+
+        return new ViewModel(array('admin' => $admin));
+    }
+
+	public function statisticsoptionsAction() {
+		
+		# capturando valores transmitidos desde a vIeW-MvC, parametrização.
+		
+		$id	= (int) $this->params('id', null);
+		
+		$tpView = (string) $this->params('tpView', null);
+		
+		# discernir qual bloco estatístico hás de ser processado ...
+		
+		switch ( $tpView ) {
+		
+			case 'individuais':
+			
+				# relacione os registros de alunos, segmentando por turma. Legendas: Nome, Inscrito em.
+				
+				$cmmd_students = 
+				
+					' SELECT '. 
+					' (a.id) AS id_aluno , '.
+					' (a.nome) AS nome_aluno , '.
+					' (a.matricula) AS matricula_aluno , '.
+					' (e.nome) AS nome_escola , '.
+					' (a.escola) AS id_escola , '.
+					' (a.turma) AS turma_aluno , '.
+					' (a.serie) AS serie_aluno , '.					
+					' (a.periodo) AS periodo_aluno '.
+					' FROM Alunos\Entity\Aluno a '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id=a.turma '.
+					" WHERE a.matricula <> '' ".
+					" OR a.nome <> '' ".
+					' ORDER BY a.escola, a.turma, a.periodo, a.serie';
+				
+				$cmmd_students = $this->getObjectManager()->createQuery($cmmd_students)->getResult();
+				
+				# remessar valores à ViEw-mVc.
+
+				return new ViewModel (
+					array (
+						'id' => $id,
+						'tpView' => $tpView,
+						'cmmd_students' => $cmmd_students
+					)
+				);
+			
+			break;
+			
+			case 'turmas':
+			
+				# apresente quais turmas estão ativas (contendo alunos).
+
+				$cmmd_schoolclass =
+					
+					' SELECT '.
+					' (e.id) AS id_escola, '.
+					' (e.nome) AS nm_escola, '.			
+					' (a.id) AS id_aluno, '.
+					' (a.serie) AS serie, '.
+					' (a.periodo) AS periodo, '.
+					' IDENTITY (a.turma) AS id_turmaEmAluno, '.
+					' COUNT(a) AS quantidade_alunos, '.
+					' (t.id) AS id_turma, '.
+					' (t.turma) AS nm_turma '.
+					' FROM Alunos\Entity\Aluno a '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id=a.turma '.
+					' GROUP BY e.id, t.id, a.serie, a.periodo '.
+					#' ORDER BY e.id, a.serie DESC ';
+					' ORDER BY a.escola, a.turma, a.serie, a.periodo';
+
+				$cmmd_schoolclass = $this->getObjectManager()->createQuery($cmmd_schoolclass)->getResult();
+
+				# remessar valores à ViEw-mVc.
+
+				return new ViewModel (
+					array (
+						'id' => $id,
+						'tpView' => $tpView,
+						'cmmd_schoolclass' => $cmmd_schoolclass
+					)
+				);
+			
+			break;
+			
+			case 'series':
+			
+			break;
+		
+		}
+
+	}
+
+	public function statisticsperstudentsAction() {
+
+		# capturando valores transmitidos desde a vIeW-MvC, parametrização.
+		
+		$id = (int) $this->params('id', null);
+		
+		$tpView = (string) $this->params('tpView', null);
+
+		$llaveX = (int) $this->params('llaveX', null);
+		
+		$llaveY = (int) $this->params('llaveY', null);
+		
+		$llaveZ = (int) $this->params('llaveZ', null);
+		
+		$llaveQ = $this->params('llaveQ', null);
+		
+		# discernir se conteúdo em base de dados, coluna "periodo" X tabela "aluno" ... é string ou inteiro?
+		
+		is_int($llaveQ)? $tpValueInRouter = '[0-9]+' : $tpValueInRouter = '[a-zA-Z][a-zA-Z0-9_-]*';
+		
+		switch ($tpView) {
+		
+			case "quantitativo" :
+			
+				# Quantidade de denúncias feitas por um usuário.
+
+				$cmmd_0 = 
+
+					' SELECT '.
+					' COUNT(d) '.
+					' FROM Acesso\Entity\Denuncia d '.
+					' JOIN Alunos\Entity\Aluno a ' .
+					' WITH a.id = d.destinatario '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id=a.turma '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					" WHERE d.tipo_remetente='A' ".
+					" AND a.id=".$llaveQ;
+
+				$cmmd_0 = $this->getObjectManager()->createQuery($cmmd_0)->getResult();
+				
+				( !empty ( $cmmd_0[0][1] ) ) ? "" : $cmmd_0[0][1]=0;
+								
+				# Quantidade de atividades registradas por um usuário - aluno.
+				
+				$cmmd_1 = 
+
+					' SELECT '.
+					' COUNT(at) '.
+					' FROM Atividades\Entity\Atividade at '.
+					' JOIN Alunos\Entity\Aluno a ' .
+					' WITH a.id = at.id_destino '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id=a.turma '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					" WHERE at.tipo_dono = 'A' ".
+					' AND a.id ='.$llaveQ;
+					
+				$cmmd_1 = $this->getObjectManager()->createQuery($cmmd_1)->getResult();			
+				
+				( !empty ( $cmmd_1[0][1] ) ) ? "" : $cmmd_1[0][1]=0;
+				
+				# Quantidade de atividades registradas para este usuário.
+				
+				$cmmd_2 = 
+
+					' SELECT '.
+					' COUNT(at) '.
+					' FROM 	Atividades\Entity\Atividade at '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = at.id_destino '.
+					' JOIN Turmas\Entity\Turma t  '.
+					' WITH t.id = a.turma  '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					" WHERE at.tipo_destino='A' ".
+					' AND a.id='.$llaveQ;
+					#' AND at.id_dono<>'.$llaveQ;
+
+				$cmmd_2 = $this->getObjectManager()->createQuery($cmmd_2)->getResult();
+				
+				( !empty ( $cmmd_2[0][1] ) ) ? "" : $cmmd_2[0][1]=0;
+				
+				# Exiba a quantidade de amigos (Aluno) que esse Aluno possui.
+				
+				$cmmd_3A = 
+
+					' SELECT '.
+					' COUNT(ama) '.
+					' FROM Acesso\Entity\Amigoa ama '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = ama.amigo1 '.
+					' JOIN Turmas\Entity\Turma t  '.
+					' WITH t.id = a.turma  '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					' WHERE a.id='.$llaveQ;
+					
+				$cmmd_3A = $this->getObjectManager()->createQuery($cmmd_3A)->getResult();	
+					
+				( !empty ( $cmmd_3A[0][1] ) ) ? "" : $cmmd_3A[0][1]=0;
+	
+				# Exiba a quantidade de amigos (Funcionário, Diretor ou Professor) que esse Aluno possui.
+				
+				$cmmd_3B = 
+
+					' SELECT '.
+					' COUNT(amf) '.
+					' FROM Acesso\Entity\Amigof amf '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = amf.aluno '.
+					' JOIN Turmas\Entity\Turma t  '.
+					' WITH t.id = a.turma  '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					' WHERE a.id='.$llaveQ;
+						
+				$cmmd_3B = $this->getObjectManager()->createQuery($cmmd_3B)->getResult();
+
+				( !empty ( $cmmd_3B[0][1] ) ) ? "" : $cmmd_3B[0][1]=0;
+				
+				# Informe a quantidade de smiles que esse Aluno postou.
+
+				$cmmd_4 = 
+
+					' SELECT '.
+					' COUNT(p) '.
+					' FROM Acesso\Entity\Post p '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = p.remetente_id '.
+					' JOIN Turmas\Entity\Turma t  '.
+					' WITH t.id = a.turma  '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					' WHERE a.id='.$llaveQ.
+					" AND p.tipo_remetente = 'A' ";
+				
+				$cmmd_4 = $this->getObjectManager()->createQuery($cmmd_4)->getResult();
+				
+				( !empty ( $cmmd_4[0][1] ) ) ? "" : $cmmd_4[0][1]=0;
+				
+				# Quantidade de postagens gerais após entrada na ferramenta por um usuário.
+
+				$cmmd_5 = 
+
+					' SELECT '.
+					' COUNT(p) '.
+					' FROM Acesso\Entity\Post p '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = p.remetente_id '.
+					' JOIN Turmas\Entity\Turma t  '.
+					' WITH t.id = a.turma  '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.
+					' WHERE a.id='.$llaveQ.
+					" AND p.tipo_remetente = 'A'";
+				
+				$cmmd_5 = $this->getObjectManager()->createQuery($cmmd_5)->getResult();
+
+				( !empty ( $cmmd_5[0][1] ) ) ? "" : $cmmd_5[0][1]=0;
+				
+				# Quantidade de posts feitos para um amigo específico por um usuário.
+				
+				$cmmd_6 = 
+
+					' SELECT '.
+					' COUNT(p) '.
+					' FROM Acesso\Entity\Post p '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = p.remetente_id '.
+					' JOIN Turmas\Entity\Turma t  '.
+					' WITH t.id = a.turma  '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id=a.escola '.		
+					' WHERE a.id='.$llaveQ.
+					" AND p.tipo_remetente = 'A' ".
+					' AND p.destinatario_id IN ( '.
+						' SELECT '.
+						' ama.amigo2 '.
+						' FROM Acesso\Entity\Amigoa ama '.
+						' JOIN Alunos\Entity\Aluno aX '.
+						' WITH aX.id = ama.amigo1 '.
+						' JOIN Escolas\Entity\Escola eX '.
+						' WITH eX.id = aX.escola '.
+						' JOIN Turmas\Entity\Turma tX '.
+						' WITH aX.turma = tX.id '.
+						' WHERE aX.id='.$llaveQ.
+					' )';
+						
+				$cmmd_6 = $this->getObjectManager()->createQuery($cmmd_6)->getResult();		
+
+				( !empty ( $cmmd_6[0][1] ) ) ? "" : $cmmd_6[0][1]=0;
+				
+				# Quantidade de posts recebidos por esse Aluno.
+
+				$cmmd_7 = 
+
+					' SELECT '.
+					' COUNT (p) '.
+					' FROM Acesso\Entity\Post p '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id=p.destinatario_id '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH a.turma = t.id '.
+					' WHERE a.id='.$llaveQ.
+					" AND p.tipo_destinatario='A'";
+				
+				$cmmd_7 = $this->getObjectManager()->createQuery($cmmd_7)->getResult();
+				
+				( !empty ( $cmmd_7[0][1] ) ) ? "" : $cmmd_7[0][1]=0;
+
+				# Quantidade de pessoas que postaram algo para esse Aluno.
+
+				$cmmd_8 = 
+
+					' SELECT '.
+					' (p.remetente_id) '.
+					' FROM Acesso\Entity\Post p '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id=p.destinatario_id '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH a.turma = t.id '.
+					' WHERE a.id='.$llaveQ.
+					" AND p.tipo_destinatario = 'A' ".
+					' GROUP BY p.remetente_id';
+			
+				$cmmd_8 = $this->getObjectManager()->createQuery($cmmd_8)->getResult();
+				
+				( !empty ( $cmmd_8[0][1] ) ) ? "" : $cmmd_8[0][1]=0;
+				
+				# Quantidade de apertos de mão enviados por esse Aluno.
+
+				$cmmd_9A = 
+
+					' SELECT '.
+					' COUNT(ap) '.
+					' FROM Acesso\Entity\Aperto ap '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = ap.remetente '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH a.turma = t.id '.
+					' WHERE a.id='.$llaveQ;
+
+				$cmmd_9A = $this->getObjectManager()->createQuery($cmmd_9A)->getResult();
+				
+				( !empty ( $cmmd_9A[0][1] ) ) ? "" : $cmmd_9A[0][1]=0;
+				
+				# Quantidade de corações enviados por esse Aluno.
+				
+				$cmmd_9B = 
+
+					' SELECT '.
+					' COUNT(co) '.
+					' FROM Acesso\Entity\Coracao co '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = co.remetente '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH a.turma = t.id '.	
+					' WHERE a.id='.$llaveQ;
+				
+				$cmmd_9B = $this->getObjectManager()->createQuery($cmmd_9B)->getResult();
+
+				( !empty ( $cmmd_9B[0][1] ) ) ? "" : $cmmd_9B[0][1]=0;
+
+				# Quantidade de apertos de mão foram enviados por esse Aluno a um amigo, segmente.
+
+				$cmmd_10 = 
+
+					' SELECT '.
+					' COUNT(ap) '.
+					' FROM Acesso\Entity\Aperto ap '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = ap.remetente '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH a.turma = t.id '.	
+					' WHERE a.id='.$llaveQ.
+					' AND ap.destinatario '.
+					' IN ( '.
+						' SELECT '.
+						' ama.amigo2 '.
+						' FROM Acesso\Entity\Amigoa ama '.
+						' JOIN Alunos\Entity\Aluno aX '.
+						' WITH aX.id = ama.amigo1 '.
+						' JOIN Escolas\Entity\Escola eX '.
+						' WITH eX.id = aX.escola '.
+						' JOIN Turmas\Entity\Turma tX '.
+						' WITH aX.turma = tX.id '.	
+						' WHERE aX.id='.$llaveQ.
+					' )';
+					
+				$cmmd_10 = $this->getObjectManager()->createQuery($cmmd_10)->getResult();	
+
+				( !empty ( $cmmd_10[0][1] ) ) ? "" : $cmmd_10[0][1]=0;
+
+				# Quantidade de corações foram enviados por esse Aluno a um amigo, segmente.
+
+				$cmmd_11 = 
+
+					' SELECT '.
+					' COUNT(co) '.
+					' FROM Acesso\Entity\Coracao co '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = co.remetente '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id = a.turma '.
+					' WHERE a.id='.$llaveQ.
+					' AND co.destinatario IN '.
+					' ( '.
+						' SELECT '.
+						' ama.amigo2 '.
+						' FROM Acesso\Entity\Amigoa ama '.
+						' JOIN Alunos\Entity\Aluno aX '.
+						' WITH aX.id = ama.amigo1 '.
+						' JOIN Escolas\Entity\Escola eX '.
+						' WITH eX.id = aX.escola '.
+						' JOIN Turmas\Entity\Turma tX '.
+						' WITH tX.id=aX.turma '.
+						' WHERE aX.id='.$llaveQ.
+					' )';
+
+				$cmmd_11 = $this->getObjectManager()->createQuery($cmmd_11)->getResult();	
+
+				( !empty ( $cmmd_11[0][1] ) ) ? "" : $cmmd_11[0][1]=0;
+
+				# Quantidade de vezes que esse Aluno tornou suas amizades como sendo "Favorita".
+					
+				$cmmd_12 = 
+
+					' SELECT '.
+					' COUNT(pr) '.
+					' FROM Acesso\Entity\Preferido pr '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = pr.remetente '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id=a.turma '.
+					' WHERE a.id='.$llaveQ;
+					
+				$cmmd_12 = $this->getObjectManager()->createQuery($cmmd_12)->getResult();	
+				
+				( !empty ( $cmmd_12[0][1] ) ) ? "" : $cmmd_12[0][1]=0;
+				
+				# Quantidade de vezes que Aluno avaliou outros Alunos.
+
+				$cmmd_13 = 
+
+					' SELECT '.
+					' COUNT(opa) '.
+					' FROM Acesso\Entity\Opinea opa '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = opa.avaliador '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id = a.turma '.
+					' WHERE a.id='.$llaveQ.
+					" AND opa.tipo_avaliador = 'A'";
+					
+				$cmmd_13 = $this->getObjectManager()->createQuery($cmmd_13)->getResult();
+				
+				( !empty ( $cmmd_13[0][1] ) ) ? "" : $cmmd_13[0][1]=0;
+
+				# Quantidade de vezes que Aluno avaliou o Funcionalismo.
+				
+				$cmmd_14 = 
+
+					' SELECT '.
+					' COUNT(opf) '.
+					' FROM Acesso\Entity\Opinef opf '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = opf.avaliador '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id = a.turma '.
+					' WHERE a.id='.$llaveQ.
+					" AND opf.tipo_avaliador = 'A'";
+					
+				$cmmd_14 = $this->getObjectManager()->createQuery($cmmd_14)->getResult();
+				
+				( !empty ( $cmmd_14[0][1] ) ) ? "" : $cmmd_14[0][1]=0;
+	
+				# Quantidade de vezes que Aluno avaliou Escolas.
+					
+				$cmmd_15 = 
+
+					' SELECT '.
+					' COUNT(ope) '.
+					' FROM Acesso\Entity\Opinee ope '.
+					' JOIN Alunos\Entity\Aluno a '.
+					' WITH a.id = ope.avaliador '.
+					' JOIN Escolas\Entity\Escola e '.
+					' WITH e.id = a.escola '.
+					' JOIN Turmas\Entity\Turma t '.
+					' WITH t.id=a.turma '.
+					' WHERE a.id='.$llaveQ.
+					" AND ope.tipo_avaliador = 'A'";
+					
+				$cmmd_15 = $this->getObjectManager()->createQuery($cmmd_15)->getResult();	
+				
+				( !empty ( $cmmd_15[0][1] ) ) ? "" : $cmmd_15[0][1]=0;
+	
+				# remessar valores à ViEw-mVc.
+
+				return new ViewModel (
+					array (
+						'id' => $id,
+						'tpView' => $tpView,
+						'llaveX' => $llaveX,
+						'llaveY' => $llaveY,
+						'llaveZ' => $llaveZ,
+						'llaveQ' => $llaveQ,
+						'amountOfReports' => $cmmd_0,
+						'amountOfActivitiesThatStudent' => $cmmd_1,
+						'amountOfActivitiesThatStudentByOther' => $cmmd_2,
+						'amountOfStudentFriends' => $cmmd_3A,
+						'amountOfFriendsOfficials' => $cmmd_3B,
+						'amountOfSmilesSent' => $cmmd_4,
+						'amountOfPostsSent' => $cmmd_5,
+						'amountOfPostsSentForFriends' => $cmmd_6,
+						'amountOfPostsReceived' => $cmmd_7,
+						'amountOfUsersSendPost' => $cmmd_8,
+						'amountOfHandshakeSentByThisStudent' => $cmmd_9A,
+						'amountOfHeartSentByThisStudent' => $cmmd_9B,
+						'amountOfHandshakeSentByFriend' => $cmmd_10,
+						'amountOfHeartSentByFriend' => $cmmd_11,
+						'amountOfFriendsAsFavorite' => $cmmd_12,				
+						'amountOfAvaliationsForStudents' => $cmmd_13,
+						'amountOfAvaliationsForOfficials' => $cmmd_14,
+						'amountOfAvaliationsForSchools' => $cmmd_15
+						)
+				);
+
+			break;
+			
+			case "qualitativo":
+				
+				# Exiba quais foram os dados cadastrais inseridos por esse Aluno.
+				
+				if ( $llaveX == 1 ) {
+				
+					$cmmd_16 = 
+
+						' SELECT '.
+						' (a.matricula) AS matricula , '.
+						' (a.nome) AS nome_completo , '.
+						' (a.email) AS email , '.
+						' (a.sexo) AS sexo '.
+						' FROM Alunos\Entity\Aluno a '.					
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id = a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' WHERE a.id='.$llaveQ;
+
+					$cmmd_16 = $this->getObjectManager()->createQuery($cmmd_16)->getResult();
+				
+				# Esclareça como Aluno avaliou outros Alunos.	
+				
+				} else if ( $llaveX == 2 ) {
+					
+					$cmmd_17A = 
+
+						' SELECT '.
+						' (a.nome) AS nome_aluno , '.
+						' (opa.avaliador) AS id_aluno , '.
+						' (opa.nota) AS nota_aluno , '.
+						' (opa.observacao) AS observacao_avaliacao , '.
+						' (opa.avaliado) AS id_avaliado , '.
+						' (aa.nome) AS nome_avaliado '.
+						' FROM Acesso\Entity\Opinea opa '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=opa.avaliador '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' JOIN Alunos\Entity\Aluno aa '.
+						' WITH aa.id=opa.avaliado '.
+						' WHERE a.id='.$llaveQ.
+						" AND opa.tipo_avaliador = 'A' ".
+						' GROUP BY opa.avaliado';
+
+					$cmmd_17A = $this->getObjectManager()->createQuery($cmmd_17A)->getResult();
+					
+				# Esclareça como Aluno avaliou o Funcionalismo.				
+				
+				} else if ( $llaveX == 3 ) {
+					
+					$cmmd_17B = 
+
+						' SELECT '.
+						' (opf.funcionario) AS id_funcionario , '.
+						' (opf.nota) AS nota_funcionario , '.
+						' (opf.observacao) AS observacao_avaliacao , '.
+						' (f.nome) AS nome_funcionario , '.
+						' (f.funcao) AS funcao_funcionario '.
+						' FROM Acesso\Entity\Opinef opf '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH opf.avaliador=a.id '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' JOIN Funcionarios\Entity\Funcionario f '.
+						' WITH f.id=opf.funcionario '.
+						' WHERE a.id='.$llaveQ.
+						" AND opf.tipo_avaliador='A' ".
+						' GROUP BY opf.funcionario';
+						
+					$cmmd_17B = $this->getObjectManager()->createQuery($cmmd_17B)->getResult();	
+				
+				# Esclareça como Aluno avaliou as Escolas.	
+				
+				} else if ( $llaveX == 4 ) {
+
+					$cmmd_17C = 
+
+						' SELECT '.
+						' (ope.escola) AS id_escola , '.
+						' (ope.nota) AS nota_avaliacao , '.
+						' (ope.observacao) AS observacao_avaliacao , '.
+						' (e.nome) AS nome_escola '.
+						' FROM Acesso\Entity\Opinee ope '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=ope.avaliador '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' WHERE a.id='.$llaveQ.
+						" AND ope.tipo_avaliador='A' ".
+						' GROUP BY ope.escola';
+						
+					$cmmd_17C = $this->getObjectManager()->createQuery($cmmd_17C)->getResult();
+					
+				# Informe quais postagens foram direcionadas para esse Aluno, desde que o remetente esteja como Aluno.
+				
+				} else if ( $llaveX == 5 ) {
+
+					$cmmd_18A = 
+
+						' SELECT '.
+						' (p.remetente_id) AS id_remetente_aluno , '.
+						' (p.mensagem) AS post_enviado , '.
+						' (p.tipo_remetente) AS tipo_remetente , '.
+						' (p.data) AS ultimo_post , '.
+						' (aa.nome) AS nome_remetente , '.					
+						' COUNT(p) AS quantidade_posts '.
+						' FROM Acesso\Entity\Post p '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH p.destinatario_id=a.id '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' JOIN Alunos\Entity\Aluno aa '.
+						' WITH p.remetente_id=aa.id '.
+						' WHERE a.id='.$llaveQ.
+						" AND p.tipo_remetente IN ('A') ".
+						' GROUP BY p.remetente_id '.
+						" ORDER BY p.id DESC";
+						
+					$cmmd_18A = $this->getObjectManager()->createQuery($cmmd_18A)->getResult();
+
+					# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				# detalhamento das estatísticas acima.
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				
+				} else if ( $llaveX == 5000  ) {
+
+					$cmmd_18A = 
+
+						' SELECT '.
+						' (p.id) AS id_post , '.
+						' (p.mensagem) AS descricao_post , '.
+						' (p.data) AS data_post '.
+						' FROM Acesso\Entity\Post p '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH p.destinatario_id=a.id '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' JOIN Alunos\Entity\Aluno aa '.
+						' WITH p.remetente_id=aa.id '.
+						' WHERE a.id='.$llaveQ.
+						' AND p.remetente_id='.$llaveY.
+						" AND p.tipo_remetente = 'A' ".					
+						" ORDER BY p.id DESC";
+						
+					$cmmd_18A = $this->getObjectManager()->createQuery($cmmd_18A)->getResult();
+				
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				# detalhamento das estatísticas acima.
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				
+				} else if ( $llaveX == 5001 ) {
+
+					$cmmd_18A = 
+
+						' SELECT '.						
+						' (p.mensagem) AS descricao_post , '.
+						' (p.data) AS data_post '.
+						' FROM Acesso\Entity\Post p '.
+						' WHERE p.id='.$llaveY;
+						
+					$cmmd_18A = $this->getObjectManager()->createQuery($cmmd_18A)->getResult();
+					
+				# Informe quais postagens foram direcionadas para esse Aluno, desde que o remetente pertença ao Funcionalismo.
+				
+				} else if ( $llaveX == 6 ) {
+				
+					$cmmd_18B = 
+					
+						' SELECT '.
+						' (p.remetente_id) AS id_remetente_funcionario , '.
+						' (p.mensagem) AS mensagem , '.
+						' (p.tipo_remetente) AS tipo_remetente , '.
+						' (p.data) AS ultimo_post , '.
+						' (f.nome) AS nome_remetente , '.
+						' (f.funcao) AS funcao_remetente , '.
+						' COUNT(f) AS quantidade_posts '.
+						' FROM Acesso\Entity\Post p '.
+						' JOIN Funcionarios\Entity\Funcionario f '.
+						' WITH f.id=p.destinatario_id '.
+						#' WHERE p.destinatario_id<>'.$llaveQ.
+						' WHERE p.destinatario_id='.$llaveQ.
+						" AND p.tipo_remetente IN ('P','D','F') ".
+						" AND p.tipo_destinatario = 'A' ".
+						' GROUP BY f.id '.
+						' ORDER BY p.id DESC ';
+
+					$cmmd_18B = $this->getObjectManager()->createQuery($cmmd_18B)->getResult();
+				
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				# detalhamento das estatísticas acima.
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				
+				} else if ( $llaveX == 6000  ) {
+				
+					$cmmd_18B = 
+
+						' SELECT '.
+						' (p.id) AS id_post , '.
+						' (p.remetente_id) AS id_remetente_funcionario , '.
+						' (p.destinatario_id) AS id_destinatario_aluno , '.
+						' (p.mensagem) AS descricao_post , '.
+						' (p.tipo_remetente) AS tipo_remetente , '.
+						' (p.tipo_destinatario) AS tipo_destinatario , '.
+						' (p.data) AS data_post , '.
+						' (f.nome) AS nome_remetente '.
+						' FROM Acesso\Entity\Post p '.
+						' JOIN Funcionarios\Entity\Funcionario f '.
+						' WITH f.id=p.destinatario_id '.
+						' WHERE p.destinatario_id='.$llaveQ.
+						' AND p.remetente_id='.$llaveY.
+						#' WHERE p.destinatario_id<>'.$llaveQ.
+						#' AND p.remetente_id='.$llaveY.
+						" AND p.tipo_remetente IN ('P','D','F') ".
+						" AND p.tipo_destinatario = 'A'";
+						#" AND p.tipo_destinatario <> 'A'";
+					
+					$cmmd_18B = $this->getObjectManager()->createQuery($cmmd_18B)->getResult();
+				
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				# detalhamento das estatísticas acima.
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				
+				} else if ( $llaveX == 6001 ) {
+				
+					$cmmd_18B = 
+
+						' SELECT '.
+						' (p.mensagem) AS descricao_post , '.
+						' (p.data) AS data_post '.
+						' FROM Acesso\Entity\Post p '.
+						' JOIN Funcionarios\Entity\Funcionario f '.
+						' WITH f.id=p.destinatario_id '.
+						' WHERE p.id='.$llaveY;
+					
+					$cmmd_18B = $this->getObjectManager()->createQuery($cmmd_18B)->getResult();
+				
+				# Histórico de posts que pertençam a esse Aluno.
+				
+				} else if ( $llaveX == 7 ) {
+				
+					$cmmd_19 =
+
+						' SELECT '.
+						' (p.id) AS id_post , '.
+						' (p.mensagem) AS descricao_post , '.
+						' (p.icon) AS smile_post , '.
+						' (p.data) AS data_post '.
+						' FROM Acesso\Entity\Post p '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=p.remetente_id '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' WHERE a.id='.$llaveQ.
+						" AND p.tipo_destinatario= 'A'";
+						
+					$cmmd_19 = $this->getObjectManager()->createQuery($cmmd_19)->getResult();
+
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				# detalhamento das estatísticas acima.
+				# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\	
+				
+				} else if ( $llaveX == 7000 ) {
+				
+					$cmmd_19 = 
+
+						' SELECT '.
+						' (p.mensagem) AS descricao_post , '.
+						' (p.icon) AS icon_post , '.
+						' (p.data) AS data_post '.
+						' FROM Acesso\Entity\Post p '.
+						' JOIN Funcionarios\Entity\Funcionario f '.
+						' WITH f.id=p.destinatario_id '.
+						' WHERE p.id='.$llaveY.
+						" AND p.tipo_destinatario= 'A'";
+					
+					$cmmd_19 = $this->getObjectManager()->createQuery($cmmd_19)->getResult();
+
+				# Exiba quais amigos esse Aluno avaliou, desde que sejam Alunos.
+				
+				} else if ( $llaveX == 8 ) {
+				
+					$cmmd_20A1 = 
+
+						' SELECT '.
+						' (ama.amigo2) '.
+						' FROM Acesso\Entity\Amigoa ama '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id = ama.amigo1 '.
+						' JOIN Turmas\Entity\Turma t  '.
+						' WITH t.id = a.turma  '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' WHERE a.id='.$llaveQ;
+						
+					$cmmd_20A1 = $this->getObjectManager()->createQuery($cmmd_20A1)->getResult();
+
+					for ( $running = 0 ; $running < sizeof ( $cmmd_20A1 ) ; $running++ ) {
+
+						$cmmd_20A2 = 
+
+							' SELECT '.
+							' (opa.avaliador) AS id_avaliador_aluno , '.
+							' (opa.nota) AS nota_avaliativa , '.
+							' (opa.avaliado) AS id_avaliado_aluno , '.
+							' (a.nome) AS nome_avaliador_aluno , '.
+							' (aa.nome) AS nome_avaliado_aluno '.
+							' FROM Acesso\Entity\Opinea opa '.
+							' JOIN Alunos\Entity\Aluno a '.
+							' WITH a.id=opa.avaliador '.
+							' JOIN Escolas\Entity\Escola e '.
+							' WITH e.id=a.escola '.
+							' JOIN Turmas\Entity\Turma t '.
+							' WITH t.id=a.turma '.
+							' JOIN Alunos\Entity\Aluno aa '.
+							' WITH aa.id=opa.avaliado '.
+							' WHERE opa.avaliado='.$cmmd_20A1[$running][1].
+							' AND opa.avaliador='.$llaveQ.
+							" AND opa.tipo_avaliador='A'";
+						
+						$cmmd_20A2 = $this->getObjectManager()->createQuery($cmmd_20A2)->getResult();
+						
+						$cmmd_20A[$running] = $cmmd_20A2;
+						
+						if ( sizeof ( $cmmd_20A[$running] ) > 0 ) {
+
+							# Certifique-se de que esse Aluno enviou "Aperto de Mão" para o Amigo.
+
+							$cmmd_20A3 = 
+
+								' SELECT '.
+								' COUNT(ap) AS quantidade_handshake '.
+								' FROM Acesso\Entity\Aperto ap '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id = ap.remetente '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH e.id = a.escola '.
+								' JOIN Turmas\Entity\Turma t '.
+								' WITH a.turma = t.id '.
+								' WHERE a.id='.$llaveQ.
+								' AND ap.destinatario='.$cmmd_20A1[$running][1];
+
+							$cmmd_20A3 = $this->getObjectManager()->createQuery($cmmd_20A3)->getResult();
+							
+							# Aluno apertou mão de Amigo ou não? Adicione a resposta ao array em questão (cmmd_20).
+
+							$cmmd_20A3[0]['quantidade_handshake'] == '0' ? array_push($cmmd_20A[$running][0], 'NÃO') : array_push($cmmd_20A[$running][0], 'SIM');
+
+							# Certifique-se de que esse Aluno enviou "Coração" para o Amigo. 
+
+							$cmmd_20A4 = 
+
+								' SELECT '.
+								' COUNT(co) AS amount_heart '.
+								' FROM Acesso\Entity\Coracao co '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id = co.remetente '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH e.id = a.escola '.
+								' JOIN Turmas\Entity\Turma t '.
+								' WITH a.turma = t.id '.	
+								' WHERE a.id='.$llaveQ.
+								' AND co.destinatario='.$cmmd_20A1[$running][1];
+
+							$cmmd_20A4 = $this->getObjectManager()->createQuery($cmmd_20A4)->getResult();
+
+							# Aluno enviou Coração ou não? Adicione a resposta ao array em questão (cmmd_20).
+							
+							$cmmd_20A4[0]['amount_heart'] == 0 ? array_push($cmmd_20A[$running][0], 'NÃO') : array_push($cmmd_20A[$running][0], 'SIM');
+
+							# Certifique-se de que esse Aluno tornou o amigo, em questão, como "Preferido". 
+
+							$cmmd_20A5 = 
+
+								' SELECT '.
+								' COUNT(pr) AS isFavorite '.
+								' FROM Acesso\Entity\Preferido pr '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id = pr.remetente '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH e.id = a.escola '.
+								' JOIN Turmas\Entity\Turma t '.
+								' WITH t.id=a.turma '.
+								' WHERE a.id='.$llaveQ.
+								' AND pr.destinatario='.$cmmd_20A1[$running][1];
+													
+							$cmmd_20A5 = $this->getObjectManager()->createQuery($cmmd_20A5)->getResult();
+
+							# Aluno favoritou Amigo ou não? Adicione a resposta ao array em questão (cmmd_20).
+
+							$cmmd_20A5[0]['isFavorite'] == 0 ? array_push($cmmd_20A[$running][0], 'NÃO') : array_push($cmmd_20A[$running][0], 'SIM');
+
+						}
+
+					}
+
+					# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+					if ( !empty ( $cmmd_20A ) ) {
+
+						$p = sizeof ( $cmmd_20A );
+
+						$o=0;
+
+						while ( $o < sizeof ( $cmmd_20A ) ) {
+
+							empty ( $cmmd_20A[$o] ) ? $p-- : $p;
+							
+							$o++;
+
+						}
+
+						$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+					
+					} else {
+					
+						$someColumnsNotNull='N';
+					
+					}
+				
+				# Exiba quais amigos esse Aluno avaliou, desde que pertençam ao Funcionalismo.
+				
+				} else if ( $llaveX == 9 ) {
+				
+					$cmmd_20B1 =	
+					
+						' SELECT '.
+						' (amf.funcionario) '.
+						' FROM Acesso\Entity\Amigof amf '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id = amf.aluno '.
+						' JOIN Turmas\Entity\Turma t  '.
+						' WITH t.id = a.turma  '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' WHERE a.id='.$llaveQ;
+
+					$cmmd_20B1 = $this->getObjectManager()->createQuery($cmmd_20B1)->getResult();
+					
+					for ( $running = 0 ; $running < sizeof ( $cmmd_20B1 ) ; $running++ ) {
+					
+						$cmmd_20B2 = 
+
+						' SELECT '.
+						' (opf.avaliador) AS id_avaliador_aluno , '.
+						' (opf.nota) AS nota_avaliativa , '.
+						' (opf.funcionario) AS id_avaliado_funcionario , '.
+						' (a.nome) AS nome_avaliador_aluno , '.
+						' (f.nome) AS nome_avaliado_funcionario '.
+						' FROM Acesso\Entity\Opinef opf '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=opf.avaliador '.
+						' JOIN Funcionarios\Entity\Funcionario f '.
+						' WITH f.id=opf.funcionario '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH a.turma=t.id '.
+						' WHERE opf.funcionario='.$cmmd_20B1[$running][1].
+						' AND opf.avaliador='.$llaveQ.
+						" AND opf.tipo_avaliador='A'";
+
+						$cmmd_20B2 = $this->getObjectManager()->createQuery($cmmd_20B2)->getResult();
+						
+						$cmmd_20B[$running] = $cmmd_20B2;
+						
+						if ( sizeof ( $cmmd_20B[$running] ) > 0 ) {
+						
+							# Certifique-se de que esse Aluno enviou "Aperto de Mão" para o Amigo.
+
+							$cmmd_20B3 = 
+
+								' SELECT '.
+								' COUNT(ap) AS quantidade_handshake '.
+								' FROM Acesso\Entity\Aperto ap '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id = ap.remetente '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH e.id = a.escola '.
+								' JOIN Turmas\Entity\Turma t '.
+								' WITH a.turma = t.id '.
+								' WHERE a.id='.$llaveQ.
+								' AND ap.destinatario='.$cmmd_20B1[$running][1];
+
+							$cmmd_20B3 = $this->getObjectManager()->createQuery($cmmd_20B3)->getResult();
+							
+							# Aluno apertou mão de Amigo ou não? Adicione a resposta ao array em questão (cmmd_20).
+
+							$cmmd_20B3[0]['quantidade_handshake'] > 0 ? array_push($cmmd_20B[$running][0], 'SIM') : array_push($cmmd_20B[$running][0], 'NÃO');
+
+							# Certifique-se de que esse Aluno enviou "Coração" para o Amigo. 
+
+							$cmmd_20B4 = 
+
+								' SELECT '.
+								' COUNT(co) AS amount_heart '.
+								' FROM Acesso\Entity\Coracao co '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id = co.remetente '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH e.id = a.escola '.
+								' JOIN Turmas\Entity\Turma t '.
+								' WITH a.turma = t.id '.	
+								' WHERE a.id='.$llaveQ.
+								' AND co.destinatario='.$cmmd_20B1[$running][1];
+
+							$cmmd_20B4 = $this->getObjectManager()->createQuery($cmmd_20B4)->getResult();
+
+							# Aluno enviou Coração ou não? Adicione a resposta ao array em questão (cmmd_20).
+							
+							$cmmd_20B4[0]['amount_heart'] > 0 ? array_push($cmmd_20B[$running][0], 'SIM') : array_push($cmmd_20B[$running][0], 'NÃO');
+
+							# Certifique-se de que esse Aluno tornou o amigo, em questão, como "Preferido". 
+
+							$cmmd_20B5 = 
+
+								' SELECT '.
+								' COUNT(pr) AS isFavorite '.
+								' FROM Acesso\Entity\Preferido pr '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id = pr.remetente '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH e.id = a.escola '.
+								' JOIN Turmas\Entity\Turma t '.
+								' WITH t.id=a.turma '.
+								' WHERE a.id='.$llaveQ.
+								' AND pr.destinatario='.$cmmd_20B1[$running][1];
+													
+							$cmmd_20B5 = $this->getObjectManager()->createQuery($cmmd_20B5)->getResult();
+
+							# Aluno favoritou Amigo ou não? Adicione a resposta ao array em questão (cmmd_20).
+							
+							$cmmd_20B5[0]['isFavorite'] > 0 ? array_push($cmmd_20B[$running][0], 'SIM') : array_push($cmmd_20B[$running][0], 'NÃO');
+							
+						}
+					
+					}
+					
+					# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+					
+					if ( !empty ( $cmmd_20B ) ) {
+
+						$p = sizeof ( $cmmd_20B );
+
+						$o=0;
+
+						while ( $o < sizeof ( $cmmd_20B ) ) {
+
+							empty ( $cmmd_20B[$o] ) ? $p-- : $p;
+							
+							$o++;
+
+						}
+
+						$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+					
+					} else {
+					
+						$someColumnsNotNull='N';
+					
+					}
+
+				# Relação de notas escolares desse Aluno.
+
+				} else if ( $llaveX == 10 ) {
+
+					$cmmd_30 = 
+					
+						' SELECT '.
+						' a.nome AS nome_aluno , '.
+						' a.matricula AS matricula_aluno , '.
+						' e.nome AS escola_aluno , '.
+						' t.turma AS turma_aluno , '.
+						' t.bairro AS bairro_turma , '.
+						' m.nome AS materia_escolar , '.
+						' n.nota1 AS ntI , '.
+						' n.nota2 AS ntII , '.
+						' n.nota3 AS ntIII , '.
+						' n.nota4 AS ntIV '.				
+						' FROM Alunos\Entity\Nota n '.
+						' JOIN Acesso\Entity\Materia m '.
+						' WITH m.id=n.materia '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=n.aluno '.
+						' JOIN Escolas\Entity\Escola e '.
+						' WITH e.id=a.escola '.
+						' JOIN Turmas\Entity\Turma t '.
+						' WITH t.id=a.turma '.
+						' WHERE n.ano='.date('Y').
+						' AND a.id='.$llaveQ;
+						
+					$cmmd_30 = $this->getObjectManager()->createQuery($cmmd_30)->getResult();
+					
+					# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+					if ( !empty ( $cmmd_30 ) ) {
+					
+						$p = sizeof ( $cmmd_30 );
+
+						$o=0;
+
+						while ( $o < sizeof ( $cmmd_30 ) ) {
+
+							empty ( $cmmd_30[$o] ) ? $p-- : $p;
+							
+							$o++;
+
+						}
+
+						$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+					
+					} else {
+					
+						$someColumnsNotNull='N';
+					
+					}
+					
+				} else if ( $llaveX == 11 ) {
+				
+					$cmmd_31 = 
+					
+						' SELECT '.
+						' (ac.id) AS id_url , '.
+						' (ac.url) AS endereco , '.
+						' (a.id) AS id_aluno , '.
+						' COUNT(a) AS qt_acessos '.
+						' FROM Alunos\Entity\Aluno a '.
+						' JOIN Acesso\Entity\Acesso ac '.
+						' WITH ac.usuario=a.id '.
+						' WHERE a.id='.$llaveQ.
+						' GROUP BY ac.url'.
+						' ORDER BY ac.id DESC';
+
+					$cmmd_31 = $this->getObjectManager()->createQuery($cmmd_31)->getResult();
+
+				} else if ( $llaveX == 11000 ) {
+
+					$cmmd_31 = 
+					
+						' SELECT '.
+						' (ac.usuario) AS id_aluno , '.
+						' (a.nome) AS nome_aluno , '.
+						' (ac.id) AS id_url , '.
+						' (ac.url) AS endereco , '.							
+						' (ac.data) AS data_acesso '.
+						' FROM Alunos\Entity\Aluno a '.
+						' JOIN Acesso\Entity\Acesso ac '.
+						' WITH ac.usuario=a.id '.
+						' WHERE a.id = '.$llaveQ.
+						' AND ac.url = '.
+						' ( '.
+						' SELECT  '.
+						' acX.url '.
+						' FROM Alunos\Entity\Aluno aX '.
+						' JOIN Acesso\Entity\Acesso acX '.
+						' WITH acX.usuario=aX.id '.
+						' WHERE acX.id = '.$llaveY.
+						' AND aX.id = '.$llaveQ.
+						' ) ';
+						
+					$cmmd_31 = $this->getObjectManager()->createQuery($cmmd_31)->getResult();
+
+				}
+				
+				!empty($someColumnsNotNull)	? : $someColumnsNotNull	= NULL;
+				!empty($cmmd_16)	? : $cmmd_16	= NULL;
+				!empty($cmmd_17A)	? : $cmmd_17A	= NULL;
+				!empty($cmmd_17B)	? : $cmmd_17B	= NULL;
+				!empty($cmmd_17C)	? : $cmmd_17C	= NULL;
+				!empty($cmmd_18A)	? : $cmmd_18A	= NULL;
+				!empty($cmmd_18B)	? : $cmmd_18B	= NULL;				
+				!empty($cmmd_19)	? : $cmmd_19	= NULL;
+				!empty($cmmd_20A)	? : $cmmd_20A	= NULL;
+				!empty($cmmd_20B)	? : $cmmd_20B	= NULL;
+				!empty($cmmd_30)	? : $cmmd_30	= NULL;
+				!empty($cmmd_31)	? : $cmmd_31	= NULL;
+
+				# remessar valores à ViEw-mVc.
+
+				return new ViewModel (
+					array (
+						'id' => $id,
+						'tpView' => $tpView,
+						'llaveX' => $llaveX,
+						'llaveY' => $llaveY,
+						'llaveZ' => $llaveZ,
+						'llaveQ' => $llaveQ,
+						'someColumnsNotNull' => $someColumnsNotNull,
+						'dataOfStudents' => $cmmd_16,
+						'avaliationsForStudents' => $cmmd_17A,
+						'avaliationsForOfficials' => $cmmd_17B,
+						'avaliationsForSchools' => $cmmd_17C,
+						'postsSentByStudents' => $cmmd_18A,
+						'postsSentByOfficials' => $cmmd_18B,
+						'historyOfPosts' => $cmmd_19,
+						'avaliationsForFriendsStudents' => $cmmd_20A,
+						'avaliationsForFriendsOfficials' => $cmmd_20B,
+						'avgNotesStudents' => $cmmd_30,
+						'accessToPagesByThisStudent' => $cmmd_31
+					)
+				);	
+			
+			break;
+		
+		}
+
+	}
+
+	public function statisticsperschoolclassAction() {
+	
+		# capturando valores transmitidos desde a vIeW-MvC, parametrização.
+		
+		$id = (int) $this->params('id', null);
+
+		$tpView = (string) $this->params('tpView', null);
+
+		$llaveX = (int) $this->params('llaveX', null);
+		
+		$llaveY = (int) $this->params('llaveY', null);
+		
+		$llaveZ = (int) $this->params('llaveZ', null);
+		
+		$llaveQ = $this->params('llaveQ', null);
+		
+		empty ($someColumnsNotNull) ? $someColumnsNotNull="" : ""; 
+		
+		# discernir se conteúdo em base de dados, coluna "periodo" X tabela "aluno" ... é string ou inteiro?
+		
+		is_int($llaveQ)? $tpValueInRouter = '[0-9]+' : $tpValueInRouter = '[a-zA-Z][a-zA-Z0-9_-]*';
+		
+		# apresente somente turmas, segmentando-a por série e período, desde que a mesma possua aluno(s).
+
+		$cmmd_0 =
+		
+			' SELECT '.
+			' (a.id) AS id_aluno , '.
+			' (a.serie) AS serie , '.
+			' (a.periodo) AS periodo , '.
+			' IDENTITY (a.turma) AS id_turmaEmAluno , '.
+			' COUNT(a) AS quantidade_alunos , '.
+			' (t.id) AS id_turma , '.
+			' (t.turma) AS nm_turma , '.
+			' (e.nome) AS nome_escola '.
+			' FROM Alunos\Entity\Aluno a '.
+			' JOIN Escolas\Entity\Escola e '.
+			' WITH e.id=a.escola '.
+			' JOIN Turmas\Entity\Turma t '.
+			' WITH t.id=a.turma '.
+			' WHERE e.id='.$id.
+			' AND a.turma='.$llaveY.
+			' AND a.serie='.$llaveZ.
+			" AND a.periodo IN ('".$llaveQ."')".
+			' GROUP BY a.id, a.serie, a.periodo '.
+			' ORDER BY a.id DESC ';
+			
+		$cmmd_0 = $this->getObjectManager()->createQuery($cmmd_0)->getResult();
+		
+		# identifique quais funcionários estão na condição de professores.
+		
+		$cmmd_F =
+		
+			' SELECT '.
+			' (f.id) AS id_funcionario '.
+			' FROM Funcionarios\Entity\Funcionario f '.
+			' JOIN Escolas\Entity\Escola e '.
+			' WITH e.nome=f.escola '.
+			" WHERE f.funcao = 'P' ".
+			' AND e.id='.$id;
+
+		$cmmd_F = $this->getObjectManager()->createQuery($cmmd_F)->getResult();
+
+		# identifique quais registros estão na condição de funcionários.
+		
+		$cmmd_F2 =
+		
+			' SELECT '.
+			' (f.id) AS id_funcionario '.
+			' FROM Funcionarios\Entity\Funcionario f '.
+			' JOIN Escolas\Entity\Escola e '.
+			' WITH e.nome=f.escola '.
+			" WHERE f.funcao IN ('P','F','D') ".
+			' AND e.id='.$id;
+
+		$cmmd_F2 = $this->getObjectManager()->createQuery($cmmd_F2)->getResult();
+
+		# discernir se solicitação está para: quantitativo ou qualitativo.
+		
+		switch ($tpView) {
+		
+			case "quantitativo" : 
+
+				for ( $running2 = 0 ; $running2 < sizeof ($cmmd_0) ; $running2++ ) {
+
+					# calculando o total de notificações registradas/enviadas pela turma selecionada.
+				
+					$cmmd_1 =
+
+						' SELECT '.
+						' COUNT(n) AS qqNotif '.
+						' FROM Acesso\Entity\Notificacao n '.
+						' WHERE n.remetente = '.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY n.remetente ';
+
+					$cmmd_1 = $this->getObjectManager()->createQuery($cmmd_1)->getResult();
+					
+					( !isset ( $amountNotificationsOutput ) ) ? $amountNotificationsOutput = 0 : $amountNotificationsOutput;
+					
+					( !empty ( $cmmd_1[0]['qqNotif'] ) ) ? $amountNotificationsOutput += $cmmd_1[0]['qqNotif'] : "";
+					
+					# calculando o total de postagens registradas/enviadas pela turma selecionada.
+					
+					$cmmd_2 =	
+					
+						' SELECT '.
+						' COUNT(p) AS qqPostOutput '.
+						' FROM Acesso\Entity\Post p '.
+						' WHERE p.remetente_id = '.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY p.remetente_id ';
+
+					$cmmd_2 = $this->getObjectManager()->createQuery($cmmd_2)->getResult();
+					
+					( !isset ( $amountPostsOutput ) ) ? $amountPostsOutput = 0 : $amountPostsOutput;
+					
+					( !empty ( $cmmd_2[0]['qqPostOutput'] ) ) ? $amountPostsOutput += $cmmd_2[0]['qqPostOutput'] : "";
+					
+					# calculando o total de postagens destinadas para turma selecionada.
+					
+					$cmmd_3 = 
+
+						' SELECT '.
+						' COUNT(p) AS qqPostInput '.
+						' FROM Acesso\Entity\Post p '.
+						' WHERE p.destinatario_id = '.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY p.destinatario_id ';
+						
+					$cmmd_3 = $this->getObjectManager()->createQuery($cmmd_3)->getResult();
+					
+					( !isset ( $amountPostsInput ) ) ? $amountPostsInput = 0 : $amountPostsInput;
+
+					( !empty ( $cmmd_3[0]['qqPostInput'] ) ) ? $amountPostsInput += $cmmd_3[0]['qqPostInput'] : "";
+					
+					# calculando o total de smiles/icons que haviam sido postados pela turma selecionada.
+					
+					$cmmd_4 = 
+					
+						' SELECT '.	
+						' p.icon AS tp_icons, '.
+						' COUNT(p) AS quant_icons '.
+						' FROM Acesso\Entity\Post p '.
+						' WHERE p.remetente_id = '.$cmmd_0[$running2]['id_aluno'].
+						' AND p.icon IS NOT NULL '.
+						' GROUP BY p.remetente_id, p.icon ';
+					
+					$cmmd_4 = $this->getObjectManager()->createQuery($cmmd_4)->getResult();
+					
+					( !isset ( $amountSmilesIconsInput ) ) ? $amountSmilesIconsInput = 0 : $amountSmilesIconsInput;
+					
+					( !empty ( $cmmd_4[0]['quant_icons'] ) ) ? $amountSmilesIconsInput += $cmmd_4[0]['quant_icons'] : "";
+					
+					# calcular quantidade de atividades registradas pela turma selecionada;
+					
+					$cmmd_5 = 
+					
+						' SELECT '.
+						' at.id_dono AS remetente, '.
+						' at.id_destino AS destinatario, '.
+						' COUNT(at) AS qqActivitiesInput '.
+						' FROM Atividades\Entity\Atividade at, '.
+						' Alunos\Entity\Aluno a '.
+						' WHERE at.id_dono = a.id '.
+						' AND at.id_dono = '.$cmmd_0[$running2]['id_aluno'].
+						' AND at.id_dono IS NOT NULL '.
+						' AND at.id_destino IS NOT NULL '.
+						' GROUP BY at.id_dono, at.id_destino ';
+
+					$cmmd_5 = $this->getObjectManager()->createQuery($cmmd_5)->getResult();
+					
+					( !isset ( $amountActivitiesInput ) ) ? $amountActivitiesInput = 0 : $amountActivitiesInput;
+
+					( !empty ( $cmmd_5[0]['qqActivitiesInput'] ) ) ? $amountActivitiesInput += $cmmd_5[0]['qqActivitiesInput'] : "";
+					
+					# calcular quantidade de atividades registradas por terceiros para turma selecionada.
+
+					$cmmd_6 = 
+					
+						' SELECT '.
+						' at.id_dono AS remetente, '.
+						' at.id_destino AS destinatario, '.
+						' COUNT(at) AS qqActivitiesOutput '.
+						' FROM Atividades\Entity\Atividade at, '.
+						' Alunos\Entity\Aluno a '.
+						' WHERE at.id_dono = a.id '.
+						' AND at.id_destino = '.$cmmd_0[$running2]['id_aluno'].
+						' AND at.id_dono IS NOT NULL '.
+						' AND at.id_destino IS NOT NULL '.
+						' GROUP BY at.id_dono, at.id_destino ';
+						
+					$cmmd_6 = $this->getObjectManager()->createQuery($cmmd_6)->getResult();
+					
+					( !isset ( $amountActivitiesOutput ) ) ? $amountActivitiesOutput = 0 : $amountActivitiesOutput;
+
+					( !empty ( $cmmd_6[0]['qqActivitiesOutput'] ) ) ? $amountActivitiesOutput += $cmmd_6[0]['qqActivitiesOutput'] : "";
+					
+					# calcular quantidade de amigos que haviam sido favoritados/preferidos pela turma selecionada.
+
+					$cmmd_7 = 
+					
+						' SELECT '.
+						' pf.remetente AS cod_aluno_favoritou, '.
+						' COUNT(pf) AS quant_amigos_favoritou '.
+						' FROM Acesso\Entity\Preferido pf, '.
+						' Alunos\Entity\Aluno a '.
+						' WHERE a.id=pf.remetente '.
+						' AND a.id = '.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY pf.remetente ';
+						
+					$cmmd_7 = $this->getObjectManager()->createQuery($cmmd_7)->getResult();
+					
+					( !isset ( $amountLikesForFriendsOutput ) ) ? $amountLikesForFriendsOutput = 0 : $amountLikesForFriendsOutput;
+
+					( !empty ( $cmmd_7[0]['quant_amigos_favoritou'] ) ) ? $amountLikesForFriendsOutput += $cmmd_7[0]['quant_amigos_favoritou'] : "";
+					
+					# calcular quantidade de alunos, da turma selecionada, que haviam sido favoritados/preferidos.
+					
+					$cmmd_8 = 
+					
+						' SELECT '.
+						' aa.amigo1 AS cod_aluno_favoritou_alguem, '.
+						' aa.amigo2 AS cod_aluno_favoritado, '.
+						' COUNT(aa) AS quant_vezes_favoritou '.
+						' FROM Acesso\Entity\Amigoa aa, '.
+						' Alunos\Entity\Aluno a '.
+						' WHERE a.id=aa.amigo2 '.
+						' AND a.id = '.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY a.id, aa.amigo1 ';
+
+					$cmmd_8 = $this->getObjectManager()->createQuery($cmmd_8)->getResult();
+					
+					( !isset ( $amountLikesForFriendsInput ) ) ? $amountLikesForFriendsInput = 0 : $amountLikesForFriendsInput;
+
+					( !empty ( $cmmd_8[0]['quant_vezes_favoritou'] ) ) ? $amountLikesForFriendsInput += $cmmd_8[0]['quant_vezes_favoritou'] : "";
+					
+					# calcular quantidade de vezes que integrantes da turma selecionada receberam 'aperto de mão'.
+
+					$cmmd_9 = 
+					
+						' SELECT '.
+						' COUNT (ap) AS quant_handshake '.
+						' FROM Acesso\Entity\Aperto ap '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=ap.destinatario '.
+						' WHERE a.id='.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY ap.remetente ';
+
+					$cmmd_9 = $this->getObjectManager()->createQuery($cmmd_9)->getResult();
+					
+					( !isset ( $amountHandshakeInput ) ) ? $amountHandshakeInput = 0 : $amountHandshakeInput;
+
+					( !empty ( $cmmd_9[0]['quant_handshake'] ) ) ? $amountHandshakeInput += $cmmd_9[0]['quant_handshake'] : "";
+
+					# calcular quantidade de vezes que turma selecionada enviou 'aperto de mão'.
+					
+					$cmmd_11 =
+					
+						' SELECT '.
+						' COUNT(ap) AS quant_envios_handshakes '.
+						' FROM Acesso\Entity\Aperto ap '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=ap.remetente '.
+						' WHERE a.id='.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY ap.remetente, ap.destinatario ';
+						
+					$cmmd_11 = $this->getObjectManager()->createQuery($cmmd_11)->getResult();
+					
+					( !isset ( $amountHandshakeOutput ) ) ? $amountHandshakeOutput = 0 : $amountHandshakeOutput;
+
+					( !empty ( $cmmd_11[0]['quant_envios_handshakes'] ) ) ? $amountHandshakeOutput += $cmmd_11[0]['quant_envios_handshakes'] : "";
+					
+					# calcular quantidade de vezes que turma selecionada enviou 'coração'.
+					
+					$cmmd_12 =
+					
+						' SELECT '.
+						' c.destinatario AS destinatario, '.
+						' a.id AS remetente, '.
+						' COUNT(c) AS quant_coracoes_enviados '.
+						' FROM Acesso\Entity\Coracao c '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=c.destinatario '.
+						' WHERE a.id='.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY a.id, c.destinatario, c.remetente ';
+						
+					$cmmd_12 = $this->getObjectManager()->createQuery($cmmd_12)->getResult();
+					
+					( !isset ( $amountHeartOutput ) ) ? $amountHeartOutput = 0 : $amountHeartOutput;
+
+					( !empty ( $cmmd_12[0]['quant_coracoes_enviados'] ) ) ? $amountHeartOutput += $cmmd_12[0]['quant_coracoes_enviados'] : "";
+					
+					# calcular quantidade de vezes que turma selecionada recebeu 'coração'.
+					
+					$cmmd_13 =
+					
+						' SELECT '.
+						' a.id AS remetente, '.
+						' c.destinatario AS destinatario, '.
+						' COUNT(c) AS quant_coracoes_recebidos '.
+						' FROM Acesso\Entity\Coracao c '.
+						' JOIN Alunos\Entity\Aluno a '.
+						' WITH a.id=c.remetente '.
+						' WHERE a.id='.$cmmd_0[$running2]['id_aluno'].
+						' GROUP BY a.id, c.remetente, c.destinatario ';
+						
+					$cmmd_13 = $this->getObjectManager()->createQuery($cmmd_13)->getResult();
+					
+					( !isset ( $amountHeartInput ) ) ? $amountHeartInput = 0 : $amountHeartInput;
+
+					( !empty ( $cmmd_12[0]['quant_coracoes_recebidos'] ) ) ? $amountHeartInput += $cmmd_12[0]['quant_coracoes_recebidos'] : "";
+
+				}
+				
+				# diagnosticar se array contém algo, caso não possua então o declare, mesmo com conteúdo "vazio".
+				
+				!empty ( $cmmd_0 ) ?  : $cmmd_0="";
+				
+				!empty ( $amountNotificationsOutput ) ?  : $amountNotificationsOutput=0;
+				
+				!empty ( $amountPostsOutput ) ?  : $amountPostsOutput=0;
+				
+				!empty ( $amountPostsInput ) ?  : $amountPostsInput=0;
+				
+				!empty ( $amountSmilesIconsInput ) ?  : $amountSmilesIconsInput=0;
+				
+				!empty ( $amountActivitiesInput ) ?  : $amountActivitiesInput=0;
+				
+				!empty ( $amountActivitiesOutput ) ?  : $amountActivitiesOutput=0;
+				
+				!empty ( $amountLikesForFriendsOutput ) ?  : $amountLikesForFriendsOutput=0;
+				
+				!empty ( $amountLikesForFriendsInput ) ?  : $amountLikesForFriendsInput=0;
+				
+				!empty ( $amountHandshakeInput ) ?  : $amountHandshakeInput=0;
+				
+				!empty ( $amountHandshakeOutput ) ?  : $amountHandshakeOutput=0;
+		
+				!empty ( $amountHeartOutput ) ?  : $amountHeartOutput=0;
+		
+				!empty ( $amountHeartInput ) ?  : $amountHeartInput=0;
+			
+				return new ViewModel (
+					array (
+						'id' => $id,
+						'tpView' => $tpView,
+						'llaveX' => $llaveX,
+						'llaveY' => $llaveY,
+						'llaveZ' => $llaveZ,
+						'llaveQ' => $llaveQ,
+						'cmmd_0' => $cmmd_0,
+						'amountNotificationsOutput' => $amountNotificationsOutput,
+						'amountPostsOutput' => $amountPostsOutput,
+						'amountPostsInput' => $amountPostsInput,
+						'amountSmilesIconsInput' => $amountSmilesIconsInput,
+						'amountActivitiesInput' => $amountActivitiesInput,
+						'amountActivitiesOutput' => $amountActivitiesOutput,
+						'amountLikesForFriendsOutput' => $amountLikesForFriendsOutput,
+						'amountLikesForFriendsInput' => $amountLikesForFriendsInput,
+						'amountHandshakeInput' => $amountHandshakeInput,
+						'amountHandshakeOutput' => $amountHandshakeOutput,
+						'amountHeartOutput' => $amountHeartOutput,
+						'amountHeartInput' => $amountHeartInput
+					)
+				);
+			
+			break;
+			
+			case "qualitativo" :
+			
+				switch ( $llaveX ) {
+				
+					# ------------------------------------------------
+					# quais endereços web mais vezes foram acessados ?
+					# ------------------------------------------------
+
+					case 1 :
+						
+						$cmmd_14 = 
+						
+							' SELECT '.
+							' (ac.id) AS id_url , '.
+							' (a.nome) AS nm_aluno , '.
+							' (ac.url) AS endereco , '.
+							' COUNT(a) AS qt_acessos '.
+							' FROM Alunos\Entity\Aluno a '.
+							' JOIN Acesso\Entity\Acesso ac '.
+							' WITH ac.usuario=a.id '.
+							' WHERE a.escola='.$id.
+							' AND a.turma='.$llaveY.
+							' AND a.serie='.$llaveZ.
+							" AND a.periodo IN ('".$llaveQ."') ".
+							' GROUP BY ac.url '.
+							' ORDER BY ac.id DESC';
+							
+						$cmmd_14 = $this->getObjectManager()->createQuery($cmmd_14)->getResult();
+
+						$accessToPagesTopFive = $cmmd_14;
+				
+					break;
+					
+					# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+					# detalhamento das estatísticas acima.
+					# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+						
+					case 1000 :
+					
+						$cmmd_14B = 
+						
+							' SELECT '.
+							' (ac.id) AS id_acesso , '.
+							' (ac.tipo_usuario) AS tipo_usuario '.
+							' FROM Acesso\Entity\Acesso ac '.
+							' WHERE ac.url IN '.
+							' ( '.
+							' SELECT acC.url '.
+							' FROM Acesso\Entity\Acesso acC '.
+							' WHERE acC.id='.$llaveY.
+							' ) ';
+							
+						$cmmd_14B = $this->getObjectManager()->createQuery($cmmd_14B)->getResult();
+
+						for ( $running = 0 ; $running < sizeof ( $cmmd_14B ) ; $running++ ) {
+
+							if ( $cmmd_14B[$running]['tipo_usuario'] == "A" ) {
+							
+								$cmmd_14C = 
+								
+									' SELECT '.
+									' (a.nome) AS nome_usuario , '.
+									' (ac.url) AS endereco , '.
+									' (ac.id) AS id_usuario , '.									
+									' (ac.tipo_usuario) AS tipo_usuario , '.
+									' (ac.data) AS data_acesso '.
+									' FROM Alunos\Entity\Aluno a '.
+									' JOIN Acesso\Entity\Acesso ac '.
+									' WITH ac.usuario=a.id '.
+									' WHERE ac.id = '.$cmmd_14B[$running]['id_acesso'];
+							
+							} else if ( $cmmd_14B[$running]['tipo_usuario'] == "F" || 
+							$cmmd_14B[$running]['tipo_usuario'] == "D" || 
+							$cmmd_14B[$running]['tipo_usuario'] == "P" ) {
+
+								$cmmd_14C = 
+								
+									' SELECT '.
+									' (f.nome) AS nome_usuario , '.
+									' (ac.url) AS endereco , '.
+									' (ac.tipo_usuario) AS tipo_usuario , '.
+									' (ac.data) AS data_acesso , '.
+									' (ac.id) AS id_usuario '.									
+									' FROM Funcionarios\Entity\Funcionario f '.
+									' JOIN Acesso\Entity\Acesso ac '.
+									' WITH ac.usuario=f.id '.
+									' WHERE ac.id = '.$cmmd_14B[$running]['id_acesso'];
+
+							}
+
+						$cmmd_14C = $this->getObjectManager()->createQuery($cmmd_14C)->getResult();
+
+						$accessToPagesTopFive[$running] = $cmmd_14C;
+						
+						}
+				
+					break;
+
+					# -----------------------------------------------
+					# quais funcionários mais vezes foram avaliados ?
+					# -----------------------------------------------
+					
+					case 2 : 
+
+						for ( $running = 0 ; $running < sizeof ( $cmmd_0 ) ; $running++ ) {
+						
+							$cmmd_15 = 
+							
+								' SELECT '.
+								' a.id AS julgador , '.
+								' f.id AS func_avaliado , '.
+								' f.nome AS nm_func , '.
+								' COUNT(a) AS quant_vezes_fora_avaliado , '.
+								' AVG(opf.nota) AS md_classificatoria '.
+								' FROM Acesso\Entity\Opinef opf '.
+								' JOIN Funcionarios\Entity\Funcionario f '.
+								' WITH opf.funcionario=f.id '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id=opf.avaliador '.
+								' WHERE f.id=opf.funcionario '.
+								' AND opf.avaliador=a.id '.
+								' AND opf.avaliador = '.$cmmd_0[$running]['id_aluno'].
+								" AND opf.tipo_avaliador IN ('A') ".
+								' GROUP BY opf.avaliador, opf.funcionario '.
+								' ORDER BY md_classificatoria ASC ';
+
+							$cmmd_15 = $this->getObjectManager()->createQuery($cmmd_15)->getResult();
+
+							$avgEmployerSchools[$running] = $cmmd_15;
+						
+						}
+
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+						
+						if ( !empty ( $avgEmployerSchools ) ) {
+
+							$p = sizeof ( $avgEmployerSchools );
+
+							$o=0;
+
+							while ( $o < sizeof ( $avgEmployerSchools ) ) {
+
+								empty ( $avgEmployerSchools[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+						
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+						
+					break;
+					
+					# ------------------------------------------
+					# quais escolas mais vezes foram avaliadas ?
+					# ------------------------------------------
+
+					case 3 :
+
+						for ( $running = 0 ; $running < sizeof ( $cmmd_0 ) ; $running++ ) {
+							
+							$cmmd_16 = 
+							
+								' SELECT '.
+								' a.id AS julgador , '.
+								' e.id AS escola_avaliado , '.
+								' e.nome AS nm_escola , '.
+								' COUNT(a) AS quant_vezes_fora_avaliado , '.
+								' AVG(oe.nota) AS md_classificatoria '.
+								' FROM Acesso\Entity\Opinee oe '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH oe.escola=e.id '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id=oe.avaliador '.
+								' WHERE e.id=oe.escola '.
+								' AND oe.avaliador=a.id '.
+								' AND oe.avaliador = '.$cmmd_0[$running]['id_aluno'].
+								' GROUP BY oe.avaliador, oe.escola '.
+								' ORDER BY md_classificatoria ASC ';
+
+							$cmmd_16 = $this->getObjectManager()->createQuery($cmmd_16)->getResult();
+
+							$avgSchools[$running] = $cmmd_16;
+
+						}
+
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+						
+						if ( !empty ( $avgSchools ) ) {
+
+							$p = sizeof ( $avgSchools );
+
+							$o=0;
+
+							while ( $o < sizeof ( $avgSchools ) ) {
+
+								empty ( $avgSchools[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+						
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+
+					break;
+					
+					# -------------------------------------------
+					# média avaliativa de turma para funcionário.
+					# -------------------------------------------
+					
+					case 4 :
+						
+						for ( $running = 0 ; $running < ( sizeof ( $cmmd_0 ) ) ; $running++ ) {
+						
+							$cmmd_17 = 
+
+								' SELECT '.
+								' (f.nome) AS nm_func , '.
+								' (opf.avaliador) AS avaliador , '.
+								' (opf.funcionario) AS funcionario , '.
+								' COUNT(a) AS quant_vezes_fora_avaliado , '.
+								' AVG(opf.nota) AS md_classificatoria '.
+								' FROM Acesso\Entity\Opinef opf '.
+								' JOIN Funcionarios\Entity\Funcionario f '.
+								' WITH opf.funcionario=f.id '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id=opf.avaliador '.
+								' WHERE opf.avaliador=a.id '.
+								' AND opf.avaliador = '.$cmmd_0[$running]['id_aluno'].
+								" AND f.funcao IN ('P') ".
+								' GROUP BY opf.avaliador ';
+								
+							$cmmd_17 = $this->getObjectManager()->createQuery($cmmd_17)->getResult();
+
+							$avgSchoolsClassPerTeacher[$running] = $cmmd_17;
+							
+						}
+
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+						
+						if ( !empty ( $avgSchoolsClassPerTeacher ) ) {
+
+							$p = sizeof ( $avgSchoolsClassPerTeacher );
+
+							$o=0;
+
+							while ( $o < sizeof ( $avgSchoolsClassPerTeacher ) ) {
+
+								empty ( $avgSchoolsClassPerTeacher[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+						
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+						
+					break;
+					
+					# ---------------------------------------------
+					# média avaliativa de turma para outras turmas.
+					# ---------------------------------------------
+					
+					case 5 :
+
+						# dentre os integrantes dessa turma, quais avaliaram alguém ?
+						
+						for ( $i = 0 ; $i < sizeof ( $cmmd_0 ) ; $i++ ) {
+						
+							$cmmd_18A = 
+							
+								' SELECT '.
+								' oa '.
+								' FROM Acesso\Entity\Opinea oa '.
+								' WHERE oa.avaliador IN '.								
+								' ( '.
+								$cmmd_0[$i]['id_aluno'].
+								') ';
+								
+							$cmmd_18A = $this->getObjectManager()->createQuery($cmmd_18A)->getResult();
+
+						}
+
+						# se algum integrante, da turma em questão, avaliou alguém então processe ...
+						
+						if ( !empty ( $cmmd_18A ) && sizeof ( $cmmd_18A ) > 0 ) {
+						
+							for ( $j = 0 ; $j < sizeof ( $cmmd_0 ) ; $j++ ) {
+
+								$cmmd_18B = 
+								
+									' SELECT '.
+									' (oa.avaliador) AS avaliador , '.
+									' (oa.avaliado) AS avaliado , '.
+									' (oa.nota) AS nota , '.
+									' (a.escola) AS escola_aluno , '.
+									' (a.turma) AS turma_aluno , '.
+									' (a.periodo) AS periodo_aluno , '.
+									' (a.serie) AS serie_aluno , '.
+									' AVG(oa.nota) AS media_nota , '.
+									' COUNT(oa.avaliado) AS quantidade '.
+									' FROM Acesso\Entity\Opinea oa '.
+									' JOIN Alunos\Entity\Aluno a '.
+									' WITH a.id=oa.avaliado '.
+									' JOIN Turmas\Entity\Turma t '.
+									' WITH t.id=a.turma '.
+									' WHERE t.id=a.turma AND a.id=oa.avaliado AND oa.avaliado NOT IN '.
+									' ( '.
+									' SELECT aN.id from Alunos\Entity\Aluno aN '.
+									' WHERE aN.turma = '.$llaveY.								
+									') '.
+									' AND oa.avaliador = '.$cmmd_0[$j]['id_aluno'].
+									' GROUP BY oa.avaliado';
+
+								!empty( $cmmd_18B ) ? $cmmd_18B = $this->getObjectManager()->createQuery($cmmd_18B)->getResult() : "";	
+								
+							}
+							
+							# o avaliador, da turma em questão, avaliou alguém de outra turma realmente ?
+							
+							if ( !empty ( $cmmd_18B ) && sizeof ( $cmmd_18B ) > 0 ) {
+							
+								for ( $k = 0 ; $k < sizeof ( $cmmd_18B ) ; $k++ ) {
+								
+									$cmmd_18C = 
+									
+										' SELECT '.
+										' (oa.id) AS id , '.
+										' (oa.avaliador) AS avaliador , '.
+										' (oa.avaliado) AS avaliado '.
+										' FROM Acesso\Entity\Opinea oa '.
+										' WHERE oa.avaliado = '.$cmmd_18B[$k]['avaliado'].
+										' AND oa.avaliador = '.$cmmd_18B[$k]['avaliador'];
+										
+									$cmmd_18C = $this->getObjectManager()->createQuery($cmmd_18C)->getResult();
+
+									# se avaliador estiver nessa turma e avaliado pertencer a turma diferente então processe ...
+									
+									!empty ( $cmmd_18C ) ? $avgBetweenClassSchools = $cmmd_18B : ""; 
+									
+								}
+								
+								# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+								
+								if ( !empty ( $avgBetweenClassSchools ) ) {
+
+									$p = sizeof ( $avgBetweenClassSchools );
+
+									$o=0;
+
+									while ( $o < sizeof ( $avgBetweenClassSchools ) ) {
+
+										empty ( $avgBetweenClassSchools[$o] ) ? $p-- : $p;
+										
+										$o++;
+
+									}
+
+									$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+								
+								} else {
+								
+									$someColumnsNotNull='N';
+
+								}
+								
+							}
+							
+						}
+
+					break;
+					
+					# ----------------------------------------------
+					# média avaliativa de turma para outras escolas. 	
+					# ----------------------------------------------
+					
+					case 6 :
+					
+						for ( $running = 0 ; $running < sizeof ( $cmmd_0 ) ; $running++ ) {
+							
+							$cmmd_19 = 
+							
+								' SELECT '.
+								' a.id AS julgador , '.
+								' e.id AS escola_avaliado , '.
+								' e.nome AS nm_escola , '.
+								' COUNT(a) AS quant_vezes_fora_avaliado , '.
+								' AVG(oe.nota) AS md_classificatoria '.
+								' FROM Acesso\Entity\Opinee oe '.
+								' JOIN Escolas\Entity\Escola e '.
+								' WITH oe.escola=e.id '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id=oe.avaliador '.
+								' WHERE e.id=oe.escola '.
+								' AND oe.avaliador=a.id '.
+								' AND oe.avaliador = '.$cmmd_0[$running]['id_aluno'].
+								' GROUP BY oe.avaliador, oe.escola '.
+								' ORDER BY md_classificatoria ASC ';
+
+							$cmmd_19 = $this->getObjectManager()->createQuery($cmmd_19)->getResult();
+
+							$avgSchools[$running] = $cmmd_19;
+
+						}
+						
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+						
+						if ( !empty ( $avgSchools ) ) {
+
+							$p = sizeof ( $avgSchools );
+
+							$o=0;
+
+							while ( $o < sizeof ( $avgSchools ) ) {
+
+								empty ( $avgSchools[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+
+						} else {
+						
+							$someColumnsNotNull='N';
+							
+						}
+					
+					break;
+					
+					# -------------------------------------------------
+					# média avaliativa dos professores para essa turma.  
+					# -------------------------------------------------
+					
+					case 7 :
+
+						for ( $running = 0 ; $running < ( sizeof ( $cmmd_F ) ) ; $running++ ) {
+						
+							$cmmd_20 = 
+
+								' SELECT '.
+								' f.nome AS nm_func , '.
+								' oa.avaliador AS avaliador , '.
+								' oa.avaliado AS avaliado , '.
+								' COUNT(a) AS quant_vezes_fora_avaliado , '.
+								' AVG(oa.nota) AS md_classificatoria '.
+								' FROM Acesso\Entity\Opinea oa '.
+								' JOIN Funcionarios\Entity\Funcionario f '.
+								' WITH oa.avaliador=f.id '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id=oa.avaliado '.
+								' WHERE oa.avaliador=f.id '.
+								' AND oa.avaliador  = '.$cmmd_F[$running]['id_funcionario'].
+								" AND f.funcao IN ('P') ".
+								' GROUP BY oa.avaliador ';
+								
+							$cmmd_20 = $this->getObjectManager()->createQuery($cmmd_20)->getResult();
+
+							$avgSchoolsClassPerTeacher[$running] = $cmmd_20;
+							
+						}
+
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+						
+						if ( !empty ( $avgSchoolsClassPerTeacher ) ) {
+						
+							$p = sizeof ( $avgSchoolsClassPerTeacher );
+
+							$o=0;
+
+							while ( $o < sizeof ( $avgSchoolsClassPerTeacher ) ) {
+
+								empty ( $avgSchoolsClassPerTeacher[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+						
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+					
+					break;
+					
+					# ---------------------------------------
+					# exiba o histórico de humor dessa turma.
+					# ---------------------------------------
+					
+					case 8 :
+					
+						for ( $running = 0 ; $running < sizeof ( $cmmd_0 ) ; $running++ ) {
+						
+							$cmmd_21 =
+										
+								' SELECT '.
+								' p.id AS id_post , '.
+								' p.icon AS situacao_animo , '.
+								' p.data AS mais_recentes , '.
+								' COUNT(p) AS quant_post '.
+								' FROM Acesso\Entity\Post p '.
+								' WHERE p.remetente_id = '.$cmmd_0[$running]['id_aluno'].
+								' AND p.icon IS NOT NULL '.
+								' GROUP BY p.icon '.
+								' ORDER BY p.id DESC ';
+
+							$cmmd_21 = $this->getObjectManager()->createQuery($cmmd_21)->getResult();
+
+							$iconsSmilesOutput[$running] = $cmmd_21;
+
+						}
+
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+						if ( !empty ( $iconsSmilesOutput ) ) {
+						
+							$p = sizeof ( $iconsSmilesOutput );
+
+							$o=0;
+
+							while ( $o < sizeof ( $iconsSmilesOutput ) ) {
+
+								empty ( $iconsSmilesOutput[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+						
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+
+					break;
+					
+					# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+					# detalhamento das estatísticas acima.
+					# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+					
+					case 8000 :
+
+							$cmmd_21 =
+							
+								' SELECT '.
+								' (p.id) AS id_post , '.
+								' (p.remetente_id) AS remetente , '.
+								' (p.tipo_remetente) AS tipo_remetente '.
+								' FROM Acesso\Entity\Post p '.								
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id=p.destinatario_id '.
+								' JOIN Turmas\Entity\Turma t '.
+								' WITH t.id=a.turma '.
+								' WHERE p.icon IN '.
+								' ( '.
+								' SELECT pP.icon '.
+								' FROM Acesso\Entity\Post pP '.
+								' WHERE pP.id='.$llaveY.
+								' ) '.
+								" AND a.periodo IN ('".$llaveQ."') ".
+								" AND a.serie IN ('".$llaveZ."')";
+
+							$cmmd_21 = $this->getObjectManager()->createQuery($cmmd_21)->getResult();
+							
+							for ( $running = 0 ; $running < sizeof ( $cmmd_21 ) ; $running++ ) {
+							
+								if ( $cmmd_21[$running]['tipo_remetente'] == "A" ) {
+								
+									$cmmd_21B =
+									
+										' SELECT '.
+										' (a.nome) AS nome_remetente , '.
+										' (p.icon) AS situacao_animo , '.
+										' (p.data) AS mais_recentes , '.
+										' (p.tipo_remetente) AS tipo_remetente '.
+										' FROM Acesso\Entity\Post p '.								
+										' JOIN Alunos\Entity\Aluno a '.
+										' WITH a.id=p.remetente_id '.
+										' WHERE p.id = '.$cmmd_21[$running]['id_post'];
+								
+								} else if ( $cmmd_21[$running]['tipo_remetente'] == "F" || 
+								$cmmd_21[$running]['tipo_remetente'] == "D" || 
+								$cmmd_21[$running]['tipo_remetente'] == "P" ) {
+								
+									$cmmd_21B =
+									
+										' SELECT '.
+										' (f.nome) AS nome_remetente , '.										
+										' (p.icon) AS situacao_animo , '.
+										' (p.data) AS mais_recentes , '.
+										' (p.tipo_remetente) AS tipo_remetente '.
+										' FROM Acesso\Entity\Post p '.
+										' JOIN Funcionarios\Entity\Funcionario f '.
+										' WITH f.id=p.remetente_id '.
+										' WHERE p.id = '.$cmmd_21[$running]['id_post'];
+								
+								}
+
+								$cmmd_21B = $this->getObjectManager()->createQuery($cmmd_21B)->getResult();
+								
+								$iconsSmilesOutput[$running] = $cmmd_21B;
+								
+							}
+							
+						#}
+						
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+						if ( !empty ( $iconsSmilesOutput ) ) {
+						
+							$p = sizeof ( $iconsSmilesOutput );
+
+							$o=0;
+
+							while ( $o < sizeof ( $iconsSmilesOutput ) ) {
+
+								empty ( $iconsSmilesOutput[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+						
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+
+					break;
+					
+					# ------------------------------------------
+					# exiba o histórico de denúncia dessa turma.
+					# ------------------------------------------
+					
+					case 9 :
+					
+						$cmmd_22 = 
+							
+							' SELECT '.
+							' n.id AS id_notificacao , '.
+							' n.remetente AS quem_enviou , '.
+							' a.nome AS nm_remetente , '.
+							' COUNT(a) AS quant_registros , '.
+							' n.data AS dt_envio	'.
+							' FROM Acesso\Entity\Notificacao n '.
+							' JOIN Alunos\Entity\Aluno a '.
+							' WITH n.remetente=a.id '.
+							' WHERE a.escola='.$id.
+							' AND a.turma='.$llaveY.
+							' AND a.serie='.$llaveZ.
+							" AND a.periodo IN ('".$llaveQ."') ".
+							" AND n.tipo_remetente IN ('A') ".
+							' GROUP BY n.remetente '.
+							' ORDER BY n.data DESC ';
+								
+						$cmmd_22 = $this->getObjectManager()->createQuery($cmmd_22)->getResult();
+
+						$notificationsOutput = $cmmd_22;
+
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+						if ( !empty ( $notificationsOutput ) ) {
+						
+							$p = sizeof ( $notificationsOutput );
+
+							$o=0;
+
+							while ( $o < sizeof ( $notificationsOutput ) ) {
+
+								empty ( $notificationsOutput[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+							
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+					
+					break;
+
+					# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+					# detalhamento das estatísticas acima.
+					# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+					
+					case 9000 :
+					
+						$cmmd_22 = 
+						
+							' SELECT '.
+							' (n.remetente) AS quem_enviou , '.
+							' (n.tipo_remetente) AS tipo_remetente , '.
+							' (n.data) AS dt_envio '.
+							' FROM Acesso\Entity\Notificacao n '.
+							' WHERE n.remetente IN '.
+							' ( '.
+							' SELECT Nn.remetente '.
+							' FROM Acesso\Entity\Notificacao Nn '.
+							' WHERE Nn.id = '.$llaveY.
+							' ) '.
+							' ORDER BY n.data DESC';
+							
+							$cmmd_22 = $this->getObjectManager()->createQuery($cmmd_22)->getResult();
+							
+						for ( $running = 0 ; $running < sizeof ( $cmmd_22 ) ; $running++ ) {
+						
+							if ( $cmmd_22[$running]['tipo_remetente'] == "A" ) {
+							
+							
+								$cmmd_22B =
+								
+									' SELECT '.										
+									' (a.nome) AS nm_remetente , '.
+									' (n.data) AS dt_envio , '.
+									' (n.tipo_remetente) AS tipo_remetente '.
+									' FROM Acesso\Entity\Notificacao n '.								
+									' JOIN Alunos\Entity\Aluno a '.
+									' WITH a.id=n.remetente '.
+									' WHERE a.id = '.$cmmd_22[$running]['quem_enviou'];
+
+							} else if ( $cmmd_22[$running]['tipo_remetente'] == "F" || 
+							$cmmd_22[$running]['tipo_remetente'] == "D" || 
+							$cmmd_22[$running]['tipo_remetente'] == "P" ) {
+							
+								$cmmd_22B =
+								
+									' SELECT '.										
+									' (f.nome) AS nm_remetente , '.
+									' COUNT(f) AS quant_registros , '.
+									' (n.data) AS dt_envio , '.
+									' (n.tipo_remetente) AS tipo_remetente '.
+									' FROM Acesso\Entity\Notificacao n '.								
+									' JOIN Funcionarios\Entity\Funcionario f '.
+									' WITH f.id=n.remetente '.
+									' WHERE a.id = '.$cmmd_22[$running]['quem_enviou'];
+							
+							} else if ( $cmmd_22[$running]['tipo_remetente'] == "AD" ) {
+							
+								$cmmd_22B =
+								
+									' SELECT '.
+									' (ad.nome) AS nome_remetente , '.
+									' COUNT(ad) AS quant_registros , '.
+									' (n.data) AS mais_recentes , '.
+									' (n.tipo_remetente) AS tipo_remetente '.										
+									' FROM Acesso\Entity\Notificacao n '.
+									' JOIN Applicatoin\Entity\Admin ad '.
+									' WITH ad.id=n.remetente '.
+									' WHERE a.id = '.$cmmd_22[$running]['quem_enviou'];
+							
+							}
+							
+							$cmmd_22B = $this->getObjectManager()->createQuery($cmmd_22B)->getResult();
+							
+							$notificationsOutput = $cmmd_22B;
+							
+						}
+						
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+						if ( !empty ( $notificationsOutput ) ) {
+						
+							$p = sizeof ( $notificationsOutput );
+
+							$o=0;
+
+							while ( $o < sizeof ( $notificationsOutput ) ) {
+
+								empty ( $notificationsOutput[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+							
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+					
+					break;
+					
+					# ------------------------------------------------------
+					# exiba o boletim escolar a cada integrante dessa turma.
+					# ------------------------------------------------------
+					
+					case 10 :
+					
+						for ( $running = 0 ; $running < sizeof ( $cmmd_0 ) ; $running++ ) {
+
+							$cmmd_23 = 
+							
+								' SELECT '.
+								' a.nome AS nome_aluno , '.
+								' m.nome AS materia_escolar , '.
+								' a.matricula AS matricula_aluno , '.
+								' n.nota1 AS ntI , '.
+								' n.nota2 AS ntII , '.
+								' n.nota3 AS ntIII , '.
+								' n.nota4 AS ntIV '.				
+								' FROM Alunos\Entity\Nota n '.
+								' JOIN Acesso\Entity\Materia m '.
+								' WITH m.id=n.materia '.
+								' JOIN Alunos\Entity\Aluno a '.
+								' WITH a.id=n.aluno '.
+								' WHERE n.ano='.date('Y').
+								' AND a.escola='.$id.
+								' AND a.id='.$cmmd_0[$running]['id_aluno'].	
+								' ORDER BY m.nome DESC ';
+								
+							$cmmd_23 = $this->getObjectManager()->createQuery($cmmd_23)->getResult();
+
+							$avgNotesStudents[$running] = $cmmd_23;
+							
+						}
+						
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+						if ( !empty ( $avgNotesStudents ) ) {
+						
+							$p = sizeof ( $avgNotesStudents );
+
+							$o=0;
+
+							while ( $o < sizeof ( $avgNotesStudents ) ) {
+
+								empty ( $avgNotesStudents[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+						
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+					
+					break;
+					
+					# -------------------------------------------------------------
+					# exiba a média escolar dessa turma a cada disciplina ensinada.
+					# -------------------------------------------------------------
+					
+					case 11 :
+					
+						for ( $running = 0 ; $running < sizeof ( $cmmd_0 ) ; $running++ ) {
+
+							$cmmd_24 = 
+								
+									' SELECT '.
+									' a.id AS id_aluno , '.
+									' a.nome AS nm_aluno , '.
+									' m.nome AS materia_escolar , '.
+									' n.nota1 AS ntI , '.
+									' n.nota2 AS ntII , '.
+									' n.nota3 AS ntIII , '.
+									' n.nota4 AS ntIV '.
+									' FROM Alunos\Entity\Nota n '.
+									' JOIN Acesso\Entity\Materia m '.
+									' WITH m.id=n.materia '.
+									' JOIN Alunos\Entity\Aluno a '.
+									' WITH a.id=n.aluno '.
+									' WHERE n.ano='.date('Y').
+									' AND a.escola='.$id.
+									' AND a.id='.$cmmd_0[$running]['id_aluno'].
+									' ORDER BY m.nome DESC ';
+									
+								$cmmd_24 = $this->getObjectManager()->createQuery($cmmd_24)->getResult();
+
+								$avgNotesStudents[$running] = $cmmd_24;
+							
+						}
+						
+						$cmmd_24X =
+						
+							' SELECT '.							
+							' COUNT(a) AS quant_alunos '.
+							' FROM Alunos\Entity\Aluno a '.
+							' WHERE a.escola='.$id.
+							' AND a.turma='.$llaveY.
+							' AND a.serie='.$llaveZ.
+							" AND a.periodo IN ('".$llaveQ."')".
+							' GROUP BY a.id ';
+							
+						$cmmd_24X = $this->getObjectManager()->createQuery($cmmd_24X)->getResult();
+
+						for ( $running7 = 0 ; $running7 < sizeof ( $cmmd_0 ) ; $running7++ ) {
+							
+							# exiba média escolar, a cada matéria, da turma em questão.					
+
+							$mddisciplina=0;
+
+							for ( $running3X = 0 ; $running3X < sizeof ($cmmd_24) ; $running3X++ ) {
+
+								# identificar se a atual disciplina, e suas respectivas notas, continuam sendo processadas...
+								# ... ou se já estamos processando os dados de outro curso.
+
+								$cmmd_24[$running3X]['materia_escolar'] == @$cmmd_24[$running3X+1]['materia_escolar'] ? $YsN = 'N' : $YsN = 'S';
+
+								# calcular média individual, a cada aluno, por período exercido.
+
+								$mddisciplina += (($cmmd_24[$running3X]['ntI'] + $cmmd_24[$running3X]['ntII'] + $cmmd_24[$running3X]['ntIII'] + $cmmd_24[$running3X]['ntIV'])/4);
+
+								# processe condição a seguir, se somente se, estivermos na última nota do último aluno pertencente a turma e se em seguida vier NULL.
+
+								if ( $YsN == 'S' ) {
+
+									$avgNotesSchoolsClass[$running3X]  = array (
+									
+									'materia_escolar' => $cmmd_24[$running3X]['materia_escolar'],
+									
+									'media_geral' => (($mddisciplina)/$cmmd_24X[0]['quant_alunos'])
+									
+									);
+
+									$mddisciplina = 0;
+									
+									$YsN = "";
+
+								}
+
+							}
+							
+						}
+						
+						# identificar se ao menos um registro consta no array correspondente ao relatório/estatística em questão.
+
+						if ( !empty ( $avgNotesSchoolsClass ) ) {
+
+							$p = sizeof ( $avgNotesSchoolsClass );
+
+							$o=0;
+
+							while ( $o < sizeof ( $avgNotesSchoolsClass ) ) {
+
+								empty ( $avgNotesSchoolsClass[$o] ) ? $p-- : $p;
+								
+								$o++;
+
+							}
+
+							$p==0 ? $someColumnsNotNull='N' : $someColumnsNotNull='S';
+							
+						} else {
+						
+							$someColumnsNotNull='N';
+						
+						}
+					
+					break;
+					
+					# ------------------------------------
+					# quais integrantes compõe essa turma?					
+					# ------------------------------------
+					
+					case 12 :
+
+						$cmmd_25 = 
+
+							' SELECT '.
+							' a.nome AS nome_aluno , '.
+							' a.matricula AS matricula_aluno , '.
+							' a.email AS email_aluno , '.
+							' t.turma AS turma , '.
+							' a.serie AS serie , '.
+							' a.data_nasc AS dt_nasc '.
+							' FROM Alunos\Entity\Aluno a '.
+							' JOIN Escolas\Entity\Escola e '.
+							' WITH e.id=a.escola '.
+							' JOIN Turmas\Entity\Turma t '.
+							' WITH t.id=a.turma '.
+							' WHERE e.id='.$id.
+							' AND a.turma='.$llaveY.
+							' AND a.serie='.$llaveZ.
+							" AND a.periodo IN ('".$llaveQ."')".
+							' GROUP BY a.id, a.escola, a.serie '.
+							' ORDER BY a.serie DESC ';
+						
+						$cmmd_25 = $this->getObjectManager()->createQuery($cmmd_25)->getResult();
+
+						$dataStudentsSchoolsClass = $cmmd_25;
+					
+					break;
+					
+					# -----------------------------------
+					# listar quais integrantes são P.N.E.
+					# -----------------------------------
+					
+					case 13 :
+					
+						$cmmd_26 = 
+									
+							' SELECT '.
+							' a.nome AS nome_aluno , '.
+							' a.matricula AS matricula_aluno , '.
+							' t.turma AS turma , '.
+							' a.serie AS serie , '.
+							' a.data_nasc AS dt_nasc, '.
+							' a.email AS email_aluno , '.
+							' a.deficiencia AS PNE '.
+							' FROM Alunos\Entity\Aluno a '.
+							' JOIN Escolas\Entity\Escola e '.
+							' WITH e.id=a.escola '.
+							' JOIN Turmas\Entity\Turma t '.
+							' WITH t.id=a.turma '.
+							' WHERE e.id='.$id.
+							' AND a.turma='.$llaveY.
+							' AND a.serie='.$llaveZ.
+							" AND a.periodo IN ('".$llaveQ."') ".
+							' GROUP BY a.deficiencia, a.id, a.escola '.
+							' ORDER BY a.serie DESC ';
+
+						$cmmd_26 = $this->getObjectManager()->createQuery($cmmd_26)->getResult();
+
+						$typeStudentsPNE = $cmmd_26;
+					
+					break;
+					
+					# ----------------------------------------------------
+					# forneça lista de integrantes segmentando-a por sexo.
+					# ----------------------------------------------------
+					
+					case 14 :
+					
+						$cmmd_27 = 
+
+							' SELECT '.
+							' a.nome AS nome_aluno , '.
+							' a.matricula AS matricula_aluno , '. 
+							' a.sexo AS sexo_aluno , '.
+							' t.turma AS turma '.
+							' FROM Alunos\Entity\Aluno a '.
+							' JOIN Escolas\Entity\Escola e '.
+							' WITH e.id=a.escola '.
+							' JOIN Turmas\Entity\Turma t '.
+							' WITH t.id=a.turma '.
+							' WHERE e.id='.$id.
+							' AND a.turma='.$llaveY.
+							' AND a.serie='.$llaveZ.
+							" AND a.periodo IN ('".$llaveQ."')".
+							' AND a.sexo IS NOT NULL '.
+							' GROUP BY a.id, a.sexo';
+
+						$cmmd_27 = $this->getObjectManager()->createQuery($cmmd_27)->getResult();
+
+						$genderStudents = $cmmd_27;
+
+					break;
+
+				}
+				
+				# diagnosticar se array contém algo, caso não possua então o declare, mesmo com conteúdo "vazio".
+				
+				!empty ( $accessToPagesTopFive ) ?  : $accessToPagesTopFive=NULL;
+				
+				!empty ( $avgEmployerSchools ) ?  : $avgEmployerSchools=NULL;
+				
+				!empty ( $avgSchools ) ?  : $avgSchools=NULL;
+				
+				!empty ( $avgBetweenClassSchools ) ?  : $avgBetweenClassSchools=NULL;
+				
+				!empty ( $avgSchoolsClassPerTeacher ) ?  : $avgSchoolsClassPerTeacher=NULL;
+				
+				!empty ( $iconsSmilesOutput ) ?  : $iconsSmilesOutput=NULL;
+				
+				!empty ( $notificationsOutput ) ? : $notificationsOutput=NULL;
+				
+				!empty ( $avgNotesStudents ) ? : $avgNotesStudents=NULL;
+				
+				!empty ( $avgNotesSchoolsClass ) ? : $avgNotesSchoolsClass=NULL;
+				
+				!empty ( $dataStudentsSchoolsClass ) ? : $dataStudentsSchoolsClass=NULL;
+				
+				!empty ( $typeStudentsPNE ) ? : $typeStudentsPNE=NULL;
+				
+				!empty ( $genderStudents ) ? : $genderStudents=NULL;
+
+				# despachar conteúdo de arrays à view statisticsperschoolclass.
+				
+				return new ViewModel (
+					array (
+						'id' => $id,
+						'tpView' => $tpView,
+						'llaveX' => $llaveX,
+						'llaveY' => $llaveY,
+						'llaveZ' => $llaveZ,
+						'llaveQ' => $llaveQ,
+						'someColumnsNotNull' => $someColumnsNotNull,
+						'accessToPagesTopFive' => $accessToPagesTopFive,
+						'avgEmployerSchools' => $avgEmployerSchools,
+						'avgSchools' => $avgSchools,
+						'avgBetweenClassSchools' => $avgBetweenClassSchools,
+						'avgSchoolsClassPerTeacher' => $avgSchoolsClassPerTeacher,
+						'iconsSmilesOutput' => $iconsSmilesOutput,
+						'notificationsOutput' => $notificationsOutput,
+						'avgNotesStudents' => $avgNotesStudents,
+						'avgNotesSchoolsClass' => $avgNotesSchoolsClass,
+						'dataStudentsSchoolsClass' => $dataStudentsSchoolsClass,
+						'typeStudentsPNE' => $typeStudentsPNE,
+						'genderStudents' => $genderStudents
+					)
+				);
+				
+			break;
+		
+		}
+
+	}
+	
+	public function statisticsperschoolsgradesAction () {
+
+		$id	= (int) $this->params('id', null);
+		
+		$tpView	= (string) $this->params('tpView', null);
+
+		return new ViewModel (
+			array (
+				'id' => $id,
+				'tpView' => $tpView
+			)
+		);
+
+	}
+	
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+}

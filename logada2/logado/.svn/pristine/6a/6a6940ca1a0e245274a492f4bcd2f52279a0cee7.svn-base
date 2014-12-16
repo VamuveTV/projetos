@@ -1,0 +1,69 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/jquery.raty.js"></script>
+<script type="text/javascript" src="/public/js/labs.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    <?php
+    $amigo_id = $amigo->getId();
+    $id = '#'.$amigo_id;
+    echo "$('$id').raty({
+            score: $nota,
+            path: '/images',
+            click: function(score, evt) {
+                $('#nota').val(score);
+            }
+        });";
+    ?>
+
+    $('#botao').click(function(){
+        var observacao = $('#observacao').val();
+        var nota = $('#nota').val();
+
+        $('#mensagem').html('<h5>Avalição registrada com sucesso</h5>');
+
+        $.ajax({
+            type: "POST",
+            data: {'avaliador': <?php echo $logado->getId();?>,'avaliado': <?php echo $amigo->getId();?>,'nota':nota, 'observacao': observacao},
+            url: '/opine/enviaNotaA',
+            success: function(dados) {
+                alert('Avaliação registrada com sucesso');
+            }
+        });
+    })
+})
+</script>
+<div>
+    <div id="topo_perfil">
+        <br>
+        <?php
+        echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+        ?>
+        <h3></b><?php echo $amigo->getNome();?></h3>
+        <br class="limpa">
+        <h4>Avalie <?php echo $amigo->getNome();?></h4>
+        <div class='star' id='<?php echo $amigo->getId();?>'></div>
+    </div>
+    <div class="limpa"></div>
+    <div id="meio_perfil">
+        <h3>GOSTARIA DE FALAR ALGO SOBRE <?php echo strtoupper($amigo->getNome());?>?</h3>
+        <textarea id="observacao"><?php echo $observacao; ?></textarea>
+        <input id="nota" value="<?php echo $nota;?>" type="hidden">
+        <button class="btn btn-success" id="botao">Salvar</button>
+        <button class="btn" onclick="document.location='/opine/alunos'">Voltar</button>
+
+    </div>
+    <div id="mensagem"></div>
+</div>

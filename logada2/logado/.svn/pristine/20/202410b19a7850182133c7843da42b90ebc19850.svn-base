@@ -1,0 +1,99 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Escolas\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Escolas\Entity\Escola;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+
+        return new ViewModel(array('escolas' => $escolas));
+    }
+
+    public function addAction()
+    {
+        if ($this->request->isPost()) {
+            $escola = new Escola();
+            $escola->setNome($this->getRequest()->getPost('nome'));
+            $escola->setEndereco($this->getRequest()->getPost('endereco'));
+            $escola->setBairro($this->getRequest()->getPost('bairro'));
+            $escola->setDiretor($this->getRequest()->getPost('diretor'));
+            $escola->setRegiao($this->getRequest()->getPost('regiao'));
+            $escola->setTipoNota($this->getRequest()->getPost('tipo_nota'));
+			$escola->setLatitude($this->getRequest()->getPost('latitude'));
+			$escola->setLongitude($this->getRequest()->getPost('longitude'));
+				
+            $this->getObjectManager()->persist($escola);
+            $this->getObjectManager()->flush();
+            $newId = $escola->getId();
+
+            return $this->redirect()->toRoute('home_escolas');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+        return new ViewModel();
+    }
+
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id);
+		
+        if ($this->request->isPost()) {
+            $escola->setNome($this->getRequest()->getPost('nome'));
+            $escola->setEndereco($this->getRequest()->getPost('endereco'));
+            $escola->setBairro($this->getRequest()->getPost('bairro'));
+            $escola->setDiretor($this->getRequest()->getPost('diretor'));
+            $escola->setRegiao($this->getRequest()->getPost('regiao'));
+            $escola->setTipoNota($this->getRequest()->getPost('tipo_nota'));
+			$escola->setLatitude($this->getRequest()->getPost('latitude'));
+			$escola->setLongitude($this->getRequest()->getPost('longitude'));
+
+            $this->getObjectManager()->persist($escola);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('home_escolas');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('escola' => $escola));
+    }
+
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id);
+
+        if ($this->request->isPost()) {
+            $this->getObjectManager()->remove($escola);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('home_escolas');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('escola' => $escola));
+    }
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+}

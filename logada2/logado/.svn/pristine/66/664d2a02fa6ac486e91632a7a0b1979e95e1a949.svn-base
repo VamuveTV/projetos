@@ -1,0 +1,76 @@
+<?php
+
+$title = 'Adicionar Aluno';
+$this->headTitle($title);
+
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="nome">Nome</label>
+        <div class="controls">
+            <input type="text" id="nome" name="nome">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="matricula">Matrícula</label>
+        <div class="controls">
+            <input type="text" id="matricula" name="matricula">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="escola">Escola</label>
+        <div class="controls">
+            <select name="escola" id="escola">
+                <?php foreach($escolas AS $escola){
+                            echo "<option value='".$escola->getId()."'>".$escola->getNome()."</option>";
+                        }
+                ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="serie">Série</label>
+        <div class="controls">
+            <select name="serie" id="serie">
+                <option value="1">Primeiro ano</option>
+                <option value="2">Segundo ano</option>
+                <option value="3">Terceiro ano</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="turma">Turma</label>
+        <div class="controls">
+            <select name="turma" id="turma">
+                <?php foreach($turmas AS $turma){
+                    echo "<option value='".$turma->getId()."'>".$turma->getTurma()."</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="periodo">Período</label>
+        <div class="controls">
+            <select name="periodo" id="periodo">
+                <option value="M">Manhã</option>
+                <option value="T">Tarde</option>
+                <option value="N">Noite</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='/alunos'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>

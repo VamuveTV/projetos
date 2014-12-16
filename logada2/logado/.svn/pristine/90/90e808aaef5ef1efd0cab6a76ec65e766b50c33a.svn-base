@@ -1,0 +1,613 @@
+-- --------------------------------------------------------
+-- Servidor:                     127.0.0.1
+-- Versão do servidor:           5.5.32 - MySQL Community Server (GPL)
+-- OS do Servidor:               Win32
+-- HeidiSQL Versão:              8.3.0.4694
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- Copiando estrutura para tabela logada.acesso
+CREATE TABLE IF NOT EXISTS `acesso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario` int(11) DEFAULT NULL,
+  `tipo_usuario` char(5) DEFAULT NULL,
+  `data` datetime DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.acesso: ~17 rows (aproximadamente)
+/*!40000 ALTER TABLE `acesso` DISABLE KEYS */;
+INSERT INTO `acesso` (`id`, `usuario`, `tipo_usuario`, `data`, `url`) VALUES
+	(1, 4, 'A', '2014-02-04 07:52:24', 'http://www.globo.com'),
+	(2, 4, 'A', '2014-02-04 07:52:44', 'http://www.uol.com.br'),
+	(3, 4, 'A', '2014-02-04 07:55:41', 'http://www.google.com.br'),
+	(4, 4, 'A', '2014-02-04 07:55:56', 'http://www.uai.com.br'),
+	(5, 4, 'A', '2014-02-07 08:41:32', 'www.google.com'),
+	(6, 6, 'A', '2014-02-07 08:41:54', 'http://www.uol.com.br'),
+	(7, 6, 'A', '2014-02-07 08:42:09', 'http://www.google.com.br'),
+	(8, 4, 'A', '2014-02-07 08:42:16', 'www.globoesporte.com'),
+	(9, 6, 'A', '2014-02-07 08:42:34', 'http://www.uai.com.br'),
+	(10, 4, 'A', '2014-02-07 08:42:38', 'http://mail.google.com'),
+	(11, 4, 'A', '2014-02-07 08:42:38', 'http://www.globoesporte.com'),
+	(12, 4, 'A', '2014-02-07 08:42:55', 'http://www.forbes.com'),
+	(13, 4, 'A', '2014-02-07 08:43:11', 'http://drive.google.com'),
+	(14, 4, 'A', '2014-02-07 08:43:11', 'http://www.google.com'),
+	(15, 4, 'A', '2014-02-07 08:43:31', 'http://bbc.co.uk'),
+	(16, 6, 'A', '2014-02-11 06:23:54', 'http://globo.com'),
+	(17, 2, 'F', '2014-02-27 07:06:06', 'http://www.zarbsolution.com.br');
+/*!40000 ALTER TABLE `acesso` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.admin
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `senha` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Copiando dados para a tabela logada.admin: ~5 rows (aproximadamente)
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` (`id`, `nome`, `login`, `senha`) VALUES
+	(1, 'Fernando Braz Sabino', 'braz', '123456'),
+	(2, 'teste', 'teste', 'teste'),
+	(4, 'Administrador', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997'),
+	(5, 'Juca', 'juca', 'juca123'),
+	(6, 'Marcelo Roque', 'marcelo.roque', '123qwe');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.aluno
+CREATE TABLE IF NOT EXISTS `aluno` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `escola_id` int(11) DEFAULT NULL,
+  `turma_id` int(11) DEFAULT NULL,
+  `nome` varchar(100) DEFAULT NULL,
+  `matricula` varchar(100) DEFAULT NULL,
+  `serie` varchar(100) DEFAULT NULL,
+  `periodo` varchar(100) DEFAULT NULL,
+  `senha` varchar(100) DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `sexo` varchar(100) DEFAULT NULL,
+  `data_nasc` date DEFAULT NULL,
+  `endereco` varchar(100) DEFAULT NULL,
+  `complemento` varchar(100) DEFAULT NULL,
+  `bairro` varchar(100) DEFAULT NULL,
+  `cidade` varchar(100) DEFAULT NULL,
+  `estado` varchar(100) DEFAULT NULL,
+  `cep` varchar(100) DEFAULT NULL,
+  `atendimento` varchar(100) DEFAULT NULL,
+  `deficiencia` varchar(100) DEFAULT NULL,
+  `npessoas` varchar(100) DEFAULT NULL,
+  `doenca` varchar(100) DEFAULT NULL,
+  `nome_doenca` varchar(100) DEFAULT NULL,
+  `materias_mais` varchar(100) DEFAULT NULL,
+  `materias_menos` varchar(100) DEFAULT NULL,
+  `vestibular` varchar(100) DEFAULT NULL,
+  `tipo_vestibular` varchar(100) DEFAULT NULL,
+  `habilidades` varchar(100) DEFAULT NULL,
+  `outras_habilidades` varchar(100) DEFAULT NULL,
+  `profissao` varchar(100) DEFAULT NULL,
+  `computador` varchar(100) DEFAULT NULL,
+  `compras_net` varchar(100) DEFAULT NULL,
+  `frequencia_net` varchar(100) DEFAULT NULL,
+  `celular_net` varchar(100) DEFAULT NULL,
+  `redes` varchar(100) DEFAULT NULL,
+  `renda` varchar(100) DEFAULT NULL,
+  `tv` varchar(100) DEFAULT NULL,
+  `celular` varchar(100) DEFAULT NULL,
+  `maquina` varchar(100) DEFAULT NULL,
+  `geladeira` varchar(100) DEFAULT NULL,
+  `app_celular` varchar(100) DEFAULT NULL,
+  `app_preferidos` text,
+  `bolsa` varchar(100) DEFAULT NULL,
+  `bolsa_quem` varchar(100) DEFAULT NULL,
+  `incentivo` varchar(100) DEFAULT NULL,
+  `incentivo_quem` varchar(100) DEFAULT NULL,
+  `idiomas` varchar(100) DEFAULT NULL,
+  `livros` text,
+  `lugares` text,
+  `esportes` varchar(100) DEFAULT NULL,
+  `filmes` text,
+  `musicas` text,
+  `media` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `escola_id` (`escola_id`),
+  KEY `turma_id` (`turma_id`),
+  CONSTRAINT `aluno_ibfk_1` FOREIGN KEY (`escola_id`) REFERENCES `escola` (`id`),
+  CONSTRAINT `aluno_ibfk_2` FOREIGN KEY (`turma_id`) REFERENCES `turma` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.aluno: ~7 rows (aproximadamente)
+/*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
+INSERT INTO `aluno` (`id`, `escola_id`, `turma_id`, `nome`, `matricula`, `serie`, `periodo`, `senha`, `foto`, `email`, `sexo`, `data_nasc`, `endereco`, `complemento`, `bairro`, `cidade`, `estado`, `cep`, `atendimento`, `deficiencia`, `npessoas`, `doenca`, `nome_doenca`, `materias_mais`, `materias_menos`, `vestibular`, `tipo_vestibular`, `habilidades`, `outras_habilidades`, `profissao`, `computador`, `compras_net`, `frequencia_net`, `celular_net`, `redes`, `renda`, `tv`, `celular`, `maquina`, `geladeira`, `app_celular`, `app_preferidos`, `bolsa`, `bolsa_quem`, `incentivo`, `incentivo_quem`, `idiomas`, `livros`, `lugares`, `esportes`, `filmes`, `musicas`, `media`) VALUES
+	(1, 3, 1, 'Juca', '05050505', '3', 'ManhÃ£', '05050505', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(2, 4, 1, 'Zeca tatu', '14141414', '2', '4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(3, 1, 1, 'Sirlan', '12121212', '1', 'T', '12121212', '3.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(4, 1, 1, 'Braz', '10101010', '3', 'M', '10101010', '4.jpg', 'braz@teste.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N'),
+	(5, 4, 1, 'Marcelo Guedes Roque', '100.100.100.100', '2', 'M', '100.100.100.100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	(6, 1, 1, 'Gabriel Foca', '20202020', '3', 'M', '20202020', NULL, NULL, 'M', '1983-02-24', 'Rua abc', 'ap 3', 'SÃ£o Lucas', 'Belo Horizonte', 'Minas Gerais', '30300-300', 'S', 'S', '3', 'S', '', 'MatemÃ¡tica#PortuguÃªs#', 'MatemÃ¡tica#PortuguÃªs#Literatura#', 'S', '', 'Pintura#Nadar#', NULL, 'DanÃ§arino', 'S', 'S', 'adsfadf', NULL, '2', NULL, 'S', 'S', 'S', 'S', 'S', 'asdfadf', 'S', 'Eu', 'S', 'Pai', 'FrancÃªs', 'A era do gelo\r\nTri-brasileiro', 'Casa\r\nTrabalho', 'Tento', 'Titanic\r\nAmanhecer', 'Anita\r\nJustin', 'N'),
+	(8, 1, 1, '', '', '1', 'M', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+/*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.amigoa
+CREATE TABLE IF NOT EXISTS `amigoa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amigo1` int(11) NOT NULL,
+  `amigo2` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.amigoa: ~4 rows (aproximadamente)
+/*!40000 ALTER TABLE `amigoa` DISABLE KEYS */;
+INSERT INTO `amigoa` (`id`, `amigo1`, `amigo2`) VALUES
+	(1, 4, 3),
+	(3, 1, 3),
+	(5, 4, 2),
+	(6, 4, 1);
+/*!40000 ALTER TABLE `amigoa` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.amigof
+CREATE TABLE IF NOT EXISTS `amigof` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `funcionario` int(11) DEFAULT NULL,
+  `aluno` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.amigof: ~1 rows (aproximadamente)
+/*!40000 ALTER TABLE `amigof` DISABLE KEYS */;
+INSERT INTO `amigof` (`id`, `funcionario`, `aluno`) VALUES
+	(1, 2, 3);
+/*!40000 ALTER TABLE `amigof` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.aperto
+CREATE TABLE IF NOT EXISTS `aperto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `destinatario` int(11) DEFAULT NULL,
+  `remetente` int(11) DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.aperto: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `aperto` DISABLE KEYS */;
+INSERT INTO `aperto` (`id`, `destinatario`, `remetente`, `data`) VALUES
+	(1, 3, 4, '2014-02-12'),
+	(2, 3, 4, '2014-02-12');
+/*!40000 ALTER TABLE `aperto` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.atividade
+CREATE TABLE IF NOT EXISTS `atividade` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) DEFAULT NULL,
+  `local` varchar(100) DEFAULT NULL,
+  `tipo_destino` char(2) DEFAULT NULL,
+  `id_destino` int(11) DEFAULT NULL,
+  `data` date DEFAULT NULL,
+  `hora_inicio` time DEFAULT NULL,
+  `hora_fim` time DEFAULT NULL,
+  `descricao` text,
+  `tipo_dono` char(2) DEFAULT NULL,
+  `id_dono` int(11) DEFAULT NULL,
+  `data_criacao` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.atividade: ~8 rows (aproximadamente)
+/*!40000 ALTER TABLE `atividade` DISABLE KEYS */;
+INSERT INTO `atividade` (`id`, `nome`, `local`, `tipo_destino`, `id_destino`, `data`, `hora_inicio`, `hora_fim`, `descricao`, `tipo_dono`, `id_dono`, `data_criacao`) VALUES
+	(1, 'Gincana de abertura', 'Quadra de futebol', NULL, NULL, '2014-01-31', '14:00:00', '17:00:00', 'ObrigatÃ³rio a presenÃ§a de todos.', 'A', 4, '2014-01-31 17:26:14'),
+	(2, 'Torneio de futebol', 'Campo principal', 'A', 4, '2014-02-03', '08:00:00', '11:00:00', 'Levar documento', 'A', 4, '2014-01-31 17:01:29'),
+	(3, 'Boletim', 'Internet', 'A', 4, '2014-03-05', '08:00:00', '08:00:00', 'Consultar na internet', 'A', 4, '2014-01-31 17:14:32'),
+	(4, 'Trabalho de portuguÃªs', 'Sala', 'A', 4, '2014-02-05', '09:00:00', '10:00:00', 'Ãšltimo dia para entrega', 'A', 4, '2014-01-31 17:38:38'),
+	(5, 'Trabalho de matemÃ¡tica', 'Sala', 'A', 4, '2014-03-06', '10:00:00', '12:00:00', 'NÃ£o atrasar', 'A', 4, '2014-01-31 17:47:26'),
+	(6, 'Resultado', 'Escola', 'T', 1, '2014-02-15', '08:00:00', '10:00:00', 'Testando', 'AD', 1, '2014-02-14 19:07:56'),
+	(7, 'ApresentaÃ§Ã£o de trabalho', 'AuditÃ³rio', 'A', 3, '2014-02-26', '10:30:00', '11:30:00', 'Testando', 'F', NULL, '2014-02-26 21:17:11'),
+	(8, 'ApresentaÃ§Ã£o de trabalho', 'AuditÃ³rio', 'A', 3, '2014-02-26', '14:00:00', '15:50:00', 'Testando', 'F', 2, '2014-02-26 21:19:19');
+/*!40000 ALTER TABLE `atividade` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.aviso
+CREATE TABLE IF NOT EXISTS `aviso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `destinatario` int(11) DEFAULT NULL,
+  `tipo_destinatario` char(10) DEFAULT NULL,
+  `assunto` varchar(255) DEFAULT NULL,
+  `mensagem` text,
+  `data` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.aviso: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `aviso` DISABLE KEYS */;
+INSERT INTO `aviso` (`id`, `destinatario`, `tipo_destinatario`, `assunto`, `mensagem`, `data`) VALUES
+	(1, 1, 'T', 'RematrÃ­cula (Ãºltima chamada)', 'Favor comparecer ao atendimento para realizar a rematrÃ­cula atÃ© o dia 20/02/2014', '2014-02-18 20:58:58'),
+	(3, 4, 'A', 'Entregar trabalho', 'Seu trabalho estÃ¡ atrasado. Favor entregar.', '2014-02-18 21:09:08'),
+	(4, 4, 'A', 'Alertar turma', 'Favor avisar a turma que teremos aula durante o carnaval.', '2014-02-18 21:10:03');
+/*!40000 ALTER TABLE `aviso` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.coracao
+CREATE TABLE IF NOT EXISTS `coracao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `destinatario` int(11) DEFAULT NULL,
+  `remetente` int(11) DEFAULT NULL,
+  `data` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.coracao: ~4 rows (aproximadamente)
+/*!40000 ALTER TABLE `coracao` DISABLE KEYS */;
+INSERT INTO `coracao` (`id`, `destinatario`, `remetente`, `data`) VALUES
+	(1, 3, 4, '2014-02-12 05:59:41'),
+	(2, 3, 4, '2014-02-12 06:09:39'),
+	(3, 3, 4, '2014-02-12 06:10:25'),
+	(4, 2, 4, '2014-02-12 06:29:33');
+/*!40000 ALTER TABLE `coracao` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.escola
+CREATE TABLE IF NOT EXISTS `escola` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `endereco` varchar(100) NOT NULL,
+  `bairro` varchar(100) DEFAULT NULL,
+  `diretor` varchar(100) DEFAULT NULL,
+  `regiao` varchar(100) DEFAULT NULL,
+  `tipo_nota` char(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.escola: ~5 rows (aproximadamente)
+/*!40000 ALTER TABLE `escola` DISABLE KEYS */;
+INSERT INTO `escola` (`id`, `nome`, `endereco`, `bairro`, `diretor`, `regiao`, `tipo_nota`) VALUES
+	(1, 'Belo Horizonte', 'Av Amazonas, 300 - Centro', 'Centro', 'Mauricio', 'Central', 'T'),
+	(2, 'Contagem 1', 'Av. JosÃ© Faria da Rocha 1500, Eldorado', NULL, NULL, NULL, 'B'),
+	(3, 'Betim', 'Rua a, 100', NULL, NULL, NULL, 'S'),
+	(4, 'Centro', 'Rua abc', 'Centro', 'Zeca', 'Central', 'B'),
+	(5, 'teste', 'teste', 'teste', 'teste', 'teste', 'B');
+/*!40000 ALTER TABLE `escola` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.funcionario
+CREATE TABLE IF NOT EXISTS `funcionario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) DEFAULT NULL,
+  `escola` varchar(100) DEFAULT NULL,
+  `turmas` varchar(100) DEFAULT NULL,
+  `materia` varchar(100) DEFAULT NULL,
+  `funcao` char(1) DEFAULT NULL,
+  `login` varchar(100) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.funcionario: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
+INSERT INTO `funcionario` (`id`, `nome`, `escola`, `turmas`, `materia`, `funcao`, `login`, `senha`, `foto`) VALUES
+	(2, 'Zeca', 'Zarb', 'A,B,C', 'MatemÃ¡tica', 'D', 'zeca', 'zeca', NULL),
+	(4, 'Maria dos Santos', 'Belo Horizonte', 'A,B,C', 'PortuguÃªs', 'P', NULL, NULL, NULL),
+	(5, 'Juca', 'Belo Horizonte', 'A,B', 'Geografia', 'P', 'juca', '123456', NULL);
+/*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.materia
+CREATE TABLE IF NOT EXISTS `materia` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) DEFAULT NULL,
+  `sigla` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.materia: ~4 rows (aproximadamente)
+/*!40000 ALTER TABLE `materia` DISABLE KEYS */;
+INSERT INTO `materia` (`id`, `nome`, `sigla`) VALUES
+	(1, 'Matemática', 'MA'),
+	(2, 'Português', 'PO'),
+	(3, 'Geografia', 'GE'),
+	(4, 'Biologia', 'BIO');
+/*!40000 ALTER TABLE `materia` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.nota
+CREATE TABLE IF NOT EXISTS `nota` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aluno` int(11) DEFAULT NULL,
+  `materia` int(11) DEFAULT NULL,
+  `nota1` int(11) DEFAULT NULL,
+  `nota2` int(11) DEFAULT NULL,
+  `nota3` int(11) DEFAULT NULL,
+  `nota4` int(11) DEFAULT NULL,
+  `ano` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.nota: ~13 rows (aproximadamente)
+/*!40000 ALTER TABLE `nota` DISABLE KEYS */;
+INSERT INTO `nota` (`id`, `aluno`, `materia`, `nota1`, `nota2`, `nota3`, `nota4`, `ano`) VALUES
+	(1, 1, 1, 25, 40, 0, 0, 2014),
+	(4, 2, 3, 100, 80, 60, 40, 2014),
+	(5, 2, 2, 10, 20, 30, 40, 2014),
+	(6, 2, 4, 15, 12, 20, 17, 2014),
+	(7, 2, 4, 6, 12, 15, 19, 2013),
+	(8, 2, 3, 14, 12, 10, 20, 2013),
+	(9, 2, 1, 5, 9, 10, 11, 2013),
+	(10, 2, 2, 14, 15, 16, 17, 2013),
+	(11, 4, 1, 30, 30, 30, 0, 2014),
+	(12, 4, 2, 20, 25, 28, 0, 2014),
+	(13, 4, 3, 15, 25, 30, 0, 2014),
+	(14, 4, 4, 14, 27, 32, 0, 2014),
+	(15, 3, 1, 15, 25, 35, 0, 2014);
+/*!40000 ALTER TABLE `nota` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.notificacao
+CREATE TABLE IF NOT EXISTS `notificacao` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `remetente` int(11) DEFAULT NULL,
+  `destinatario` int(11) DEFAULT NULL,
+  `tipo_remetente` char(10) DEFAULT NULL,
+  `tipo_destinatario` char(10) DEFAULT NULL,
+  `tipo` char(10) DEFAULT NULL,
+  `novo` char(1) DEFAULT NULL,
+  `texto` text,
+  `data` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.notificacao: ~23 rows (aproximadamente)
+/*!40000 ALTER TABLE `notificacao` DISABLE KEYS */;
+INSERT INTO `notificacao` (`id`, `remetente`, `destinatario`, `tipo_remetente`, `tipo_destinatario`, `tipo`, `novo`, `texto`, `data`) VALUES
+	(1, 6, 3, 'A', 'A', 'P', 'S', NULL, '2014-02-07 07:10:52'),
+	(2, 4, 6, 'A', 'A', 'P', 'S', NULL, '2014-02-07 07:35:47'),
+	(3, 4, 6, 'A', 'A', 'P', 'S', NULL, '2014-02-07 07:35:58'),
+	(4, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-07 08:36:46'),
+	(5, 1, 4, 'AD', 'A', 'A', 'S', NULL, '2014-02-18 09:10:04'),
+	(6, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:22:42'),
+	(7, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:22:52'),
+	(8, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:22:52'),
+	(9, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:22:52'),
+	(10, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:24:03'),
+	(11, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:24:24'),
+	(12, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:24:48'),
+	(13, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:26:46'),
+	(14, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:27:26'),
+	(15, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:30:19'),
+	(16, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:33:38'),
+	(17, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:34:53'),
+	(18, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:44:04'),
+	(19, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:45:53'),
+	(20, 4, 4, 'A', 'A', 'P', 'S', NULL, '2014-02-20 08:46:17'),
+	(21, 2, 2, 'A', 'A', 'P', 'S', NULL, '2014-02-24 09:08:44'),
+	(22, 2, 2, 'A', 'A', 'P', 'S', NULL, '2014-02-26 07:29:32'),
+	(23, 2, 2, 'A', 'A', 'P', 'S', NULL, '2014-02-26 07:55:27');
+/*!40000 ALTER TABLE `notificacao` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.opec
+CREATE TABLE IF NOT EXISTS `opec` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `link` varchar(255) DEFAULT NULL,
+  `file` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.opec: ~1 rows (aproximadamente)
+/*!40000 ALTER TABLE `opec` DISABLE KEYS */;
+INSERT INTO `opec` (`id`, `link`, `file`) VALUES
+	(1, 'http://www.finxi.com.br/', NULL);
+/*!40000 ALTER TABLE `opec` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.opinea
+CREATE TABLE IF NOT EXISTS `opinea` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `avaliador` int(11) DEFAULT NULL,
+  `avaliado` int(11) DEFAULT NULL,
+  `nota` int(11) DEFAULT NULL,
+  `observacao` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.opinea: ~5 rows (aproximadamente)
+/*!40000 ALTER TABLE `opinea` DISABLE KEYS */;
+INSERT INTO `opinea` (`id`, `avaliador`, `avaliado`, `nota`, `observacao`) VALUES
+	(9, 4, 3, 3, NULL),
+	(13, 5, 2, 3, NULL),
+	(18, 4, 4, 3, 'Teste'),
+	(19, 4, 2, 5, 'Muito gente boa esse rapaz'),
+	(21, 4, 1, 3, 'hhjh');
+/*!40000 ALTER TABLE `opinea` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.opinee
+CREATE TABLE IF NOT EXISTS `opinee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `avaliador` int(11) DEFAULT NULL,
+  `escola` int(11) DEFAULT NULL,
+  `nota` int(11) DEFAULT NULL,
+  `observacao` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.opinee: ~1 rows (aproximadamente)
+/*!40000 ALTER TABLE `opinee` DISABLE KEYS */;
+INSERT INTO `opinee` (`id`, `avaliador`, `escola`, `nota`, `observacao`) VALUES
+	(11, 4, 1, 2, 'Ã“tima escola. Todos competentes!!! Sim.');
+/*!40000 ALTER TABLE `opinee` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.opinef
+CREATE TABLE IF NOT EXISTS `opinef` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `avaliador` int(11) DEFAULT NULL,
+  `funcionario` int(11) DEFAULT NULL,
+  `nota` int(11) DEFAULT NULL,
+  `observacao` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.opinef: ~1 rows (aproximadamente)
+/*!40000 ALTER TABLE `opinef` DISABLE KEYS */;
+INSERT INTO `opinef` (`id`, `avaliador`, `funcionario`, `nota`, `observacao`) VALUES
+	(13, 4, 2, 2, 'Testando a avaliaÃ§Ã£o de funcionÃ¡rios!!!\n\nok');
+/*!40000 ALTER TABLE `opinef` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.post
+CREATE TABLE IF NOT EXISTS `post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `remetente_id` int(11) DEFAULT NULL,
+  `destinatario_id` int(11) DEFAULT NULL,
+  `tipo_remetente` char(1) DEFAULT NULL,
+  `tipo_destinatario` char(1) DEFAULT NULL,
+  `mensagem` text,
+  `data` datetime DEFAULT NULL,
+  `icon` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.post: ~7 rows (aproximadamente)
+/*!40000 ALTER TABLE `post` DISABLE KEYS */;
+INSERT INTO `post` (`id`, `remetente_id`, `destinatario_id`, `tipo_remetente`, `tipo_destinatario`, `mensagem`, `data`, `icon`) VALUES
+	(1, 4, 4, 'A', 'A', '<p>Muito feliz. <strong>Passei de ANO</strong></p>', '2014-02-20 08:34:52', NULL),
+	(2, 4, 4, 'A', 'A', '<p><strong>&Uacute;ltimo</strong> dia para inscri&ccedil;&atilde;o no torneio de futebol!!!</p>', '2014-02-20 08:44:03', NULL),
+	(3, 4, 4, 'A', 'A', '<p>Indo dormir. Fui!!!</p>', '2014-02-20 08:45:52', NULL),
+	(4, 4, 4, 'A', 'A', 'To gostando', '2014-02-20 08:46:15', NULL),
+	(5, 2, 2, 'F', 'F', 'To gostando', '2014-02-24 09:08:43', 'alegre-oculos'),
+	(6, 2, 2, 'F', 'F', 'Cansado, cadÃª o carnaval?', '2014-02-26 07:29:31', 'triste-cansado'),
+	(7, 2, 2, 'F', 'F', 'Carnaval estÃ¡ chegando!!!!', '2014-02-26 07:55:26', 'vergonha');
+/*!40000 ALTER TABLE `post` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.preferido
+CREATE TABLE IF NOT EXISTS `preferido` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `destinatario` int(11) DEFAULT NULL,
+  `remetente` int(11) DEFAULT NULL,
+  `data` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.preferido: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `preferido` DISABLE KEYS */;
+INSERT INTO `preferido` (`id`, `destinatario`, `remetente`, `data`) VALUES
+	(1, 3, 4, '2014-02-12 07:07:38'),
+	(2, 2, 4, '2014-02-12 07:17:14');
+/*!40000 ALTER TABLE `preferido` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.preferidof
+CREATE TABLE IF NOT EXISTS `preferidof` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `funcionario` int(11) DEFAULT NULL,
+  `aluno` int(11) DEFAULT NULL,
+  `data` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.preferidof: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `preferidof` DISABLE KEYS */;
+/*!40000 ALTER TABLE `preferidof` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.privileges
+CREATE TABLE IF NOT EXISTS `privileges` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `resource_id` int(11) DEFAULT NULL,
+  `nome` varchar(50) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.privileges: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `privileges` DISABLE KEYS */;
+/*!40000 ALTER TABLE `privileges` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.resources
+CREATE TABLE IF NOT EXISTS `resources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.resources: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `resources` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resources` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.roles
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL,
+  `nome` varchar(50) DEFAULT NULL,
+  `is_admin` tinyint(1) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.roles: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.turma
+CREATE TABLE IF NOT EXISTS `turma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `escola_id` int(11) NOT NULL,
+  `turma` varchar(100) NOT NULL,
+  `numero` varchar(10) NOT NULL,
+  `regiao` varchar(100) NOT NULL,
+  `bairro` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_turma_escola` (`escola_id`),
+  CONSTRAINT `FK_turma_escola` FOREIGN KEY (`escola_id`) REFERENCES `escola` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.turma: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `turma` DISABLE KEYS */;
+INSERT INTO `turma` (`id`, `escola_id`, `turma`, `numero`, `regiao`, `bairro`) VALUES
+	(1, 1, 'A1', '1', 'Central', 'Centro'),
+	(2, 2, 'Teste', '450', 'Central', 'Centro');
+/*!40000 ALTER TABLE `turma` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela logada.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `salt` varchar(255) DEFAULT NULL,
+  `active` tinyint(1) DEFAULT NULL,
+  `activation_key` varchar(255) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela logada.users: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

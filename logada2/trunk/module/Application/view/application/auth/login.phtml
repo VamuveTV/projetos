@@ -1,0 +1,68 @@
+<?php
+$title = 'Logado';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('login/process', array(
+		'action' => 'authenticate'
+)));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+
+<?php
+echo $this->formRow($form->get('email'), null, true);
+echo $this->formRow($form->get('password'), null, true);
+echo $this->formRow($form->get('submit'), null, true);
+?>
+
+<?php
+echo $this->form()->closeTag();
+?>
+
+<?php
+if ($this->messages){
+	echo '<ul>';
+	foreach($this->messages as $message)
+	{
+		echo '<li>'.$message.'</li>';
+	}
+	echo '</ul>';
+}
+
+/*
+$form = $this->form;
+$form->setAttribute('action', $this->url('login/process', array(
+    'action' => 'authenticate'
+)));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+
+echo $this->formCollection($form);
+
+
+/*
+echo $this->formLabel($form->get('email'));
+echo $this->formInput($form->get('email'));
+echo $this->formElementErrors($form->get('email'));
+echo $this->formLabel($form->get('password'));
+echo $this->formInput($form->get('password'));
+echo $this->formElementErrors($form->get('password'));
+/
+echo $this->form()->closeTag();
+
+
+if ($this->messages) {
+    echo '<ul>';
+    foreach ($this->messages as $message) {
+        echo '<li>' . $message . '</li>';
+    }
+    echo '</ul>';
+}
+*/

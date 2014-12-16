@@ -1,0 +1,76 @@
+<?php
+
+namespace Acesso\Entity;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name="materia")
+ * @ORM\Entity */
+class Materia {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $nome;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $sigla;
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @param mixed $sigle
+     */
+    public function setSigle($sigle)
+    {
+        $this->sigle = $sigle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSigle()
+    {
+        return $this->sigle;
+    }
+
+
+}

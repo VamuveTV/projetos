@@ -1,0 +1,25 @@
+<?php
+
+namespace Alunos\Entity;
+
+use Doctrine\ORM\EntityRepository;
+
+class AlunoRepository extends EntityRepository{
+
+    public function findByMatriculaAndPassword($matricula,$password,$escola){
+
+        $aluno = $this->findOneByMatricula($matricula);
+
+        if($aluno){
+            if($aluno->getEscola() != $escola->getNome())
+                return false;
+
+            if($aluno->getSenha() == $password)
+                return $aluno;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+}

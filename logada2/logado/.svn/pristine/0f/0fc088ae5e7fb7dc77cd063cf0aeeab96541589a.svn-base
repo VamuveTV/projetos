@@ -1,0 +1,61 @@
+<?php
+
+$title = 'Adicionar Escola';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<form method="post">
+    <div class="control-group">
+        <label class="control-label" for="nome">Nome</label>
+        <div class="controls">
+            <input type="text" id="nome" name="nome">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="diretor">Diretor</label>
+        <div class="controls">
+            <input type="text" id="diretor" name="diretor">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="endereco">Endereço</label>
+        <div class="controls">
+            <input type="text" id="endereco" name="endereco">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="bairro">Bairro</label>
+        <div class="controls">
+            <input type="text" id="bairro" name="bairro">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Região</label>
+        <div class="controls">
+            <input type="text" id="regiao" name="regiao">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="regiao">Diivsão de notas</label>
+        <div class="controls">
+            <select name="tipo_nota">
+                <option value="B">Bimestre</option>
+                <option value="T">Trimestre</option>
+                <option value="S">Semestre</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            <button type="button" onclick="document.location='../'" class="btn btn-info">Voltar</button>
+        </div>
+    </div>
+</form>

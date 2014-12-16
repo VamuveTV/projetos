@@ -1,0 +1,79 @@
+<style type="text/css">
+input{
+    margin: 5px;
+}
+</style>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript">
+    function buscaCampos()
+    {
+        var ano = $('#ano').val();
+        var materia = $('#materia').val();
+        $.ajax({
+            type: "POST",
+            data: {'cod_aluno':<?php echo $aluno->getId();?>,'tipo_nota':'<?php echo $tipo_nota;?>','ano':ano,'materia':materia},
+            url: '/alunos/buscaCampos',
+            success: function(dados) {
+                $('#area_campos').html(dados);
+            }
+        });
+    }
+
+    function salvaNotas()
+    {
+        <?php
+        if($tipo_nota == 'B'){
+            echo "var nota1 = $('#nota1').val();";
+            echo "var nota2 = $('#nota2').val();";
+            echo "var nota3 = $('#nota3').val();";
+            echo "var nota4 = $('#nota4').val();";
+        }
+        elseif($tipo_nota == 'T'){
+            echo "var nota1 = $('#nota1').val();";
+            echo "var nota2 = $('#nota2').val();";
+            echo "var nota3 = $('#nota3').val();";
+            echo "var nota4 = '';";
+        }
+        else{
+            echo "var nota1 = $('#nota1').val();";
+            echo "var nota2 = $('#nota2').val();";
+            echo "var nota3 = '';";
+            echo "var nota4 = '';";
+        }
+        ?>
+        var ano = $('#ano').val();
+        var materia = $('#materia').val();
+        $.ajax({
+            type: "POST",
+            data: {'cod_aluno':<?php echo $aluno->getId();?>,'tipo_nota':'<?php echo $tipo_nota;?>','ano':ano,'materia':materia,'nota1':nota1,'nota2':nota2,'nota3':nota3,'nota4':nota4},
+            url: '/alunos/salvaNotas',
+            success: function(dados) {
+                $('#area_campos').html("<h4>Notas modificadas com sucesso</h4>");
+            }
+        });
+    }
+</script>
+
+<?php
+
+$title = 'LANÇAR NOTAS';
+$this->headTitle($title);
+
+?>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<h2><?php echo $this->escapeHtml($title); ?></h2>
+<br class="limpa"><br class="limpa">
+<div>
+    <label class="label-admin">Aluno:</label> <?php echo $aluno->getNome();?><br><br>
+    <label class="label-admin">Ano:</label> <input type="text" class="input-admin" name="ano" id="ano" size="4"><br><br>
+    <label class="label-admin">Matéria:</label> <select class="input-admin" name="materia" id="materia">
+                        <?php
+                        foreach($materias AS $materia){
+                            echo "<option value='".$materia->getId()."'>".$materia->getNome()."</option>";
+                        }
+                        ?>
+                     </select><br><br>
+    <button class="btn btn-admin" onclick="buscaCampos()">Continuar</button>
+</div>
+<br>
+<div id="area_campos"></div>

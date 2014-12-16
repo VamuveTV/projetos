@@ -1,0 +1,151 @@
+<?php
+//ESTA PAGINA RECEBE 2 OBJETOS COMO PARAMETRO
+//$aluno = O aluno que está logado
+//$perfil = O aluno do perfil deseja que foi mencionado na url (se não for mencionado $perfil é igual $aluno)
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript">
+$(document).ready(function(){
+    $.ajax({
+        type: "POST",
+        data: {'destinatario':<?php echo $perfil->getId();?>},
+        url: '/acesso/buscaPost',
+        success: function(dados) {
+            $('#teste').html(dados);
+        }
+    });
+})
+function enviaPost()
+{
+    $.ajax({
+        type: "POST",
+        data: {'mensagem':$('#mensagem').val(),'remetente':<?php echo $aluno->getId();?>,'tipo_remetente':'<?php echo $tipo_logado;?>','destinatario':<?php echo $perfil->getId();?>,'tipo_destinatario':'A'},
+        url: '/acesso/envia',
+        success: function(dados) {
+            $('#teste').html(dados);
+            $('#mensagem').val('');
+        }
+    });
+}
+function addAmigo(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/addAmigo',
+        success: function(dados) {
+            $('#area_btn_amigos').html("Nova amizade realizada");
+        }
+    });
+}
+function denunciar(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/denuncia',
+        success: function(dados) {
+            $('#area_btn_amigos').html("Denúncia realizada");
+        }
+    });
+}
+function enviaCoracao(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/coracao',
+        success: function(dados) {
+            $('#area_coracao').html('<img src="/public/img/ico_coracao.png">');
+            $('#area_coracao').after("&nbsp;Coração enviado com sucesso");
+        }
+    });
+}
+
+function enviaAperto(cod)
+{
+    $.ajax({
+        type: "POST",
+        data: {'logado':'<?php echo $aluno->getId();?>','amigo':cod},
+        url: '/acesso/aperto',
+        success: function(dados) {
+            $('#area_aperto').html('<img src="/public/img/ico_aperto.png">');
+            $('#area_aperto').after("&nbsp;Aperto de mão enviado com sucesso");
+        }
+    });
+}
+</script>
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+<div>
+    <div id="topo_perfil">
+        <br>
+        <?php
+        if($perfil->getFoto() != ''){
+            $foto = $perfil->getFoto();
+            echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+        }else
+            echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+
+        if($aluno == $perfil):
+            echo '<br><a href="/perfil/foto">Atualizar foto</a>';
+        endif;
+        ?>
+        <h3></b><?php echo $perfil->getNome();?></h3>
+        <p><b>Escola: </b><?php echo $perfil->getEscola();?></p>
+        <p><b>Série: </b><?php echo $perfil->getSerie();?></p>
+        <?php
+        //verificando se não são amigos para adicionar o botão de adicionar amizade
+        if($aluno != $perfil){ //nao esta no proprio perfil
+            if(!in_array($perfil->getId(),$amigos))
+                echo '<span id="area_btn_amigos"><button class="btn btn-primary" onclick="addAmigo('.$perfil->getId().')">Adicionar aos amigos</button></span>';
+
+                echo "<span id='area_coracao'><img src='/public/img/ico_coracao.png'>";
+                $label_coracao = $n_coracoes==1?'coração':'corações';
+                echo "&nbsp;$n_coracoes $label_coracao";
+                if($coracao == '0')
+                    echo "&nbsp;<a href='#' id='linkcoracao' onclick='enviaCoracao(".$perfil->getId().")'>(enviar coração)</a>";
+                echo "</span><br>";
+
+                echo "<span id='area_aperto'><img src='/public/img/ico_aperto.png'>";
+                $label_aperto = $n_apertos==1?'aperto':'apertos';
+                echo "&nbsp;$n_apertos $label_aperto de mão";
+                if($aperto == '0')
+                    echo "&nbsp;<a href='#' id='linkaperto' onclick='enviaAperto(".$perfil->getId().")'>(enviar aperto de mão)</a>";
+                echo "</span>";
+
+                echo "<a href='#' style='float: right' onclick='denunciar(".$perfil->getId().")'>Denunciar esta pessoa</a>";
+        }
+        else
+            echo "<a href='/editaperfil'>Editar perfil</a>";
+        ?>
+    </div>
+    <div class="limpa"></div>
+    <div id="meio_perfil">
+        <?php
+        if($aluno != $perfil):
+        ?>
+        <h3>GOSTARIA DE FALAR ALGO PARA <?php echo strtoupper($perfil->getNome());?>?</h3>
+        <textarea id="mensagem"></textarea>
+        <button class="btn" onclick="enviaPost()">Enviar</button>
+        <?php
+        endif;
+        ?>
+    </div>
+    <div id="fim_perfil">
+        <h3>SUAS POSTAGENS</h3>
+    </div>
+    <div id="teste"></div>
+</div>

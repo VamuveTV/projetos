@@ -1,0 +1,41 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<div>
+    <div id="topo_perfil">
+        <br>
+        <?php
+        if($foto != '')
+            echo "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+        else
+            echo '<img src="/public/img/semfoto.jpg" id="foto_perfil">';
+        ?>
+        <h3>Atualizar foto</h3>
+        <p style="clear:both"></p>
+        <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="nova">Selecione a foto</label>
+            <input type="file" name="nova" id="nova" style="clear:both">
+            <p class="help-block">Esta será sua nova foto de perfil.</p>
+        </div>
+        <input type="submit" value="Enviar" class="btn btn-success">
+        <input type="button" value="Voltar" class="btn" onclick="document.location='/perfil'">
+        </form>
+        <?php
+        if($msg != ''){
+            echo "<h4>$msg</h4>";
+        }
+        ?>
+    </div>
+</div>

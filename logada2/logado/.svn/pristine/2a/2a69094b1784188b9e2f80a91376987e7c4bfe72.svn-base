@@ -1,0 +1,75 @@
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('estilo')==null || $.cookie('estilo')=='claro'){
+            $('#file_estilo').attr('href','/public/css/estilo_interno.css');
+
+        }else{
+            $('#file_estilo').attr('href','/public/css/estilo_internoE.css');
+            $('#logo').attr('src','/public/img/logo-logada-branco.png');
+        }
+
+        $('#acessar').click(function(){
+            var caminho = 'http://' + $('#url').val();
+            $('#navegador').html("<iframe src='"+caminho+"' style='background: #fff;width: 95%; height: 400px'></iframe>");
+            $.ajax({
+                type: "POST",
+                data: {'usuario':<?php echo $logado->getId();?>,'tipo':'<?php echo $tipo_logado;?>','url':caminho},
+                url: '/acesso/enviaAcesso',
+                success: function(dados) {
+                    return true;
+                }
+            });
+        })
+
+        $('#url').keypress(function(e) {
+            if(e.which == 13) {
+                var caminho = 'http://' + $('#url').val();
+                $('#navegador').html("<iframe src='"+caminho+"' style='background: #fff;width: 95%; height: 400px'></iframe>");
+                $.ajax({
+                    type: "POST",
+                    data: {'usuario':<?php echo $logado->getId();?>,'tipo':'<?php echo $tipo_logado;?>','url':caminho},
+                    url: '/acesso/enviaAcesso',
+                    success: function(dados) {
+                        return true;
+                    }
+                });
+            }
+        });
+    })
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="" media="all" />
+<script type="text/javascript" src="/public/js/tamanhoTextos.js"></script>
+<div>
+    <div>
+        <h2>INTERNET</h2>
+        <br class="limpa">
+        <div>
+            <input type="text" id="url" style="width: 65%"> <button id="acessar" class="btn btn-success">Acessar</button>
+        </div>
+        <br class="limpa">
+        <div id="navegador">
+
+        </div>
+
+        <br class="limpa">
+        <a data-toggle="modal" href="#myModal2" style="float: right"><img src="/public/img/ico-libras-escuro.png" alt="" border="0"></a>
+        <br class="limpa">
+    </div>
+</div>
+
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <?php
+                echo $video->getVideo();
+                ?>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Fechar</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

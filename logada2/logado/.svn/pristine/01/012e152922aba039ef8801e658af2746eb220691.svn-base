@@ -1,0 +1,2001 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Acesso\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Helper\Placeholder\Container;
+use Zend\View\Model\ViewModel;
+
+use Zend\Authentication\AuthenticationService,
+    Zend\Authentication\Storage\Session as SessionStorage,
+    Zend\Session\Container as sessionContainer;
+
+use Zend\Stdlib\Hydrator;
+
+use Acesso\Entity\Post;
+use Acesso\Entity\Amigoa;
+use Acesso\Entity\Amigof;
+use Acesso\Entity\Opinea;
+use Acesso\Entity\Opinee;
+use Acesso\Entity\Opinef;
+use Acesso\Entity\Acesso;
+use Acesso\Entity\Coracao;
+use Acesso\Entity\Aperto;
+use Acesso\Entity\Preferido;
+use Atividades\Entity\Atividade;
+use Zend\View\View;
+use Acesso\Entity\Notificacao;
+use Alunos\Entity\Aluno;
+use Acesso\Entity\Denuncia;
+use Acesso\Entity\Video;
+use Acesso\Utils\Location;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo == 'A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+
+                $comp = ''; //complemento da query;
+                //buscando os amigos de quem esta logado
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Amigoa a WHERE a.amigo1='.$id_aluno.' OR a.amigo2='.$id_aluno);
+                $dados = $query->getResult();
+                $amigos = array();
+                foreach($dados AS $amigo){
+                    if($amigo->getAmigo1() == $id_aluno){
+                        $a = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $amigo->getAmigo2());
+                        $amigos[] = $a;
+                        $comp.= ' OR p.remetente_id='.$amigo->getAmigo2();
+                    }else{
+                        $a = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $amigo->getAmigo1());
+                        $amigos[] = $a;
+                        $comp.= ' OR p.remetente_id='.$amigo->getAmigo1();
+                    }
+                }
+
+                //buscando os posts dos amigos
+                $query  = $this->getObjectManager()->createQuery('SELECT p FROM \Acesso\Entity\Post p WHERE p.id > 0 AND (p.remetente_id='.$id_aluno.' '.$comp.') ORDER BY p.data DESC');
+                $posts = $query->getResult();
+
+                //buscando os nomes dos destinatrios e remetentes
+                $nomes_remetentes = $nomes_destinatarios = $fotos_remetentes = $icones = array();
+                foreach($posts as $msg){
+                    //buscando o nome do Remetente
+                    $remetente = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getRemetenteId());
+                    $nomes_remetentes[] = $remetente->getNome();
+                    $fotos_remetentes[] = $remetente->getFoto();
+                    $icones[] = $msg->getIcon();
+
+                    //buscando o nome do Destinatario
+                    $destinatario = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getDestinatarioId());
+                    $nomes_destinatarios[] = $destinatario->getNome();
+                }
+            }
+            else if($sessao->tipo == 'F'){
+                //buscando os dados do funcionario logado
+                $func = $auth->getIdentity()[0];
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+                $id_func = $func->getId();
+                $aluno = $func;
+
+                $comp = ''; //complemento da query;
+
+                //buscando os amigos de quem esta logado
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Amigof a WHERE a.funcionario='.$id_func);
+                $dados = $query->getResult();
+                $amigos = array();
+                foreach($dados AS $amigo){
+                    $a = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $amigo->getAluno());
+                    $amigos[] = $a;
+                    $comp.= ' OR p.remetente_id='.$amigo->getAluno();
+                }
+
+                //buscando os posts dos amigos
+                $query  = $this->getObjectManager()->createQuery('SELECT p FROM \Acesso\Entity\Post p WHERE p.id > 0 AND (p.remetente_id='.$id_func.' '.$comp.') ORDER BY p.data DESC');
+                $posts = $query->getResult();
+
+                //buscando os nomes dos destinatrios e remetentes
+                $nomes_remetentes = $nomes_destinatarios = $fotos_remetentes = $icones = array();
+                foreach($posts as $msg){
+                    //buscando o nome do Remetente
+                    $remetente = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getRemetenteId());
+                    $nomes_remetentes[] = $remetente->getNome();
+                    $fotos_remetentes[] = $remetente->getFoto();
+                    $icones[] = $msg->getIcon();
+
+                    //buscando o nome do Destinatario
+                    $destinatario = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getDestinatarioId());
+                    $nomes_destinatarios[] = $destinatario->getNome();
+                }
+            }
+
+            //buscando video da pagina
+            $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'home\'');
+            $dados = $query->getResult();
+            $video = $dados[0];
+            return new ViewModel(array('video'=>$video,'logado'=>$aluno,'posts'=>$posts,'icones'=>$icones,'fotos_remetentes'=>$fotos_remetentes,'nomes_remetentes'=>$nomes_remetentes,'nomes_destinatarios'=>$nomes_destinatarios));
+        }
+    }
+
+    public function contatoAction(){
+        //buscando video da pagina
+        $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'faleconosco\'');
+        $dados = $query->getResult();
+        $video = $dados[0];
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo=='A'){
+                //buscando os dados do aluno logado
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+            }
+            else if($sessao->tipo=='F'){
+                $func = $auth->getIdentity()[0];
+                $aluno = $func;
+                $id_func = $func->getId();
+            }
+
+            if($this->request->isPost()){
+                //disparar o email
+            }
+            return new ViewModel(array('video'=>$video,'tipo_logado'=>$tipo_logado,'aluno'=>$aluno));
+        }
+    }
+
+    public function internetAction(){
+        //buscando video da pagina
+        $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'internet\'');
+        $dados = $query->getResult();
+        $video = $dados[0];
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo=='A'){
+                //buscando os dados do aluno logado
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+
+                return new ViewModel(array('video'=>$video,'tipo_logado'=>$tipo_logado,'logado'=>$aluno));
+            }
+            else if($sessao->tipo=='F'){
+                $func = $auth->getIdentity()[0];
+                $aluno = $func;
+                $id_func = $func->getId();
+
+                return new ViewModel(array('video'=>$video,'tipo_logado'=>$tipo_logado,'logado'=>$func));
+            }
+        }
+    }
+
+    public function sentindoAction(){
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo == 'A'){ //aluno
+                //buscando os dados do aluno logado
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $tipo_logado = 'A'; //quem esta logado é um aluno
+
+                return new ViewModel(array('aluno'=>$aluno,'tipo_logado'=>$tipo_logado));
+            }
+            else if($sessao->tipo == 'F'){
+                //buscando os dados do funcionario logado
+                $func = $auth->getIdentity()[0];
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+
+                return new ViewModel(array('aluno'=>$func,'tipo_logado'=>$tipo_logado));
+            }
+        }
+    }
+
+    public function sentindo2Action(){
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo == 'A'){
+                //buscando os dados do aluno logado
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $tipo_logado = 'A'; //quem esta logado é um aluno
+            }
+            else if($sessao->tipo == 'F'){
+                $func = $auth->getIdentity()[0];
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+                $id_aluno = $func->getId();
+                $aluno = $func;
+            }
+
+            if($this->request->isPost()){
+                $comentario = $this->getRequest()->getPost('comentario');
+
+                //buscando o post o icon postado anteriormente
+                $ultimo = $this->getObjectManager()->createQuery('SELECT MAX(p.id) AS id FROM \Acesso\Entity\Post as p WHERE p.remetente_id='.$id_aluno.' AND p.destinatario_id='.$id_aluno.' AND p.tipo_remetente=\''.$tipo_logado.'\'')
+                            ->getSingleResult();
+
+                $query  = $this->getObjectManager()->createQuery('UPDATE \Acesso\Entity\Post p SET p.mensagem=\''.$comentario.'\' WHERE p.id='.$ultimo['id']);
+                $num = $query->execute();
+
+                return $this->redirect()->toRoute('home');
+
+            }
+
+            return new ViewModel(array('aluno'=>$aluno,'tipo_logado'=>$tipo_logado));
+        }
+    }
+
+    public function opineAction(){
+
+        //buscando video da pagina
+        $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'opine\'');
+        $dados = $query->getResult();
+        $video = $dados[0];
+
+        return new ViewModel(array('video'=>$video));
+    }
+
+    public function opineAlunosAction(){
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            $funcao = "A";
+            if($sessao->tipo=='A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+            }
+            else if($sessao->tipo == 'F'){
+                $func = $auth->getIdentity()[0];
+                $aluno = $func;
+                $id_func = $func->getId();
+                $funcao = $func->getFuncao();
+            }
+
+            $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+
+            if ($this->request->isPost()) {
+                /*
+                $parametros = array();
+                if($this->getRequest()->getPost('busca_escola')!='')
+                    $parametros['escola']=$this->getRequest()->getPost('busca_escola');
+                if($this->getRequest()->getPost('busca_serie')!='')
+                    $parametros['serie']=$this->getRequest()->getPost('busca_serie');
+
+                $alunos = $this->getObjectManager()->getRepository('\Alunos\Entity\Aluno')->findBy($parametros);
+                */
+                $parametros = '';
+                if($this->getRequest()->getPost('busca_escola')!='')
+                    $parametros.= " AND a.escola=".$this->getRequest()->getPost('busca_escola');
+                if($this->getRequest()->getPost('busca_serie')!='')
+                    $parametros.= " AND a.serie=".$this->getRequest()->getPost('busca_serie');
+                if($this->getRequest()->getPost('busca_nome')!='Nome')
+                    $parametros.= " AND a.nome LIKE '%".$this->getRequest()->getPost('busca_nome')."%'";
+
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Alunos\Entity\Aluno a WHERE a.id > 0 '.$parametros);
+                $alunos = $query->getResult();
+
+                $notas = array();
+
+                //buscando a nota de cada aluno
+                foreach($alunos as $aluno){
+                    //NOVO MODO: PEGA A MEDIA DE NOTAS RECEBIDAS PELO ALUNO
+                    $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinea o WHERE o.avaliado='.$aluno->getId());
+                    $dados = $query->getResult();
+                    $avaliado = $aluno->getId();
+                    $ct = $soma_nota = 0;
+
+                    if($dados){
+                        foreach($dados AS $o){
+                            $nota = $o->getNota();
+                            $soma_nota+= $nota;
+                            $ct++;
+                        }
+                        $notas[$avaliado] = $soma_nota / $ct;
+                    }
+                    else
+                        $notas[$avaliado] = 0;
+
+                    /* MODO ANTIGO: PEGAVA A NOTA DADA AO ALUNO POR QUEM ESTA LOGADO
+                    $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinea o WHERE o.avaliador='.$id_aluno.' AND o.avaliado='.$aluno->getId());
+                    $dados = $query->getResult();
+                    $avaliado = $aluno->getId();
+
+                    if($dados){
+                        $nota = $dados[0]->getNota();
+                        $notas[$avaliado] = $nota;
+                    }
+                    else
+                        $notas[$avaliado] = 0;
+                    */
+                }
+
+                return new ViewModel(array('funcao'=>$funcao,'tipo_logado'=>$tipo_logado,'notas'=>$notas,'logado'=>$aluno,'alunos'=>$alunos,'escolas'=>$escolas));
+            }
+
+            return new ViewModel(array('funcao'=>$funcao,'tipo_logado'=>$tipo_logado,'logado'=>$aluno,'escolas'=>$escolas));
+        }
+    }
+
+    public function opineFuncionariosAction(){
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo=='A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+            }
+            else if($sessao->tipo=='F'){
+                $func = $auth->getIdentity()[0];
+                $aluno = $func;
+                $id_func = $func->getId();
+            }
+
+            $funcionarios = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findAll();
+
+            if ($this->request->isPost()) {
+                $parametros = array();
+                if($this->getRequest()->getPost('busca_funcao')!='')
+                    $parametros['funcao']=$this->getRequest()->getPost('busca_funcao');
+
+                $funcionarios = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findBy($parametros);
+            }
+
+            $notas = array();
+
+            //buscando a nota de cada funcionario
+            foreach($funcionarios as $funcionario){
+                //NOVO MODO: PEGA A MEDIA DE NOTAS RECEBIDAS PELO ALUNO
+                $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinef o WHERE o.funcionario='.$funcionario->getId());
+                $dados = $query->getResult();
+                $avaliado = $funcionario->getId();
+                $ct = $soma_nota = 0;
+
+                if($dados){
+                    foreach($dados AS $o){
+                        $nota = $o->getNota();
+                        $soma_nota+= $nota;
+                        $ct++;
+                    }
+                    $notas[$avaliado] = $soma_nota / $ct;
+                }
+                else
+                    $notas[$avaliado] = 0;
+            }
+
+
+            return new ViewModel(array('tipo_logado'=>$tipo_logado,'logado'=>$aluno,'funcionarios'=>$funcionarios,'notas'=>$notas));
+        }
+    }
+
+    public function avaliaFuncionariosAction(){
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo=='A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+            }
+            else if($sessao->tipo=='F'){
+                $func = $auth->getIdentity()[0];
+                $aluno = $func;
+                $id_func = $id_aluno = $func->getId();
+            }
+
+            $id_func = $this->params()->fromRoute('id', 0);
+            $funcionario = $this->getObjectManager()->find('\Funcionarios\Entity\Funcionario', $id_func);
+
+            $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinef o WHERE o.tipo_avaliador=\''.$tipo_logado.'\' AND o.avaliador='.$id_aluno.' AND o.funcionario='.$funcionario->getId());
+            $dados = $query->getResult();
+            if($dados){
+                $nota = $dados[0]->getNota();
+                $obs = $dados[0]->getObservacao();
+            }
+            else{
+                $nota = 0;
+                $obs = '';
+            }
+
+            return new ViewModel(array('logado'=>$aluno,'funcionario'=>$funcionario,'nota'=>$nota,'observacao'=>$obs));
+        }
+    }
+
+    public function avaliaEscolasAction(){
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            $funcao = "A";
+            if($sessao->tipo=='A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+            }
+            else if($sessao->tipo == 'F'){
+                $func = $auth->getIdentity()[0];
+                $aluno = $func;
+                $id_func = $id_aluno = $func->getId();
+                $funcao = $func->getFuncao();
+            }
+
+            $id_escola = $this->params()->fromRoute('id', 0);
+            $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id_escola);
+
+            $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinee o WHERE o.tipo_avaliador=\''.$tipo_logado.'\' AND o.avaliador='.$id_aluno.' AND o.escola='.$escola->getId());
+            $dados = $query->getResult();
+            if($dados){
+                $nota = $dados[0]->getNota();
+                $obs = $dados[0]->getObservacao();
+            }
+            else{
+                $nota = 0;
+                $obs = '';
+            }
+
+            return new ViewModel(array('logado'=>$aluno,'escola'=>$escola,'nota'=>$nota,'observacao'=>$obs));
+        }
+    }
+
+    public function avaliaAlunosAction(){
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo=='A'){
+                //buscando os dados do aluno logado
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+            }
+            else if($sessao->tipo=='F'){
+                $func = $auth->getIdentity()[0];
+                $aluno = $func;
+                $id_func = $id_aluno = $func->getId();
+            }
+
+            $id_amigo = $this->params()->fromRoute('id', 0);
+            $amigo = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_amigo);
+
+            $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinea o WHERE o.tipo_avaliador=\''.$tipo_logado.'\' AND o.avaliador='.$id_aluno.' AND o.avaliado='.$amigo->getId());
+            $dados = $query->getResult();
+            if($dados){
+                $nota = $dados[0]->getNota();
+                $obs = $dados[0]->getObservacao();
+            }
+            else{
+                $nota = 0;
+                $obs = '';
+            }
+
+            return new ViewModel(array('tipo_logado'=>$tipo_logado,'logado'=>$aluno,'amigo'=>$amigo,'nota'=>$nota,'observacao'=>$obs));
+        }
+    }
+
+    public function opineEscolasAction(){
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($tipo_logado == 'A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $nome_escola = $aluno->getEscola();
+
+                //buscando o ID da escola
+                $query  = $this->getObjectManager()->createQuery("SELECT e FROM \Escolas\Entity\Escola e WHERE e.nome='$nome_escola'");
+                $dados = $query->getResult();
+                $escola = $dados[0];
+
+                $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinee o WHERE o.escola='.$escola->getId());
+                $dados = $query->getResult();
+                $ct = $soma_nota = 0;
+
+                if($dados){
+                    foreach($dados AS $o){
+                        $nota = $o->getNota();
+                        $soma_nota+= $nota;
+                        $ct++;
+                    }
+                    $nota = $soma_nota / $ct;
+                }
+                else
+                    $nota = 0;
+
+                return new ViewModel(array('tipo_logado'=>$tipo_logado,'logado'=>$aluno,'escola'=>$escola,'nota'=>$nota));
+            }
+            else if($tipo_logado == 'F'){
+                $func = $auth->getIdentity()[0];
+                $id_func = $func->getId();
+
+                $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+                $notas = array();
+                foreach($escolas As $escola){
+                    $query  = $this->getObjectManager()->createQuery('SELECT o FROM \Acesso\Entity\Opinee o WHERE o.escola='.$escola->getId());
+                    $dados = $query->getResult();
+                    $ct = $soma_nota = 0;
+
+                    if($dados){
+                        foreach($dados AS $o){
+                            $nota = $o->getNota();
+                            $soma_nota+= $nota;
+                            $ct++;
+                        }
+                        $notas[$escola->getId()] = $soma_nota / $ct;
+                    }
+                    else
+                        $notas[$escola->getId()] = 0;
+                }
+
+                return new ViewModel(array('tipo_logado'=>$tipo_logado,'logado'=>$func,'escolas'=>$escolas,'notas'=>$notas));
+            }
+        }
+    }
+
+    public function enviaNotaAlunoAction(){
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $query  = $this->getObjectManager()->createQuery('DELETE FROM \Acesso\Entity\Opinea o WHERE o.tipo_avaliador=\''.$tipo_logado.'\' AND o.avaliador='.$_POST['avaliador'].' AND o.avaliado='.$_POST['avaliado']);
+        $numDeleted = $query->execute();
+
+        $opine = new Opinea();
+        $opine->setAvaliado($_POST['avaliado']);
+        $opine->setAvaliador($_POST['avaliador']);
+        $opine->setNota($_POST['nota']);
+        $opine->setObservacao($_POST['observacao']);
+        $opine->setTipoAvaliador($tipo_logado);
+
+        $this->getObjectManager()->persist($opine);
+        $this->getObjectManager()->flush();
+        $newId = $opine->getId();
+
+        echo $newId;
+    }
+
+    public function enviaNotaEscolaAction(){
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $query  = $this->getObjectManager()->createQuery('DELETE FROM \Acesso\Entity\Opinee o WHERE o.tipo_avaliador=\''.$tipo_logado.'\' AND o.avaliador='.$_POST['avaliador'].' AND o.escola='.$_POST['escola']);
+        $numDeleted = $query->execute();
+
+        $opine = new Opinee();
+        $opine->setEscola($_POST['escola']);
+        $opine->setAvaliador($_POST['avaliador']);
+        $opine->setNota($_POST['nota']);
+        $opine->setObservacao($_POST['observacao']);
+        $opine->setTipoAvaliador($tipo_logado);
+
+        $this->getObjectManager()->persist($opine);
+        $this->getObjectManager()->flush();
+        $newId = $opine->getId();
+
+        echo $newId;
+    }
+
+    public function enviaNotaFuncionarioAction(){
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $query  = $this->getObjectManager()->createQuery('DELETE FROM \Acesso\Entity\Opinef o WHERE o.tipo_avaliador=\''.$tipo_logado.'\' AND o.avaliador='.$_POST['avaliador'].' AND o.funcionario='.$_POST['funcionario']);
+        $numDeleted = $query->execute();
+
+        $opine = new Opinef();
+        $opine->setFuncionario($_POST['funcionario']);
+        $opine->setAvaliador($_POST['avaliador']);
+        $opine->setNota($_POST['nota']);
+        $opine->setObservacao($_POST['observacao']);
+        $opine->setTipoAvaliador($tipo_logado);
+
+        $this->getObjectManager()->persist($opine);
+        $this->getObjectManager()->flush();
+        $newId = $opine->getId();
+
+        echo $newId;
+    }
+
+    public function amigosAction()
+    {
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            //buscando video da pagina
+            $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'amigos\'');
+            $dados = $query->getResult();
+            $video = $dados[0];
+
+            if($sessao->tipo == 'A'){ //aluno
+                //buscando os dados do aluno logado
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $tipo_logado = 'A'; //quem esta logado é um aluno
+
+                //buscando os amigos
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Amigoa a WHERE a.amigo1='.$id_aluno.' OR a.amigo2='.$id_aluno);
+                $dados = $query->getResult();
+                $amigos = array();
+                foreach($dados AS $amigo){
+                    if($amigo->getAmigo1() == $id_aluno){
+                        $a = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $amigo->getAmigo2());
+                        $amigos[] = $a;
+                    }else{
+                        $a = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $amigo->getAmigo1());
+                        $amigos[] = $a;
+                    }
+                }
+
+                //buscando os amigos preferidos
+                $preferidos = array();
+                foreach($amigos AS $cod_amigo){
+                    $cod_amigo = $cod_amigo->getId();
+                    $query  = $this->getObjectManager()->createQuery('SELECT p FROM \Acesso\Entity\Preferido p WHERE p.remetente='.$id_aluno.' AND p.destinatario='.$cod_amigo);
+                    $dados = $query->getResult();
+                    if(count($dados)>0)
+                        $preferidos[] = $cod_amigo;
+                }
+            }
+            else if($sessao->tipo == 'F'){
+                //buscando os dados do funcionario logado
+                $func = $auth->getIdentity()[0];
+                $id_func = $func->getId();
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+                $aluno = $func; //objeto de quem esta logado que enviado a view
+
+                //buscando os amigos
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Amigof a WHERE a.funcionario='.$id_func);
+                $dados = $query->getResult();
+                $amigos = array();
+                foreach($dados AS $amigo){
+                    $a = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $amigo->getAluno());
+                    $amigos[] = $a;
+                }
+
+                //buscando os amigos preferidos
+                $preferidos = array();
+                foreach($amigos AS $cod_amigo){
+                    $cod_amigo = $cod_amigo->getId();
+                    $query  = $this->getObjectManager()->createQuery('SELECT p FROM \Acesso\Entity\Preferidof p WHERE p.funcionario='.$id_func.' AND p.aluno='.$cod_amigo);
+                    $dados = $query->getResult();
+                    if(count($dados)>0)
+                        $preferidos[] = $cod_amigo;
+                }
+            }
+
+            $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+            $turmas = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+
+            if ($this->request->isPost()) {
+                $parametros = array();
+                if($this->getRequest()->getPost('busca_amigo')!='')
+                    $parametros['nome']=$this->getRequest()->getPost('busca_amigo');
+                if($this->getRequest()->getPost('busca_escola')!='')
+                    $parametros['escola']=$this->getRequest()->getPost('busca_escola');
+                if($this->getRequest()->getPost('busca_turma')!='')
+                    $parametros['turma']=$this->getRequest()->getPost('busca_turma');
+                if($this->getRequest()->getPost('busca_periodo')!='')
+                    $parametros['periodo']=$this->getRequest()->getPost('busca_periodo');
+
+                $alunos = $this->getObjectManager()->getRepository('\Alunos\Entity\Aluno')->findBy($parametros);
+
+                return new ViewModel(array('video'=>$video,'preferidos'=>$preferidos,'logado'=>$aluno,'amigos'=>$amigos,'alunos'=>$alunos,'escolas'=>$escolas,'turmas'=>$turmas));
+            }
+
+            return new ViewModel(array('video'=>$video,'preferidos'=>$preferidos,'logado'=>$aluno,'tipo_logado'=>$tipo_logado,'amigos'=>$amigos,'escolas'=>$escolas,'turmas'=>$turmas));
+        }
+    }
+
+    public function fotoAction()
+    {
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage('Aluno'));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            $id_aluno = $auth->getIdentity()->getId();
+            $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+            if ($this->request->isPost()) {
+
+                $iniext_foto = strrpos($_FILES['nova']['name'],".");
+                $ext_foto    = substr($_FILES['nova']['name'],$iniext_foto);
+                $nome_foto   = $id_aluno.$ext_foto;
+
+                $caminho = 'public/fotos/alunos/';
+                $caminho.= $nome_foto;
+
+                if (move_uploaded_file($_FILES['nova']['tmp_name'], $caminho)){
+                    $msg = "Arquivo Enviado";
+                    $aluno->setFoto($nome_foto);
+                    $this->getObjectManager()->persist($aluno);
+                    $this->getObjectManager()->flush();
+                }
+                else {
+                    $msg = "Arquivo não enviado";
+                }
+            }
+            $foto = $aluno->getFoto();
+        }
+
+        return new ViewModel(array('foto'=>$foto,'msg'=>$msg));
+    }
+
+    public function atividadesAction()
+    {
+        //buscando video da pagina
+        $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'atividades\'');
+        $dados = $query->getResult();
+        $video = $dados[0];
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo == 'A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $tipo_logado = 'A';
+
+                //buscando o id da turma
+                $turma = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findBy(array('turma' => $aluno->getTurma()));
+                $turma = $turma[0];
+                $id_turma = $turma->getId();
+
+                $atividadesT = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findBy(array('tipo_destino' => 'T','id_destino'=>$id_turma));
+                $atividadesA = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findBy(array('tipo_destino' => 'A','id_destino'=>$id_aluno));
+
+                return new ViewModel(array('video'=>$video,'tipo_logado'=>$tipo_logado,'atividadesA'=>$atividadesA,'atividadesT'=>$atividadesT));
+            }
+            else if($sessao->tipo == 'F'){
+                $func = $auth->getIdentity()[0];
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+                $id_func = $func->getId();
+
+                $atividadesA = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findBy(array('tipo_dono' => 'F','id_dono'=>$id_func));
+                return new ViewModel(array('video'=>$video,'tipo_logado'=>$tipo_logado,'atividadesA'=>$atividadesA));
+            }
+        }
+
+
+    }
+
+    public function addAtividadeAction()
+    {
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo=='A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $tipo_logado = 'A';
+            }
+            else if($sessao->tipo == 'F'){
+                $func = $auth->getIdentity()[0];
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+                $id_func = $func->getId();
+            }
+
+            if ($this->request->isPost()) {
+                $atividade = new Atividade();
+                $atividade->setNome($this->getRequest()->getPost('nome'));
+                $atividade->setLocal($this->getRequest()->getPost('local'));
+                if($tipo_logado == 'A'){
+                    $atividade->setTipoDestino('A');
+                    $atividade->setIdDestino($id_aluno);
+                    $atividade->setIdDono($id_aluno);
+                }else{
+                    $atividade->setTipoDestino($this->getRequest()->getPost('tipo_destino'));
+                    $atividade->setIdDestino($this->getRequest()->getPost('id_destino'));
+                    $atividade->setIdDono($id_func);
+                }
+                $d = explode('/',$this->getRequest()->getPost('data'));
+                $data = $d[2].'-'.$d[1].'-'.$d[0];
+                $atividade->setData($data);
+                $atividade->setHoraInicio($this->getRequest()->getPost('hora_inicio'));
+                $atividade->setHoraFim($this->getRequest()->getPost('hora_fim'));
+                $atividade->setDescricao($this->getRequest()->getPost('descricao'));
+                $atividade->setTipoDono($tipo_logado);
+                $atividade->setDataCriacao(date('Y-m-d H:i:s'));
+
+                $this->getObjectManager()->persist($atividade);
+
+                $this->getObjectManager()->flush();
+                $newId = $atividade->getId();
+
+                return $this->redirect()->toRoute('atividades_aluno');
+            }
+
+
+        }
+
+        return new ViewModel(array('tipo_logado'=>$tipo_logado));
+
+    }
+
+    public function editAtividadeAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $atividade = $this->getObjectManager()->find('\Atividades\Entity\Atividade', $id);
+
+        if ($this->request->isPost()) {
+            $atividade->setNome($this->getRequest()->getPost('nome'));
+            $atividade->setLocal($this->getRequest()->getPost('local'));
+            $atividade->setTipoDestino($this->getRequest()->getPost('tipo_destino'));
+            $atividade->setIdDestino($this->getRequest()->getPost('id_destino'));
+            $d = explode('/',$this->getRequest()->getPost('data'));
+            $data = $d[2].'-'.$d[1].'-'.$d[0];
+            $atividade->setData($data);
+            $atividade->setHoraInicio($this->getRequest()->getPost('hora_inicio'));
+            $atividade->setHoraFim($this->getRequest()->getPost('hora_fim'));
+            $atividade->setDescricao($this->getRequest()->getPost('descricao'));
+            $atividade->setDataCriacao(date('Y-m-d H:i:s'));
+
+            $this->getObjectManager()->persist($atividade);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('atividades_aluno');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('atividade'=>$atividade));
+    }
+
+    public function calendarioAction()
+    {
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo == 'A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $tipo_logado = 'A';
+
+                //buscando o id da turma
+                $turma = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findBy(array('turma' => $aluno->getTurma()));
+                $turma = $turma[0];
+                $id_turma = $turma->getId();
+
+                $atividadesT = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findBy(array('tipo_destino' => 'T','id_destino'=>$id_turma));
+                $atividadesA = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findBy(array('tipo_destino' => 'A','id_destino'=>$id_aluno));
+
+                return new ViewModel(array('tipo_logado'=>$tipo_logado,'atividadesA'=>$atividadesA,'atividadesT'=>$atividadesT));
+            }
+            else if($sessao->tipo == 'F'){
+                $func = $auth->getIdentity()[0];
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+                $id_func = $func->getId();
+
+                $atividadesA = $this->getObjectManager()->getRepository('\Atividades\Entity\Atividade')->findBy(array('tipo_dono' => 'F','id_dono'=>$id_func));
+                return new ViewModel(array('tipo_logado'=>$tipo_logado,'atividadesA'=>$atividadesA));
+            }
+        }
+    }
+
+    public function perfilAction()
+    {
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($sessao->tipo == 'A'){
+                //buscando os dados do aluno logado
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+                $tipo_logado = 'A'; //quem esta logado é um aluno
+            }
+            else if($sessao->tipo == 'F'){
+                //buscando os dados do funcionario logado
+                $func = $auth->getIdentity()[0];
+                $id_func = $func->getId();
+                $tipo_logado = 'F'; //quem esta logado é um aluno
+                $aluno= $func;
+            }
+
+            //buscando os dados do perfil desejado /perfil/?
+            $id_perfil = $this->params()->fromRoute('id', 0);
+
+            if($id_perfil > 0)
+                $perfil = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_perfil);
+            else //se nao houver o perfil passa a ser $aluno
+                $perfil = $aluno;
+
+            if($sessao->tipo == 'A'){
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Amigoa a WHERE a.amigo1='.$id_aluno.' OR a.amigo2='.$id_aluno);
+                $dados = $query->getResult();
+                $amigos = array();
+                foreach($dados AS $amigo){
+                    if($amigo->getAmigo1() == $id_aluno)
+                        $amigos[] = $amigo->getAmigo2();
+                    else
+                        $amigos[] = $amigo->getAmigo1();
+                }
+            }
+            else if($sessao->tipo == 'F'){
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Amigof a WHERE a.funcionario='.$id_func);
+                $dados = $query->getResult();
+                $amigos = array();
+                foreach($dados AS $amigo){
+                    $amigos[] = $amigo->getAluno();
+                }
+            }
+            if($sessao->tipo == 'A'){
+                //verificando se coracao já foi enviado
+                $query  = $this->getObjectManager()->createQuery('SELECT c FROM \Acesso\Entity\Coracao c WHERE c.destinatario='.$id_perfil.' AND c.remetente='.$id_aluno);
+                $dados = $query->getResult();
+                $coracao = count($dados)>0?'1':'0';
+            }
+
+            //buscando a quantidade de coracoes recebidos
+            $query  = $this->getObjectManager()->createQuery('SELECT c FROM \Acesso\Entity\Coracao c WHERE c.destinatario='.$id_perfil);
+            $dados = $query->getResult();
+            $n_coracoes = count($dados);
+
+            if($sessao->tipo == 'A'){
+                //verificando se aperto já foi enviado
+                $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Aperto a WHERE a.destinatario='.$id_perfil.' AND a.remetente='.$id_aluno);
+                $dados = $query->getResult();
+                $aperto = count($dados)>0?'1':'0';
+            }
+
+            //buscando a quantidade de apertos recebidos
+            $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Aperto a WHERE a.destinatario='.$id_perfil);
+            $dados = $query->getResult();
+            $n_apertos = count($dados);
+
+            //buscando video da pagina
+            $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'perfil\'');
+            $dados = $query->getResult();
+            $video = $dados[0];
+
+            return new ViewModel(array('video'=>$video,'n_coracoes'=>$n_coracoes,'n_apertos'=>$n_apertos,'aperto'=>$aperto,'coracao'=>$coracao,'amigos'=>$amigos,'session_aluno'=>$auth,'aluno'=>$aluno,'perfil'=>$perfil,'tipo_logado'=>$tipo_logado));
+        }
+    }
+
+    public function denunciaAction(){
+        $denuncia = new Denuncia();
+        $denuncia->setRemetente($this->getRequest()->getPost('logado'));
+        $denuncia->setDestinatario($this->getRequest()->getPost('amigo'));
+        $denuncia->setTipo($this->getRequest()->getPost('tipo'));
+        $denuncia->setTexto($this->getRequest()->getPost('texto'));
+        $denuncia->setTipoRemetente($this->getRequest()->getPost('tipo_remetente'));
+        $denuncia->setTipoDestinatario($this->getRequest()->getPost('tipo_destinatario'));
+        $denuncia->setData(date("Y-m-d h:i;s"));
+
+        $this->getObjectManager()->persist($denuncia);
+        $this->getObjectManager()->flush();
+        $newId = $opine->getId();
+
+        echo $newId;
+
+        $viewModel = new ViewModel();
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
+
+    public function verNotasAction()
+    {
+        //buscando os dados do perfil desejado /perfil/?
+        $id_perfil = $this->params()->fromRoute('id', 0);
+        $perfil = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_perfil);
+
+        //buscando as notas
+        $query  = $this->getObjectManager()->createQuery('SELECT n FROM \Alunos\Entity\Nota n WHERE n.aluno='.$id_perfil.' ORDER BY n.ano DESC, n.materia ');
+        $dados = $query->getResult();
+
+        //buscando o tipo de nota que a escola trabalha
+        $escola = $perfil->getEscola();
+        $escola = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findBy(array('nome' => $escola));
+        $tipo_nota = $escola[0]->getTipoNota();
+
+        //buscando os nomes das materias
+        $materias = $this->getObjectManager()->getRepository('\Acesso\Entity\Materia')->findAll();
+        $nomes_materias = array();
+        foreach($materias AS $m){
+            $cod_materia = $m->getId();
+            $nome_materia = $m->getNome();
+            $nomes_materias[$cod_materia] = $nome_materia;
+        }
+
+        return new ViewModel(array('notas'=>$dados,'perfil'=>$perfil,'tipo_nota'=>$tipo_nota,'nomes_materias'=>$nomes_materias));
+    }
+
+    public function lancaNotasAction(){
+
+        $id_aluno = (int) $this->params()->fromRoute('id', 0);
+        $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+
+        $escola = $aluno->getEscola();
+        $escola = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findBy(array('nome' => $escola));
+        $tipo_nota = $escola[0]->getTipoNota();
+
+        $materias = $this->getObjectManager()->getRepository('\Acesso\Entity\Materia')->findAll();
+
+        return new ViewModel(array('aluno'=>$aluno,'tipo_nota'=>$tipo_nota,'materias'=>$materias));
+    }
+
+    public function boletimAction()
+    {
+        //buscando os dados do perfil desejado /perfil/?
+        $id_perfil = $this->params()->fromRoute('id', 0);
+        $perfil = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_perfil);
+
+        //buscando as notas
+        $query  = $this->getObjectManager()->createQuery('SELECT n FROM \Alunos\Entity\Nota n WHERE n.aluno='.$id_perfil.' ORDER BY n.ano DESC, n.materia ');
+        $dados = $query->getResult();
+
+        //buscando o tipo de nota que a escola trabalha
+        $escola = $perfil->getEscola();
+        $escola = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findBy(array('nome' => $escola));
+        $tipo_nota = $escola[0]->getTipoNota();
+
+        //buscando os nomes das materias
+        $materias = $this->getObjectManager()->getRepository('\Acesso\Entity\Materia')->findAll();
+        $nomes_materias = array();
+        foreach($materias AS $m){
+            $cod_materia = $m->getId();
+            $nome_materia = $m->getNome();
+            $nomes_materias[$cod_materia] = $nome_materia;
+        }
+
+        return new ViewModel(array('notas'=>$dados,'perfil'=>$perfil,'tipo_nota'=>$tipo_nota,'nomes_materias'=>$nomes_materias));
+    }
+
+    public function perfilAdminAction()
+    {
+        //buscando os dados do perfil desejado /perfil/?
+        $id_perfil = $this->params()->fromRoute('id', 0);
+
+        if($id_perfil > 0)
+            $perfil = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_perfil);
+
+        //buscando a quantidade de coracoes recebidos
+        $query  = $this->getObjectManager()->createQuery('SELECT c FROM \Acesso\Entity\Coracao c WHERE c.destinatario='.$id_perfil);
+        $dados = $query->getResult();
+        $n_coracoes = count($dados);
+
+        //buscando a quantidade de apertos recebidos
+        $query  = $this->getObjectManager()->createQuery('SELECT a FROM \Acesso\Entity\Aperto a WHERE a.destinatario='.$id_perfil);
+        $dados = $query->getResult();
+        $n_apertos = count($dados);
+
+        return new ViewModel(array('n_coracoes'=>$n_coracoes,'n_apertos'=>$n_apertos,'perfil'=>$perfil));
+    }
+
+    public function editPerfilAction()
+    {
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage('Aluno'));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+
+            //buscando os dados do aluno logado
+            $id_aluno = $auth->getIdentity()->getId();
+            $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+
+            if($this->request->isPost()){
+                $materias_menos = '';
+                foreach($_POST['materia_menos'] AS $m){
+                    $materias_menos.= $m.'#';
+                }
+                $_POST['materias_menos'] = $materias_menos;
+
+                $materias_mais = '';
+                foreach($_POST['materia_mais'] AS $m){
+                    $materias_mais.= $m.'#';
+                }
+                $_POST['materias_mais'] = $materias_mais;
+
+                $habilidades = '';
+                foreach($_POST['habilidades'] AS $h){
+                    $habilidades.= $h.'#';
+                }
+                $_POST['habilidades'] = $habilidades;
+                $_POST['habilidades'].= $_POST['outras_habilidades'];
+
+                $redes = '';
+                foreach($_POST['redes'] AS $r){
+                    $redes.= $r.'#';
+                }
+                $_POST['redes'] = $r;
+                unset($_POST['outras_habilidades']);
+
+                $id_escola = $this->getRequest()->getPost('escola');
+                $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id_escola);
+                $_POST['escola'] = $escola;
+
+                $id_turma = $this->getRequest()->getPost('turma');
+                $turma = $this->getObjectManager()->find('\Turmas\Entity\Turma', $id_turma);
+                $_POST['turma'] = $turma;
+
+                //$_POST['id'] = $id_aluno;
+                //$aluno = new Aluno($_POST);
+
+                $hydrator = new Hydrator\ClassMethods();
+                $hydrator->hydrate($_POST,$aluno);
+
+                $this->getObjectManager()->persist($aluno);
+                $this->getObjectManager()->flush();
+            }
+
+            $turmas = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+            $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+
+            return new ViewModel(array('aluno'=>$aluno,'turmas'=>$turmas,'escolas'=>$escolas));
+        }
+    }
+
+    public function verPerfilAction()
+    {
+        //buscando os dados do aluno logado
+        $id_aluno = $this->params()->fromRoute('id', 0);
+        $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+
+        if($this->request->isPost()){
+            $materias_menos = '';
+            foreach($_POST['materia_menos'] AS $m){
+                $materias_menos.= $m.'#';
+            }
+            $_POST['materias_menos'] = $materias_menos;
+
+            $materias_mais = '';
+            foreach($_POST['materia_mais'] AS $m){
+                $materias_mais.= $m.'#';
+            }
+            $_POST['materias_mais'] = $materias_mais;
+
+            $habilidades = '';
+            foreach($_POST['habilidades'] AS $h){
+                $habilidades.= $h.'#';
+            }
+            $_POST['habilidades'] = $habilidades;
+            $_POST['habilidades'].= $_POST['outras_habilidades'];
+
+            $redes = '';
+            foreach($_POST['redes'] AS $r){
+                $redes.= $r.'#';
+            }
+            $_POST['redes'] = $r;
+            unset($_POST['outras_habilidades']);
+
+            $id_escola = $this->getRequest()->getPost('escola');
+            $escola = $this->getObjectManager()->find('\Escolas\Entity\Escola', $id_escola);
+            $_POST['escola'] = $escola;
+
+            $id_turma = $this->getRequest()->getPost('turma');
+            $turma = $this->getObjectManager()->find('\Turmas\Entity\Turma', $id_turma);
+            $_POST['turma'] = $turma;
+
+            //$_POST['id'] = $id_aluno;
+            //$aluno = new Aluno($_POST);
+
+            $hydrator = new Hydrator\ClassMethods();
+            $hydrator->hydrate($_POST,$aluno);
+
+            $this->getObjectManager()->persist($aluno);
+            $this->getObjectManager()->flush();
+        }
+
+        $turmas = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+        $escolas = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findAll();
+
+        return new ViewModel(array('aluno'=>$aluno,'turmas'=>$turmas,'escolas'=>$escolas));
+    }
+
+    public function addPreferidoAction(){
+        $preferido = new Preferido();
+        $preferido->setRemetente($_POST['logado']);
+        $preferido->setDestinatario($_POST['amigo']);
+        $preferido->setData(date('Y-m-d h:i:s'));
+
+        $this->getObjectManager()->persist($preferido);
+        $this->getObjectManager()->flush();
+        $newId = $preferido->getId();
+
+        if($newId)
+            return true;
+        else
+            return false;
+    }
+
+    public function addAmigoAction(){
+        $amigoA = new Amigoa();
+        $amigoA->setAmigo1($_POST['logado']);
+        $amigoA->setAmigo2($_POST['amigo']);
+
+        $this->getObjectManager()->persist($amigoA);
+        $this->getObjectManager()->flush();
+        $newId = $amigoA->getId();
+
+        if($newId)
+            return true;
+        else
+            return false;
+    }
+
+    public function addAmigofAction(){
+        $amigoF = new Amigof();
+        $amigoF->setFuncionario($_POST['logado']);
+        $amigoF->setAluno($_POST['amigo']);
+
+        $this->getObjectManager()->persist($amigoF);
+        $this->getObjectManager()->flush();
+        $newId = $amigoF->getId();
+
+        if($newId)
+            return true;
+        else
+            return false;
+    }
+
+    public function mediaAction(){
+        $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $_POST['logado']);
+        $aluno->setMedia($_POST['op']);
+
+        $this->getObjectManager()->persist($aluno);
+        $this->getObjectManager()->flush();
+    }
+
+    public function coracaoAction(){
+        $coracao = new Coracao();
+        $coracao->setDestinatario($_POST['amigo']);
+        $coracao->setRemetente($_POST['logado']);
+        $coracao->setData(date('Y-,m-d h:i:s'));
+
+        $this->getObjectManager()->persist($coracao);
+        $this->getObjectManager()->flush();
+        $newId = $coracao->getId();
+
+        //gravando a notificacao do coracao
+        //gravando a notificacao
+        $notificacao = new Notificacao();
+        $notificacao->setRemetente($_POST['logado']);
+        $notificacao->setDestinatario($_POST['amigo']);
+        $notificacao->setTipoRemetente('A');
+        $notificacao->setTipoDestinatario('A');
+        $notificacao->setTipo('C'); //tipo coracao (C)
+        $notificacao->setNovo('S');
+        $notificacao->setData(date('Y-m-d h:i:s'));
+
+        $this->getObjectManager()->persist($notificacao);
+        $this->getObjectManager()->flush();
+
+        if($newId)
+            return true;
+        else
+            return false;
+    }
+
+    public function apertoAction(){
+        $aperto = new Aperto();
+        $aperto->setDestinatario($_POST['amigo']);
+        $aperto->setRemetente($_POST['logado']);
+        $aperto->setData(date('Y-,m-d h:i:s'));
+
+        $this->getObjectManager()->persist($aperto);
+        $this->getObjectManager()->flush();
+        $newId = $aperto->getId();
+
+        //gravando a notificacao
+        $notificacao = new Notificacao();
+        $notificacao->setRemetente($_POST['logado']);
+        $notificacao->setDestinatario($_POST['amigo']);
+        $notificacao->setTipoRemetente('A');
+        $notificacao->setTipoDestinatario('A');
+        $notificacao->setTipo('AM'); //tipo aperto de mao (AM)
+        $notificacao->setNovo('S');
+        $notificacao->setData(date('Y-m-d h:i:s'));
+
+        $this->getObjectManager()->persist($notificacao);
+        $this->getObjectManager()->flush();
+
+        if($newId)
+            return true;
+        else
+            return false;
+    }
+
+    public function enviaAction(){
+
+        $post = new Post();
+
+        $post->setDestinatarioId($_POST['destinatario']);
+        $post->setTipoDestinatario($_POST['tipo_destinatario']);
+        $post->setRemetenteId($_POST['remetente']);
+        $post->setTipoRemetente($_POST['tipo_remetente']);
+        $post->setMensagem($_POST['mensagem']);
+        $post->setData(date('Y-m-d h:i:s'));
+        $post->SetIcon($_POST['icone']);
+
+
+        $r= $this->getObjectManager()->persist($post);
+        $this->getObjectManager()->flush();
+        $newId = $post->getId();
+
+
+        //gravando a notificacao
+        $notificacao = new Notificacao();
+        $notificacao->setRemetente($_POST['remetente']);
+        $notificacao->setDestinatario($_POST['destinatario']);
+        $notificacao->setTipoRemetente('A');
+        $notificacao->setTipoDestinatario('A');
+        $notificacao->setTipo('P');
+        $notificacao->setNovo('S');
+        $notificacao->setData(date('Y-m-d h:i:s'));
+
+        $this->getObjectManager()->persist($notificacao);
+        $this->getObjectManager()->flush();
+
+        if($_POST['posta_icone'] == 1){
+            echo "<script>alert('Enviado com sucesso')</script>";
+        }
+        else{
+            $response = $this->getResponse();
+            $response->setStatusCode(200);
+
+            //buscando as postagens do usuario
+            $posts = $this->getObjectManager()->getRepository('\Acesso\Entity\Post')->findBy(array('destinatario_id' => $_POST['destinatario']));
+            $conteudo = '';
+            foreach($posts as $msg){
+                //buscando o nome do Remetente
+                $remetente = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getRemetenteId());
+
+                $conteudo.= "<b><p>";
+
+                $foto = $remetente->getFoto();
+                $conteudo.= "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+
+                $conteudo.= $remetente->getNome();
+
+                $timestamp = strtotime($msg->getData());
+                $new_date = date('d/m/Y', $timestamp);
+                $conteudo.= " - ".$new_date;
+                $conteudo.= "</b><br>";
+                $conteudo.= $msg->getMensagem();
+                $conteudo.= "</p><hr class='limpa'>";
+            }
+
+
+            $response->setContent($conteudo);
+
+            return $response;
+        }
+    }
+
+    public function notificacaoAction(){
+        //buscando video da pagina
+        $query  = $this->getObjectManager()->createQuery('SELECT v FROM \Acesso\Entity\Video v WHERE v.pagina=\'notificacao\'');
+        $dados = $query->getResult();
+        $video = $dados[0];
+
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+            $tipo_logado = 'A';
+        }
+        else if($sessao->tipo == 'F'){
+            $nome_sessao = 'Func';
+            $tipo_logado = 'F';
+        }
+        else if($sessao->tipo == 'AD'){
+            $nome_sessao = 'Admin';
+            $tipo_logado = 'AD';
+        }
+
+        $auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+            if($tipo_logado == 'A'){
+                $id_aluno = $auth->getIdentity()->getId();
+                $aluno = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_aluno);
+
+                $query  = $this->getObjectManager()->createQuery('SELECT n FROM \Acesso\Entity\Notificacao n WHERE n.destinatario='.$id_aluno.' AND n.tipo_destinatario=\'A\' AND n.novo=\'S\' ORDER BY n.data DESC');
+                $dados = $query->getResult();
+
+                $remetentes = array();
+                foreach($dados AS $msg){
+                    $remetente = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getRemetente());
+                    $remetentes[] = $remetente->getNome();
+                }
+            }
+            else if($tipo_logado == 'F'){
+                $func = $auth->getIdentity()[0];
+                $id_func = $func->getId();
+
+                $query  = $this->getObjectManager()->createQuery('SELECT n FROM \Acesso\Entity\Notificacao n WHERE n.destinatario='.$id_func.' AND n.tipo_destinatario=\'F\' AND n.novo=\'S\' ORDER BY n.data DESC');
+                $dados = $query->getResult();
+
+                $remetentes = array();
+                foreach($dados AS $msg){
+                    $remetente = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getRemetente());
+                    $remetentes[] = $remetente->getNome();
+                }
+            }
+        }
+
+        return new ViewModel(array('video'=>$video,'notificacoes'=>$dados,'remetentes'=>$remetentes));
+    }
+
+    public function buscaPostAction(){
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+
+        //buscando as postagens do usuario
+        $posts = $this->getObjectManager()->getRepository('\Acesso\Entity\Post')->findBy(array('destinatario_id' => $_POST['destinatario']));
+        $conteudo = '';
+        foreach($posts as $msg){
+            //buscando o nome do Remetente
+            $remetente = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $msg->getRemetenteId());
+
+            $conteudo.= "<b><p>";
+            $foto = $remetente->getFoto();
+            $conteudo.= "<img src=\"/public/fotos/alunos/$foto\" id=\"foto_perfil\">";
+
+            $conteudo.= $remetente->getNome();
+
+            $timestamp = strtotime($msg->getData());
+            $new_date = date('d/m/Y', $timestamp);
+            $conteudo.= " - ".$new_date;
+            $conteudo.= "</b><br>";
+            $conteudo.= $msg->getMensagem();
+            $conteudo.= "</p><hr class='limpa'>";
+        }
+
+        $response->setContent($conteudo);
+
+        return $response;
+    }
+
+    public function enviaAcessoAction(){
+        $acesso = new Acesso();
+        $acesso->setUsuario($_POST['usuario']);
+        $acesso->setTipoUsuario($_POST['tipo']);
+        $acesso->setData(date("Y-m-d h:i:s"));
+        $acesso->setUrl($_POST['url']);
+
+        $this->getObjectManager()->persist($acesso);
+        $this->getObjectManager()->flush();
+        $newId = $acesso->getId();
+
+        echo $newId;
+    }
+
+	public function mapaAction(){
+		$sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+        } else if($sessao->tipo == 'F') {
+            $nome_sessao = 'Func';
+        } else {
+			return $this->redirect()->toRoute('login_alunos');
+        }
+
+        $user;
+		$auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+		
+		if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+			if($sessao->tipo == 'A'){
+				//buscando os dados do aluno logado
+				$id_user = $auth->getIdentity()->getId();
+				$user = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_user);
+			}
+			else if($sessao->tipo == 'F'){
+				//buscando os dados do funcionario logado
+				$id_user = $auth->getIdentity()[0]->getId();
+				$user = $this->getObjectManager()->find('\Funcionarios\Entity\Funcionario', $id_user);
+			}
+
+			//Obter latitude e longitude de escola
+			$escola = $user->getEscola();
+			$escola = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findBy(array('nome' => $escola));
+			$lat = $escola[0]->getLatitude();
+			$lng = $escola[0]->getLongitude();
+				
+			//Obter token de acesso
+			$token = $this->getAccessToken($user, $sessao->tipo);
+			
+			//Criar utilitario do wikimapa
+			$locobj = new Location();
+
+			//obter localizacoes do usuário
+			$locs_user = $locobj->getLocations($user->getIdWikimapa());
+			$locs_all = $locobj->getAllLocationsInRange($lat, $lng, $token);
+			$locs_user = json_decode($locs_user);
+			$locs_all = json_decode($locs_all);
+			$locs = array_merge($locs_all, $locs_user);
+			$locs = json_encode($locs);
+			
+			return new ViewModel(array('logado'=>$user, 'locs'=>$locs, 'escola_lat'=>$lat, 'escola_lng'=>$lng));
+        }
+    }
+
+    public function localizacaoAction() {
+        $sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+        } else if($sessao->tipo == 'F') {
+            $nome_sessao = 'Func';
+        } else {
+			return $this->redirect()->toRoute('login_alunos');
+        }
+
+		$auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+		
+		$msg = "";
+		
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else{
+			if($sessao->tipo == 'A'){
+				//buscando os dados do aluno logado
+				$id_user = $auth->getIdentity()->getId();
+				$user = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_user);
+			}
+			else if($sessao->tipo == 'F'){
+				//buscando os dados do funcionario logado
+				$id_user = $auth->getIdentity()[0]->getId();
+				$user = $this->getObjectManager()->find('\Funcionarios\Entity\Funcionario', $id_user);
+			}
+			
+			//Obter latitude e longitude de escola
+			$escola = $user->getEscola();
+			$escola = $this->getObjectManager()->getRepository('\Escolas\Entity\Escola')->findBy(array('nome' => $escola));
+			$lat = $escola[0]->getLatitude();
+			$lng = $escola[0]->getLongitude();
+			
+            if ($this->request->isPost()) {
+				$nome = $this->getRequest()->getPost('nome_loc');
+				$loclat = $this->getRequest()->getPost('latitude');
+				$loclng = $this->getRequest()->getPost('longitude');
+                $desc = $this->getRequest()->getPost('desc');
+                $end = $this->getRequest()->getPost('endereco');
+				
+				//Obter token de acesso
+				$token = $this->getAccessToken($user, $sessao->tipo);
+				
+				//Criar utilitario do wikimapa
+				$locobj = new Location();
+
+				//Criar localizacao
+				$json = $locobj->createLocation($token, $nome, $desc, $end, $loclat, $loclng);
+				$loc = json_decode($json);
+				
+				if(array_key_exists('errors', $loc)) {
+					if(array_key_exists('duplicated', $loc->errors)) {
+						$msg = "Localização já existe";
+					}
+					$msg = "Erro no cadastro de localização";
+					
+				} else {
+					$iniext_foto = strrpos($_FILES['fotoloc']['name'],".");
+					$ext_foto    = substr($_FILES['fotoloc']['name'],$iniext_foto);
+					$nome_foto   = 'temp'.$ext_foto;
+					$caminho = 'public/fotos/localizacoes/';
+					$caminho.= $nome_foto;
+					echo $_FILES['fotoloc']['tmp_name'];
+					if (move_uploaded_file($_FILES['fotoloc']['tmp_name'], $caminho))
+						$msg = "Arquivo Enviado";
+					
+					$locobj->createPhoto($loc->id, $token, $caminho);
+					$msg = "Localização cadastrada com sucesso";
+					return $this->redirect()->toRoute('mapa');
+				}
+            }
+        }
+
+		return new ViewModel(array('msg'=>$msg, 'escola_lat'=>$lat, 'escola_lng'=>$lng));
+    }
+	
+	public function removerlocalizacaoAction()
+    {
+		$sessao = new sessionContainer();
+        if($sessao->tipo == 'A'){
+            $nome_sessao = 'Aluno';
+        } else if($sessao->tipo == 'F') {
+            $nome_sessao = 'Func';
+        } else {
+			return $this->redirect()->toRoute('login_alunos');
+        }
+
+		$auth = new AuthenticationService;
+        $auth->setStorage(new SessionStorage($nome_sessao));
+		
+		//ID de localizacao do wikimapa
+        $id = (int) $this->params()->fromRoute('id', 0);
+		
+		//$msg = "";
+		
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login_alunos');
+        else {
+			if($sessao->tipo == 'A'){
+				//buscando os dados do aluno logado
+				$id_user = $auth->getIdentity()->getId();
+				$user = $this->getObjectManager()->find('\Alunos\Entity\Aluno', $id_user);
+			}
+			else if($sessao->tipo == 'F'){
+				//buscando os dados do funcionario logado
+				$id_user = $auth->getIdentity()[0]->getId();
+				$user = $this->getObjectManager()->find('\Funcionarios\Entity\Funcionario', $id_user);
+			}
+			
+			//Obter token de acesso
+			$token = $this->getAccessToken($user, $sessao->tipo);
+			
+			//Criar utilitario do wikimapa
+			$locobj = new Location();
+
+			//Criar localizacao
+			$json = $locobj->removeLocation($id, $token);
+			$loc = json_decode($json);
+			
+			//if(array_key_exists('errors', $loc)) {
+			//	$msg = "Erro na remoção de localização";
+			//}
+		}
+		return $this->redirect()->toRoute('mapa');
+	}
+	
+	private function getAccessToken($user, $funcao) {
+		//Criar utilitario do wikimapa
+		$locobj = new Location();
+		
+		//Obter token refresh para atualizacao
+		$token_refresh = $user->getTokenRefresh();
+		$json = $locobj->refreshToken($token_refresh);
+		//Decodificar JSON
+		$tokens = json_decode($json);
+		//Verificar se houve erro na atualizacao do token e, se sim, gerar um novo
+		if(array_key_exists('error', $tokens)) {
+			if($funcao == "A")
+				$email = $user->getEmail();
+			else
+				$email = $user->getLogin();
+			$json = $locobj->generateToken($email, $user->getSenha());
+			$tokens = json_decode($json);
+		}
+		
+		//Armazenar novo token refresh e novo token acesso
+		$user->setTokenAcesso($tokens->access_token);
+		$user->setTokenRefresh($tokens->refresh_token);
+		
+		//Persistir user
+		$this->getObjectManager()->persist($user);
+		$this->getObjectManager()->flush();
+		
+		return $tokens->access_token;
+	}
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+}

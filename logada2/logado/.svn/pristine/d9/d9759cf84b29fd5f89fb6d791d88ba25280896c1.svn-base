@@ -1,0 +1,72 @@
+<?php
+
+$title = 'ADICIONAR AVISO';
+$this->headTitle($title);
+?>
+<script type="text/javascript" src="/public/js/jquery.min.js"></script>
+<script type="text/javascript">
+    function buscaDestino(){
+        $.ajax({
+            type: "POST",
+            data: {'tipo_destino': $('#tipo_destino').val()},
+            url: '/admin/aviso/buscaDestino',
+            success: function(dados) {
+                $('#destino').html(dados);
+            }
+        });
+    }
+    function buscaDestino2(){
+        $.ajax({
+            type: "POST",
+            data: {'tipo_destino': '<?php echo $aviso->getTipoDestinatario();?>','cod':<?php echo $aviso->getDestinatario();?>},
+            url: '/admin/aviso/buscaDestino',
+            success: function(dados) {
+                $('#destino').html(dados);
+            }
+        });
+    }
+</script>
+<link id="file_estilo" rel="stylesheet" type="text/css" href="/public/css/estilo_interno.css" media="all" />
+<h2><?php echo $this->escapeHtml($title); ?></h2>
+<br class="limpa">
+<form method="post">
+    <div class="control-group">
+        <label class="label-admin" for="assunto">Assunto</label>
+        <div class="controls">
+            <input type="text" class="input-admin" id="assunto" name="assunto" value="<?php echo $aviso->getAssunto();?>">
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="label-admin" for="tipo_destino">Para:</label>
+        <div class="controls">
+            <select class="input-admin" class="input-admin" name="tipo_destino" id="tipo_destino" onchange="buscaDestino()">
+                <option value=""></option>
+                <option value="A"<?php echo $aviso->getTipoDestinatario()=='A'?' selected':'';?>>Aluno</option>
+                <option value="T"<?php echo $aviso->getTipoDestinatario()=='T'?' selected':'';?>>Turma</option>
+                <option value="F"<?php echo $aviso->getTipoDestinatario()=='F'?' selected':'';?>>Funcionário</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="control-group" id="destino">
+    </div>
+
+    <div class="control-group">
+        <label class="label-admin" for="mensagem">Mensagem</label>
+        <div class="controls">
+            <textarea id="mensagem" name="mensagem" cols="50" rows="5"><?php echo $aviso->getMensagem();?></textarea>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <br>
+            <button type="submit" class="btn btn-admin">Enviar</button>
+            <button type="button" onclick="document.location='/admin/aviso'" class="btn btn-admin-cancel">Voltar</button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+buscaDestino2();
+</script>

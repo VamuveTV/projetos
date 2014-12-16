@@ -1,0 +1,146 @@
+<?php
+
+namespace Escolas\Entity;
+use Doctrine\ORM\Mapping as ORM;
+/** @ORM\Entity */
+class Escola {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    protected $id;
+
+    /** @ORM\Column(type="string") */
+    protected $nome;
+
+    /** @ORM\Column(type="string") */
+    protected $endereco;
+
+    /** @ORM\Column(type="string") */
+    protected $diretor;
+
+    /** @ORM\Column(type="string") */
+    protected $bairro;
+
+    /** @ORM\Column(type="string") */
+    protected $regiao;
+
+    /** @ORM\Column(type="string") */
+    protected $tipo_nota;
+
+
+    /**
+     * @param mixed $endereco
+     */
+    public function setEndereco($endereco)
+    {
+        $this->endereco = $endereco;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndereco()
+    {
+        return $this->endereco;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $nome
+     */
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * @param mixed $bairro
+     */
+    public function setBairro($bairro)
+    {
+        $this->bairro = $bairro;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBairro()
+    {
+        return $this->bairro;
+    }
+
+    /**
+     * @param mixed $diretor
+     */
+    public function setDiretor($diretor)
+    {
+        $this->diretor = $diretor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiretor()
+    {
+        return $this->diretor;
+    }
+
+    /**
+     * @param mixed $regiao
+     */
+    public function setRegiao($regiao)
+    {
+        $this->regiao = $regiao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegiao()
+    {
+        return $this->regiao;
+    }
+
+    /**
+     * @param mixed $tipo_nota
+     */
+    public function setTipoNota($tipo_nota)
+    {
+        $this->tipo_nota = $tipo_nota;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTipoNota()
+    {
+        return $this->tipo_nota;
+    }
+
+
+}

@@ -1,0 +1,10 @@
+<?php
+
+$title = 'Excluir Aluno';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+Tem certeza que quer deletar: <b><?php echo $aluno->getNome(); ?></b>? <br/>
+<br><form method="post">
+    <input type="submit" value="Excluir" class="btn btn-danger">
+</form>

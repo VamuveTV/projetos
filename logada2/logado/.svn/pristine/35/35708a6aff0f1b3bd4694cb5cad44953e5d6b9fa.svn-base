@@ -1,0 +1,151 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Aviso\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Aviso\Entity\Aviso;
+use Acesso\Entity\Notificacao;
+
+class IndexController extends AbstractActionController
+{
+    protected $_objectManager;
+
+    public function indexAction()
+    {
+        $avisos = $this->getObjectManager()->getRepository('\Aviso\Entity\Aviso')->findAll();
+
+        return new ViewModel(array('avisos' => $avisos));
+    }
+
+    public function addAction()
+    {
+        if ($this->request->isPost()) {
+            $aviso = new Aviso();
+            $aviso->setDestinatario($this->getRequest()->getPost('id_destino'));
+            $aviso->setTipoDestinatario($this->getRequest()->getPost('tipo_destino'));
+            $aviso->setAssunto($this->getRequest()->getPost('assunto'));
+            $aviso->setMensagem($this->getRequest()->getPost('mensagem'));
+            $aviso->setData(date('Y-m-d H:i:s'));
+
+            $this->getObjectManager()->persist($aviso);
+
+            $this->getObjectManager()->flush();
+            $newId = $aviso->getId();
+
+            //gravando a notificacao
+            $notificacao = new Notificacao();
+            $notificacao->setRemetente(1);
+            $notificacao->setDestinatario($this->getRequest()->getPost('id_destino'));
+            $notificacao->setTipoRemetente('AD');
+            $notificacao->setTipoDestinatario($this->getRequest()->getPost('tipo_destino'));
+            $notificacao->setTipo('A');
+            $notificacao->setNovo('S');
+            $notificacao->setData(date('Y-m-d h:i:s'));
+
+            $this->getObjectManager()->persist($notificacao);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('home_avisos');
+        }
+
+        return new ViewModel();
+    }
+
+    public function editAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $aviso = $this->getObjectManager()->find('\Aviso\Entity\Aviso', $id);
+
+        if ($this->request->isPost()) {
+            $id_destino = $this->getRequest()->getPost('id_destino');
+            $aviso->setDestinatario($this->getRequest()->getPost('id_destino'));
+            $aviso->setTipoDestinatario($this->getRequest()->getPost('tipo_destino'));
+            $aviso->setAssunto($this->getRequest()->getPost('assunto'));
+            $aviso->setMensagem($this->getRequest()->getPost('mensagem'));
+            $aviso->setData(date('Y-m-d H:i:s'));
+
+            $this->getObjectManager()->persist($aviso);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('home_avisos');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('aviso'=>$aviso));
+    }
+
+    public function deleteAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        $aviso = $this->getObjectManager()->find('\Aviso\Entity\Aviso', $id);
+
+        if ($this->request->isPost()) {
+            $this->getObjectManager()->remove($aviso);
+            $this->getObjectManager()->flush();
+
+            return $this->redirect()->toRoute('home_avisos');
+            //echo "<script>document.location='http://logada.zarbsolution.com.br/escolas/';</script>";
+        }
+
+        return new ViewModel(array('aviso' => $aviso));
+    }
+
+    public function buscaDestinoAction(){
+        $response = $this->getResponse();
+        $response->setStatusCode(200);
+
+        //verificando se é turma ou aluno para buscar os dados
+        if($_POST['tipo_destino']=='A'){
+            $dados = $this->getObjectManager()->getRepository('\Alunos\Entity\Aluno')->findAll();
+            $label = "Aluno";
+        }else if($_POST['tipo_destino']=='T'){
+            $dados = $this->getObjectManager()->getRepository('\Turmas\Entity\Turma')->findAll();
+            $label = "Turma";
+        }else if($_POST['tipo_destino']=='F'){
+            $dados = $this->getObjectManager()->getRepository('\Funcionarios\Entity\Funcionario')->findAll();
+            $label = "Funcionario";
+        }
+
+        $conteudo = '<label class="label-admin" for="nome">'.$label.'</label>
+                    <div class="controls">';
+        $conteudo.= '<input type="hidden" name="tipo_destino" value="'.$_POST['tipo_destino'].'">';
+        $conteudo.= '<select class="input-admin" name="id_destino" id="id_destino">';
+        foreach($dados as $item){
+            if($_POST['tipo_destino']=='A'){
+                $conteudo.= "<option value='".$item->getId()."'";
+                $conteudo.= $item->getId()==$_POST['cod']?' selected':'';
+                $conteudo.= ">".$item->getNome()."</option>";
+            }else if($_POST['tipo_destino']=='T'){
+                $conteudo.= "<option value='".$item->getId()."'";
+                $conteudo.= $item->getId()==$_POST['cod']?' selected':'';
+                $conteudo.= ">".$item->getTurma()."</option>";
+            }else{
+                $conteudo.= "<option value='".$item->getId()."'";
+                $conteudo.= $item->getId()==$_POST['cod']?' selected':'';
+                $conteudo.= ">".$item->getNome()."</option>";
+            }
+        }
+        $conteudo.= "</select>";
+        $conteudo.= "</div>";
+        $response->setContent($conteudo);
+
+        return $response;
+    }
+
+    protected function getObjectManager()
+    {
+        if (!$this->_objectManager) {
+            $this->_objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        }
+
+        return $this->_objectManager;
+    }
+}

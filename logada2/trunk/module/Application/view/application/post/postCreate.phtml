@@ -1,0 +1,16 @@
+<script src="<?php echo $this->basepath() . '/js/tinymce/tinymce.min.js'?>"></script>
+<script>
+    tinymce.init({
+        selector:'textarea', 
+        toolbar: "undo redo | bold italic | emoticons",
+        plugins: "emoticons",
+        language: "pt_BR",
+        statusbar: false,
+        menubar: false
+    });
+</script>
+
+<?php 
+echo $this->formRow($this->form->get('comment'), null, true);
+echo $this->formRow($this->form->get('submit'), null, true);
+?>
